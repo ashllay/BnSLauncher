@@ -16,7 +16,8 @@ using System.Xml;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using Microsoft.Win32;
-
+using System.Web.Security;
+using System.Management;
 
 namespace BnS_TwLauncher
 {
@@ -37,7 +38,7 @@ namespace BnS_TwLauncher
 
         private string ArchitectureBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Architecture", "");
         private string IsFirstRun = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "FirstRun", "");
-        
+
         public Main()
         {
             InitializeComponent();
@@ -63,17 +64,25 @@ namespace BnS_TwLauncher
             //AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
         }
 
-        
+       
         private void FormMain_Load(object sender, EventArgs e)
         {
+            //string wdid = getUniqueID("C");
             //NC West login
             string SavedMail = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "mail", "");
-            txb_Mail.Text = SavedMail;
+            txb_Mail.Text = Dec(SavedMail);
+            string SavedPass = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "pass", "");
+            txb_Pass.Text = Dec(SavedPass);
 
-            if (string.IsNullOrWhiteSpace(SavedMail))
+            if (string.IsNullOrWhiteSpace(SavedPass))
                 cbox_Smail.Checked = false;
             else
                 cbox_Smail.Checked = true;
+
+            if (string.IsNullOrWhiteSpace(SavedPass))
+                cbox_Spass.Checked = false;
+            else
+                cbox_Spass.Checked = true;
 
             if (RegionBool == "EN")
             {
@@ -100,15 +109,8 @@ namespace BnS_TwLauncher
             {
                 Unattended = "-UNATTENDED";
             }
+        }
 
-        }
-        private void cbox_Smail_CheckedChanged(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txb_Mail.Text))
-                MessageBox.Show("Error: Email field is empty!!");
-            else
-                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "mail", txb_Mail.Text, RegistryValueKind.String);
-        }
 
         private void Btn_play_Click(object sender, EventArgs e)
         {
@@ -125,7 +127,6 @@ namespace BnS_TwLauncher
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_JPN", "BaseDir", null);
                 if (InstallPath != null)
                 {
-                    DatPath = InstallPath + "\\contents\\Local\\NCJAPAN\\data\\";
                     if (ArchitectureBoolCurrent == "0")
                     {
                         LaunchPath = InstallPath + "\\bin\\Client.exe";
@@ -138,7 +139,6 @@ namespace BnS_TwLauncher
                 // registry path not found, check for side-by-side install
                 else if (File.Exists(".\\Client.exe"))
                 {
-                    DatPath = "..\\contents\\Local\\NCJAPAN\\data\\";
                     LaunchPath = ".\\Client.exe";
                 }
             }
@@ -147,13 +147,11 @@ namespace BnS_TwLauncher
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
                 if (InstallPath != null)
                 {
-                    DatPath = InstallPath + "\\contents\\Local\\NCTAIWAN\\data\\";
                     LaunchPath = InstallPath + "\\bin\\Client.exe";
                 }
                 // registry path not found, check for side-by-side install
                 else if (File.Exists(".\\Client.exe"))
                 {
-                    DatPath = "..\\contents\\Local\\NCTAIWAN\\data\\";
                     LaunchPath = ".\\Client.exe";
                 }
             }
@@ -162,7 +160,6 @@ namespace BnS_TwLauncher
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
                 if (InstallPath != null)
                 {
-                    DatPath = InstallPath + "\\contents\\Local\\korean\\data\\";
                     if (ArchitectureBoolCurrent == "0")
                     {
                         LaunchPath = InstallPath + "\\bin\\Client.exe";
@@ -175,7 +172,6 @@ namespace BnS_TwLauncher
                 // registry path not found, check for side-by-side install
                 else if (File.Exists(".\\Client.exe"))
                 {
-                    DatPath = "..\\contents\\Local\\korean\\data\\";
                     LaunchPath = ".\\Client.exe";
                 }
             }
@@ -184,7 +180,6 @@ namespace BnS_TwLauncher
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
                 if (InstallPath != null)
                 {
-                    DatPath = InstallPath + "\\contents\\Local\\korean\\data\\";
                     if (ArchitectureBoolCurrent == "0")
                     {
                         LaunchPath = InstallPath + "\\bin\\Client.exe";
@@ -197,7 +192,6 @@ namespace BnS_TwLauncher
                 // registry path not found, check for side-by-side install
                 else if (File.Exists(".\\Client.exe"))
                 {
-                    DatPath = "..\\contents\\Local\\korean\\data\\";
                     LaunchPath = ".\\Client.exe";
                 }
             }
@@ -206,7 +200,6 @@ namespace BnS_TwLauncher
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
                 if (InstallPath != null)
                 {
-                    DatPath = InstallPath + "..\\contents\\Local\\NCWEST\\data\\";
                     if (ArchitectureBoolCurrent == "0")
                     {
                         LaunchPath = InstallPath + "\\bin\\Client.exe";
@@ -220,7 +213,6 @@ namespace BnS_TwLauncher
                 // registry path not found, check for side-by-side install
                 else if (File.Exists(".\\Client.exe"))
                 {
-                    DatPath = "..\\contents\\Local\\NCWEST\\data\\";
                     LaunchPath = ".\\Client.exe";
                 }
             }
@@ -242,11 +234,6 @@ namespace BnS_TwLauncher
 
             Process proc = new Process();
             proc.StartInfo.FileName = LaunchPath;
-            // /LaunchByLauncher  /AuthnToken:"" /ServiceRegion:"15" /launchbylauncher /sesskey /CompanyID: 12 /ChannelGroupIndex :-1 /LoginMode 2
-            // /launchbylauncher /sesskey /CompanyID: "12" /ChannelGroupIndex: "-1" /LoginMode 2 -lang:English -region:0
-            // /LaunchByLauncher  /AuthnToken:"" /SessKey:"" /ServiceRegion:"15" /AuthProviderCode:"np"  /NPServerAddr:"210.64.136.126:6600" /PresenceId:"TWBNS22"
-            // /LaunchByLauncher  /AuthnToken:"" /SessKey:"" /ServiceRegion:"15" /AuthProviderCode:"np"  /NPServerAddr:"210.64.136.126:6600" /PresenceId:"TWBNS22"
-            // "D:\Jogos\NCJAPAN\Blade&Soul\bin\Client.exe" /LaunchByLauncher /Sesskey /SessKey:"" /CompanyID:"14" /ChannelGroupIndex:"-1" 
 
             if (RegionBoolCurrent == "JP")
             {
@@ -263,39 +250,29 @@ namespace BnS_TwLauncher
             }
             else if (RegionBoolCurrent == "KR")
             {
-
-                ///LaunchByLauncher /SessKey:"" /CompanyID:"0" /ChannelGroupIndex:"-1" /youth:"false"  -lite:8 /LoginMode 2 -USEALLAVAILABLECORES -NOTEXTURESTREAMING
-                /// /LaunchByLauncher /SessKey:"" /CompanyID:"0" /ChannelGroupIndex:"-1" /youth:"false"  -lite:8
+                // /LaunchByLauncher /SessKey:"" /CompanyID:"0" /ChannelGroupIndex:"-1" /youth:"false"  -lite:8
                 proc.StartInfo.Arguments = "/launchbylauncher /sesskey" + "/ChannelGroupIndex:" + " - 1" + " /youth:" + "false" + "-lite:8" + " / LoginMode 2 " + " " + UseAllCores + " " + Unattended + " " + NoTextureStreaming;
                 proc.StartInfo.UseShellExecute = false;
                 proc.StartInfo.RedirectStandardError = true;
             }
             else if (RegionBoolCurrent == "EN")
             {
-
                 // generated by Nc Launcher /launchbylauncher /sesskey -lang:english /CompanyID:"12" /ChannelGroupIndex:"-1" /AuthnToken:"==" /AuthProviderCode:"np"  -lang:English -lite:2 -region:0
-                //                          /launchbylauncher /sesskey -lang:english /CompanyID:"12" /ChannelGroupIndex:"-1" /AuthnToken:"==" /AuthProviderCode:"np"-lang:English -lite:2 -region:0
-                // generated by my launcher /launchbylauncher /sesskey               /CompanyID:"12"  /ChannelGroupIndex:"-1"/AuthnToken:"==" /AuthProviderCode:"np" -lang:English -lite:2 -region:1
-                //string args = "/launchbylauncher /sesskey -lang:english /CompanyID:\"12\" /ChannelGroupIndex:\"-1\" /AuthnToken:\"{0}\" /AuthProviderCode:\"np\"  -lang:English -lite:2 -region:{1}", token;
-                proc.StartInfo.Arguments = "/launchbylauncher /sesskey -lang:english /CompanyID:\"12\" /ChannelGroupIndex:\"-1\" " +  string.Format(args, token) + " /AuthProviderCode:\"np\"" + "-lang:" + languageIDBoolCurrent + " -lite:2 -region:" + currentValue +  Unattended + "" + NoTextureStreaming + "" + UseAllCores + "";
+                proc.StartInfo.Arguments = "/launchbylauncher /sesskey -lang:english /CompanyID:\"12\" /ChannelGroupIndex:\"-1\" " + string.Format(args, token) + " /AuthProviderCode:\"np\"" + "-lang:" + languageIDBoolCurrent + " -lite:2 -region:" + currentValue + Unattended + "" + NoTextureStreaming + "" + UseAllCores + "";
                 proc.StartInfo.UseShellExecute = false;
                 proc.StartInfo.RedirectStandardError = true;
             }
             try
             {
-                //Process process = new Process();
-                //ProcessStartInfo startInfo = new ProcessStartInfo();
-                //startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                //startInfo.FileName = Od.FileName;
-                //startInfo.WorkingDirectory = new FileInfo(Od.FileName).Directory.ToString();
-                //startInfo.Arguments = string.Format(args, token, currentValue) + " " + argumentsTB.Text;
-                //process.StartInfo = startInfo;
-               // process.Start();
                 proc.Start();
-                LoginServer.Close();
-                worker.CancelAsync();
-                Btn_play.Enabled = false;
-                btn_Login.Enabled = true;
+                //kill ping thread enable login button and disable play button(west)
+                if (worker != null && worker.IsBusy)
+                {
+                    LoginServer.Close();
+                    worker.CancelAsync();
+                    Btn_play.Enabled = false;
+                    btn_Login.Enabled = true;
+                }
             }
             catch
             {
@@ -314,13 +291,25 @@ namespace BnS_TwLauncher
         {
             string CurrentRegionBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Region", "");
 
+            //check region if west enable login box
             if (CurrentRegionBool == "EN")
             {
                 box_WestLogin.Visible = true;
-                Btn_play.Enabled = false;
+                
+                //if open settings with logged account play button stay enabled
+                if (worker != null && worker.IsBusy)
+                    Btn_play.Enabled = true;
+                else
+                    Btn_play.Enabled = false;
             }
             else
             {
+                //if not west or change region logged kill ping thread disable west login and enable play button
+                if (worker != null && worker.IsBusy)
+                {
+                    LoginServer.Close();
+                    worker.CancelAsync();
+                }
                 box_WestLogin.Visible = false;
                 Btn_play.Enabled = true;
             }
@@ -344,14 +333,40 @@ namespace BnS_TwLauncher
             new BnS_Launcher.Patcher().Show();
         }
 
-
         // NC login
+
+        string Protect = "Basic Enc";
+
+        string Enc(string s)
+        {
+            return Convert.ToBase64String(MachineKey.Protect(Encoding.UTF8.GetBytes(s), Protect));
+        }
+
+        string Dec(string s)
+        {
+            return Encoding.UTF8.GetString(MachineKey.Unprotect(Convert.FromBase64String(s), Protect));
+        }
+        private void cbox_Smail_CheckedChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txb_Mail.Text))
+                MessageBox.Show("Error: Email field is empty!!");
+            else
+                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "mail", Enc(txb_Mail.Text), RegistryValueKind.String);
+        }
+        private void cbox_Spass_CheckedChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txb_Pass.Text))
+                MessageBox.Show("Error: Password field is empty!!");
+            else
+                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "pass", Enc(txb_Pass.Text), RegistryValueKind.String);
+        }
+
         bool Debugging = false;
 
         BackgroundWorker worker;
         string username, password, epoch, pid, localIP;
         //string args = "/launchbylauncher /sesskey -lang:english /CompanyID:\"12\" /ChannelGroupIndex:\"-1\" /AuthnToken:\"{0}\" /AuthProviderCode:\"np\"  -lang:English -lite:2 -region:{1}", token;
-        string args = "/AuthnToken:\"{0}\"",token;
+        string args = "/AuthnToken:\"{0}\"", token;
         string LoginIp, LoginProgramid;
         int LoginPort, counter;
         BNSXorEncryption xor;
@@ -370,7 +385,6 @@ namespace BnS_TwLauncher
         SHA256 sha = SHA256.Create();
         byte[] key;
         TcpClient LoginServer;
-
 
         class region
         {
@@ -430,7 +444,6 @@ namespace BnS_TwLauncher
             return res;
         }
 
-      
         byte[] GenerateEncryptionKeyRoot(byte[] src)
         {
             int firstSize = src.Length;
@@ -481,6 +494,7 @@ namespace BnS_TwLauncher
             return dst;
         }
 
+       
         byte[] CombineBuffers(params byte[][] buffers)
         {
             int len = 0;
@@ -851,6 +865,9 @@ namespace BnS_TwLauncher
                     case "ErrBadPasswd":
                         MessageBox.Show("Wrong Password");
                         return;
+                    case "ErrRiskMgmtDeclined":
+                        MessageBox.Show("You have exceeded the number of attempts allowed.\r\nFor security reasons, login is temporarily disabled.\r\nPlease try again later.");
+                        return;
                     default:
                         MessageBox.Show("Unknown Error: " + reply);
                         return;
@@ -1048,7 +1065,7 @@ namespace BnS_TwLauncher
             /*if (string.IsNullOrWhiteSpace(txb_Mail.Text))
                 MessageBox.Show("Error: Game Architecture not set defalt is x86!!");*/
             Btn_play.Enabled = false;
-            
+
             if (worker != null && worker.IsBusy)
             {
                 LoginServer.Close();
@@ -1073,12 +1090,15 @@ namespace BnS_TwLauncher
             worker.RunWorkerAsync();
 
         }
-        //static void OnProcessExit(object sender, EventArgs e)
-        //{
-        //    //LoginServer.Close();
-        //    //worker.CancelAsync();
-        //}
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //kill login thread(west)
+            if (worker != null && worker.IsBusy)
+            {
+                LoginServer.Close();
+                worker.CancelAsync();
+            }
+        }
         // NC Login
-
     }
 }

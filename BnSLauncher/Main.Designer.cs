@@ -34,6 +34,7 @@
             this.btn_Slider = new System.Windows.Forms.Button();
             this.btn_patcher = new System.Windows.Forms.Button();
             this.box_WestLogin = new System.Windows.Forms.GroupBox();
+            this.cbox_Smail = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.RegionCB = new System.Windows.Forms.ComboBox();
             this.btn_Login = new System.Windows.Forms.Button();
@@ -41,7 +42,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txb_Pass = new System.Windows.Forms.TextBox();
             this.txb_Mail = new System.Windows.Forms.TextBox();
-            this.cbox_Smail = new System.Windows.Forms.CheckBox();
+            this.cbox_Spass = new System.Windows.Forms.CheckBox();
             this.box_WestLogin.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -101,6 +102,7 @@
             // box_WestLogin
             // 
             this.box_WestLogin.BackColor = System.Drawing.Color.Transparent;
+            this.box_WestLogin.Controls.Add(this.cbox_Spass);
             this.box_WestLogin.Controls.Add(this.cbox_Smail);
             this.box_WestLogin.Controls.Add(this.label3);
             this.box_WestLogin.Controls.Add(this.RegionCB);
@@ -116,6 +118,17 @@
             this.box_WestLogin.TabIndex = 6;
             this.box_WestLogin.TabStop = false;
             this.box_WestLogin.Text = "West login form";
+            // 
+            // cbox_Smail
+            // 
+            this.cbox_Smail.AutoSize = true;
+            this.cbox_Smail.Location = new System.Drawing.Point(180, 74);
+            this.cbox_Smail.Name = "cbox_Smail";
+            this.cbox_Smail.Size = new System.Drawing.Size(79, 17);
+            this.cbox_Smail.TabIndex = 10;
+            this.cbox_Smail.Text = "Save Email";
+            this.cbox_Smail.UseVisualStyleBackColor = true;
+            this.cbox_Smail.CheckedChanged += new System.EventHandler(this.cbox_Smail_CheckedChanged);
             // 
             // label3
             // 
@@ -139,9 +152,9 @@
             // 
             this.btn_Login.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_Login.ForeColor = System.Drawing.Color.White;
-            this.btn_Login.Location = new System.Drawing.Point(261, 22);
+            this.btn_Login.Location = new System.Drawing.Point(261, 19);
             this.btn_Login.Name = "btn_Login";
-            this.btn_Login.Size = new System.Drawing.Size(75, 70);
+            this.btn_Login.Size = new System.Drawing.Size(75, 46);
             this.btn_Login.TabIndex = 4;
             this.btn_Login.Text = "Login";
             this.btn_Login.UseVisualStyleBackColor = true;
@@ -180,16 +193,16 @@
             this.txb_Mail.Size = new System.Drawing.Size(187, 20);
             this.txb_Mail.TabIndex = 0;
             // 
-            // cbox_Smail
+            // cbox_Spass
             // 
-            this.cbox_Smail.AutoSize = true;
-            this.cbox_Smail.Location = new System.Drawing.Point(180, 74);
-            this.cbox_Smail.Name = "cbox_Smail";
-            this.cbox_Smail.Size = new System.Drawing.Size(79, 17);
-            this.cbox_Smail.TabIndex = 10;
-            this.cbox_Smail.Text = "Save Email";
-            this.cbox_Smail.UseVisualStyleBackColor = true;
-            this.cbox_Smail.CheckedChanged += new System.EventHandler(this.cbox_Smail_CheckedChanged);
+            this.cbox_Spass.AutoSize = true;
+            this.cbox_Spass.Location = new System.Drawing.Point(259, 74);
+            this.cbox_Spass.Name = "cbox_Spass";
+            this.cbox_Spass.Size = new System.Drawing.Size(77, 17);
+            this.cbox_Spass.TabIndex = 11;
+            this.cbox_Spass.Text = "Save Pass";
+            this.cbox_Spass.UseVisualStyleBackColor = true;
+            this.cbox_Spass.CheckedChanged += new System.EventHandler(this.cbox_Spass_CheckedChanged);
             // 
             // Main
             // 
@@ -210,6 +223,7 @@
             this.Name = "Main";
             this.Text = "BnS Custom Launcher";
             this.TransparencyKey = System.Drawing.Color.Fuchsia;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.box_WestLogin.ResumeLayout(false);
             this.box_WestLogin.PerformLayout();
@@ -232,6 +246,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox RegionCB;
         private System.Windows.Forms.CheckBox cbox_Smail;
+        private System.Windows.Forms.CheckBox cbox_Spass;
     }
 }
 

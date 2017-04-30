@@ -18,7 +18,6 @@ namespace BnS_Launcher
         {
             base.Write(value);
             _output.AppendText(value.ToString());
-
         }
         public override Encoding Encoding
         {

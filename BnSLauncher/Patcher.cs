@@ -68,8 +68,6 @@ namespace BnS_Launcher
             }
             if (InstallPath != null)
             {
-                //ModPath = InstallPath + "\\contents\\Local\\NCWEST\\ENGLISH\\CookedPC\\mod";
-                //SplashPath = InstallPath + "\\contents\\Local\\NCWEST\\ENGLISH\\Splash\\";
                 DatPath = InstallPath + InstallPathRegion;
             }
 
@@ -81,39 +79,16 @@ namespace BnS_Launcher
             {
                 ConfigFileName = "config64.dat";
             }
-            //txtOut.Text = DatPath;
 
-            // string fullPath = DatPath;
-
-            // RepackPath = fullPath.Replace(fileName, "");//get working dir
             ConfigFilePath = DatPath + ConfigFileName;
             OutPath = ConfigFilePath + ".files"; //get full file path and add .files
-            //txtOut.Text = OutPath; //print to output texbox
 
         }
-
-      /*  private void button_dat_Click(object sender, EventArgs e)
-        {
-            OfileDat.Title = "Browse config.dat";
-            if (OfileDat.ShowDialog() != DialogResult.OK)
-                return;
-
-            txtDat.Text = OfileDat.FileName;
-            //if (checkBox_output.Checked == true)
-            //{
-                string fullPath = OfileDat.FileName;
-                fileName = OfileDat.SafeFileName;
-                OutPath = fullPath + ".files"; //get full file path and add .files
-                RepackPath = fullPath.Replace(fileName, "");//get working dir
-                txtOut.Text = OutPath; //print to output texbox
-            //}
-        }*/
 
 
         private void button_start_Click(object sender, EventArgs e)
         {
             //get current date and time
-           
             string date = DateTime.Now.ToString("dd-MM-yy_"); // includes leading zeros
             string time = DateTime.Now.ToString("hh.mm.ss"); // includes leading zeros
             ControlBox = false;
@@ -130,8 +105,7 @@ namespace BnS_Launcher
                 Directory.CreateDirectory(newPath);
                 // Copy file to backup folder
                 var CurrBackPath = newPath + "\\";
-                //txtOut.Text = CurrBackPath;
-                //File.Copy(RepackPath + fileName, CurrBackPath + fileName, true);
+
                 File.Copy(DatPath + ConfigFileName, CurrBackPath + ConfigFileName, true);
             }
             Console.Write("");
@@ -174,7 +148,7 @@ namespace BnS_Launcher
                 {
                     configFile = configFile.Replace("\"show-clause\" value=\"false\"", "\"show-clause\" value=\"true\"");
                 }
-                File.WriteAllText(OutPath + "\\system.config2.xml", configFile/*, Encoding.UTF8*/);
+                File.WriteAllText(OutPath + "\\system.config2.xml", configFile);
             }
 
             catch
@@ -205,13 +179,5 @@ namespace BnS_Launcher
             MessageBox.Show("Patch Finished now you can close the window", "Patch.");
             ControlBox = true;
         }
-
-      /*  private void richOut_TextChanged(object sender, EventArgs e)
-        {
-            // set the current caret position to the end
-            richOut.SelectionStart = richOut.Text.Length;
-            // scroll it automatically
-            richOut.ScrollToCaret();
-        }*/
     }
 }

@@ -46,25 +46,28 @@
             this.cBallCores = new System.Windows.Forms.CheckBox();
             this.cBmsBox = new System.Windows.Forms.CheckBox();
             this.cBtextureStr = new System.Windows.Forms.CheckBox();
+            this.cbx_disableImg = new System.Windows.Forms.CheckBox();
+            this.sts_ = new System.Windows.Forms.StatusStrip();
+            this.Sts_Label = new System.Windows.Forms.ToolStripStatusLabel();
             this.SettingsTab.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.gBox_Arc.SuspendLayout();
             this.groupBox_west_lang.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.sts_.SuspendLayout();
             this.SuspendLayout();
             // 
             // SettingsTab
             // 
             this.SettingsTab.AccessibleName = "SettingsTab";
-            this.SettingsTab.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.SettingsTab.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SettingsTab.Controls.Add(this.tabPage1);
             this.SettingsTab.Controls.Add(this.tabPage2);
             this.SettingsTab.Location = new System.Drawing.Point(7, 7);
             this.SettingsTab.Name = "SettingsTab";
             this.SettingsTab.SelectedIndex = 0;
-            this.SettingsTab.Size = new System.Drawing.Size(225, 176);
+            this.SettingsTab.Size = new System.Drawing.Size(225, 173);
             this.SettingsTab.TabIndex = 0;
             // 
             // tabPage1
@@ -80,7 +83,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(217, 150);
+            this.tabPage1.Size = new System.Drawing.Size(217, 147);
             this.tabPage1.TabIndex = 1;
             this.tabPage1.Text = "Region";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -227,21 +230,22 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.cbx_disableImg);
             this.tabPage2.Controls.Add(this.cBallCores);
             this.tabPage2.Controls.Add(this.cBmsBox);
             this.tabPage2.Controls.Add(this.cBtextureStr);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(217, 150);
+            this.tabPage2.Size = new System.Drawing.Size(217, 159);
             this.tabPage2.TabIndex = 0;
-            this.tabPage2.Text = "Graphics";
+            this.tabPage2.Text = "Others";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // cBallCores
             // 
             this.cBallCores.AutoSize = true;
-            this.cBallCores.Location = new System.Drawing.Point(11, 60);
+            this.cBallCores.Location = new System.Drawing.Point(11, 83);
             this.cBallCores.Name = "cBallCores";
             this.cBallCores.Size = new System.Drawing.Size(89, 17);
             this.cBallCores.TabIndex = 4;
@@ -271,11 +275,38 @@
             this.cBtextureStr.UseVisualStyleBackColor = true;
             this.cBtextureStr.CheckedChanged += new System.EventHandler(this.cBtextureStr_CheckedChanged);
             // 
+            // cbx_disableImg
+            // 
+            this.cbx_disableImg.AutoSize = true;
+            this.cbx_disableImg.Location = new System.Drawing.Point(11, 60);
+            this.cbx_disableImg.Name = "cbx_disableImg";
+            this.cbx_disableImg.Size = new System.Drawing.Size(134, 17);
+            this.cbx_disableImg.TabIndex = 7;
+            this.cbx_disableImg.Text = "Disable loading images";
+            this.cbx_disableImg.UseVisualStyleBackColor = true;
+            this.cbx_disableImg.CheckedChanged += new System.EventHandler(this.cbx_disableImg_CheckedChanged);
+            // 
+            // sts_
+            // 
+            this.sts_.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Sts_Label});
+            this.sts_.Location = new System.Drawing.Point(0, 185);
+            this.sts_.Name = "sts_";
+            this.sts_.Size = new System.Drawing.Size(238, 22);
+            this.sts_.TabIndex = 1;
+            this.sts_.Text = "statusStrip1";
+            // 
+            // Sts_Label
+            // 
+            this.Sts_Label.Name = "Sts_Label";
+            this.Sts_Label.Size = new System.Drawing.Size(0, 17);
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(238, 190);
+            this.ClientSize = new System.Drawing.Size(238, 207);
+            this.Controls.Add(this.sts_);
             this.Controls.Add(this.SettingsTab);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Settings";
@@ -292,7 +323,10 @@
             this.groupBox_west_lang.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.sts_.ResumeLayout(false);
+            this.sts_.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -315,5 +349,8 @@
         private System.Windows.Forms.RadioButton x86_rB;
         private System.Windows.Forms.TabControl SettingsTab;
         private System.Windows.Forms.RadioButton radioButton_KR_TEST;
+        private System.Windows.Forms.CheckBox cbx_disableImg;
+        private System.Windows.Forms.StatusStrip sts_;
+        private System.Windows.Forms.ToolStripStatusLabel Sts_Label;
     }
 }
