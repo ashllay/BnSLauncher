@@ -6,6 +6,10 @@ using System.Windows.Forms;
 using System.IO;
 using Microsoft.Win32;
 using System.Diagnostics;
+using System.Xml.Linq;
+using Ini;
+using System.Xml;
+using System.Text;
 
 namespace BnS_TwLauncher
 {
@@ -16,79 +20,98 @@ namespace BnS_TwLauncher
         string InstallPathRegion = "";
         string ModPath = "";
         string LocalCookedPCPath = "";
-        string NoTextureStreamingBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "NoTextureStreaming", "false");
-        string UnattendedBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Unattended", "false");
-        string RegionBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Region", "");
-        string RegionIDBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "RegionID", "");
-        string languageIDBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "language", "");
-        string UseAllCoresBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "UseAllCores", "false");
-        string ArchitectureBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Architecture", "");
+        string sNoTextureStreaming = "";
+        string sUnattended = "";
+        string sRegion = "";
+        string slanguageID = "";
+        string sUseAllCores = "";
+        string sArchitecture = "";
 
-        bool NoTextureStreamingInit = false;
-        bool UnattendedInit = false;
         bool PathsFound = false;
-        private bool UseAllCoresInit;
-
         bool LoadingDisabledInit = false;
         bool LoadingDisabled = false;
+
+        XmlDocument document;
+        XmlNode node;
+        XmlElement element;
+        string str2;
+        FileStream stream;
+        StreamReader reader;
+        string str3;
+        FileStream stream2;
+        StreamWriter writer;
+        string XmlSettings = "";
+
+        IniFile fSettings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
 
         public Settings()
         {
             InitializeComponent();
-            var key = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Architecture", null);
-            if (key == null)
+            sNoTextureStreaming = fSettings.IniReadValue("Settings", "NoTextureStreaming");
+            sUnattended = fSettings.IniReadValue("Settings", "Unattended");
+            sRegion = fSettings.IniReadValue("Settings", "Region");
+            slanguageID = fSettings.IniReadValue("Settings", "language");
+            sUseAllCores = fSettings.IniReadValue("Settings", "UseAllCores");
+            sArchitecture = fSettings.IniReadValue("Settings", "Architecture");
+
+            if (string.IsNullOrEmpty(sArchitecture))
             {
                 // Key does not exist
                 MessageBox.Show("Error: Game Architecture not set defalt is x86!!");
-                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Architecture", "0");
+                fSettings.IniWriteValue("Settings", "Architecture", "0");
                 x86_rB.Checked = true;
             }
         }
 
         private void FomrSettings_Load(object sender, EventArgs e)
         {
+            
             // Find Client.exe and set file paths
             // Check the registry
-            if (RegionBool == "JP")
+            if (sRegion == "JP")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_JPN", "BaseDir", null);
                 InstallPathRegion = "\\contents\\Local\\NCJAPAN\\";
                 LocalCookedPCPath = InstallPath + InstallPathRegion + "JAPANESE\\CookedPC\\";
                 ModPath = LocalCookedPCPath + "mod\\";
-
                 radioButton_JP.Checked = true;
+                XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCJAPAN\ClientConfiguration.xml";
             }
-            else if (RegionBool == "TW")
+            else if (sRegion == "TW")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
                 InstallPathRegion = "\\contents\\Local\\NCTAIWAN\\";
                 LocalCookedPCPath = InstallPathRegion + "CHINESET\\CookedPC\\";
                 ModPath = LocalCookedPCPath + "mod\\";
                 radioButton_TW.Checked = true;
+                XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCTAIWAN\ClientConfiguration.xml";
             }
-            else if (RegionBool == "KR")
+            else if (sRegion == "KR")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
                 InstallPathRegion = "\\contents\\local\\NCSoft\\";
                 ModPath = InstallPath + InstallPathRegion + "korean\\CookedPC\\mod\\";
                 LocalCookedPCPath = InstallPath + "\\contents\\bns\\CookedPC\\";
                 radioButton_KR.Checked = true;
+                XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT\ClientConfiguration.xml";
             }
-            else if (RegionBool == "KR_TEST")
+            else if (sRegion == "KR_TEST")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
                 InstallPathRegion = "\\contents\\local\\NCSoft\\";
                 ModPath = LocalCookedPCPath + InstallPathRegion + "korean\\CookedPC\\mod\\";
                 LocalCookedPCPath = InstallPath + "\\contents\\bns\\CookedPC\\";
                 radioButton_KR.Checked = true;
+                XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT_TEST\ClientConfiguration.xml";
             }
-            else if (RegionBool == "EN")
+            else if (sRegion == "EN")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
                 InstallPathRegion = "\\contents\\Local\\NCWEST\\";
                 LocalCookedPCPath = InstallPath + InstallPathRegion + "ENGLISH\\CookedPC\\";
                 ModPath = LocalCookedPCPath + "mod\\";
                 radioButton_EN.Checked = true;
+                XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCWEST\ClientConfiguration.xml";
             }
             if (InstallPath != null)
             {
@@ -104,45 +127,35 @@ namespace BnS_TwLauncher
                     LoadingDisabled = true;
                     cbx_disableImg.Checked = true;
                 }
-                LoadingDisabledInit = true;
+                //LoadingDisabledInit = true;
                 //--
-                if (NoTextureStreamingBool == "true")
-                {
+                if (sNoTextureStreaming == "true")
                     cBtextureStr.Checked = true;
-                }
-                NoTextureStreamingInit = true;
-                if (UnattendedBool == "true")
-                {
-                    cBmsBox.Checked = true;
-                }
-                UnattendedInit = true;
 
-                if (radioButton_EN.Checked)
-                {
-                    groupBox_west_lang.Show();
-                }
-                else
-                {
-                    groupBox_west_lang.Hide();
-                }
-                if (UseAllCoresBool == "true")
-                {
+                if (sUnattended == "true")
+                    cBmsBox.Checked = true;
+
+                if (sUseAllCores == "true")
                     cBallCores.Checked = true;
-                }
-                UseAllCoresInit = true;
-                if (languageIDBool == "English")
-                {
+
+                //--
+                if (slanguageID == "English")
                     radioButton_Eng.Checked = true;
-                }
-                if (languageIDBool == "German")
-                {
+
+                if (slanguageID == "German")
                     radioButton_Ger.Checked = true;
-                }
-                if (languageIDBool == "French")
-                {
+
+                if (slanguageID == "French")
                     radioButton_Fre.Checked = true;
-                }
-                if (ArchitectureBool == "0")
+
+                //--
+                if (radioButton_EN.Checked)
+                    groupBox_west_lang.Show();
+                else
+                    groupBox_west_lang.Hide();
+
+                //--
+                if (sArchitecture == "0")
                 {
                     x86_rB.Checked = true;
                     x64_Rb.Checked = false;
@@ -152,55 +165,78 @@ namespace BnS_TwLauncher
                     x86_rB.Checked = false;
                     x64_Rb.Checked = true;
                 }
+                Sts_Label.Text = "";
+            }
+            try
+            {
+                document = new XmlDocument();
+                document.Load(XmlSettings);
+                node = document.SelectSingleNode("config");
+                if (node != null)
+                {
+                    foreach (XmlNode node2 in node.ChildNodes)
+                    {
+                        element = (XmlElement)node2;
+                        if ((element.GetAttribute("name") == "maxZoom"))
+                        {
+                            txb_zoom.Text = element.GetAttribute("value");
+                        }
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void cBtextureStr_CheckedChanged(object sender, EventArgs e)
         {
-            if (NoTextureStreamingInit == false)
+            if (cBtextureStr.Checked == true)
             {
-                return;
+                sNoTextureStreaming = "true";
+                fSettings.IniWriteValue("Settings", "NoTextureStreaming", "true");
+                Sts_Label.Text = "Texture streaming disabled.";
             }
             else
             {
-                if (NoTextureStreamingBool == "false")
-                {
-                    NoTextureStreamingBool = "true";
-                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "NoTextureStreaming", "true", RegistryValueKind.String);
-                    Sts_Label.Text = "Texture streaming disabled.";
-                }
-                else
-                {
-                    NoTextureStreamingBool = "false";
-                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "NoTextureStreaming", "false", RegistryValueKind.String);
-                    Sts_Label.Text = "Texture streaming enabled.";
-                }
+                sNoTextureStreaming = "false";
+                fSettings.IniWriteValue("Settings", "NoTextureStreaming", "false");
+                Sts_Label.Text = "Texture streaming enabled.";
             }
         }
 
         private void cBmsBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (UnattendedInit == false)
+            if (cBmsBox.Checked == true)
             {
-                return;
+                sUnattended = "true";
+                fSettings.IniWriteValue("Settings", "Unattended", "true");
+                Sts_Label.Text = "Message boxes disabled.";
             }
             else
             {
-                if (UnattendedBool == "false")
-                {
-                    UnattendedBool = "true";
-                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Unattended", "true", RegistryValueKind.String);
-                    Sts_Label.Text = "Message boxes disabled.";
-                }
-                else
-                {
-                    UnattendedBool = "false";
-                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Unattended", "false", RegistryValueKind.String);
-                    Sts_Label.Text = "Message boxes enabled.";
-                }
+                sUnattended = "false";
+                fSettings.IniWriteValue("Settings", "Unattended", "false");
+                Sts_Label.Text = "Message boxes enabled.";
             }
         }
 
+        private void checkBox_AllCores_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cBallCores.Checked == true)
+            {
+                sUseAllCores = "true";
+                fSettings.IniWriteValue("Settings", "UseAllCores", "true");
+                Sts_Label.Text = "Use all cores enabled.";
+            }
+            else
+            {
+                sUseAllCores = "false";
+                fSettings.IniWriteValue("Settings", "UseAllCores", "false");
+                Sts_Label.Text = "Use all cores disabled.";
+            }
+        }
         private void radioButton_JP_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButton_JP.Checked == true)
@@ -208,10 +244,9 @@ namespace BnS_TwLauncher
                 radioButton_TW.Checked = false;
                 radioButton_KR.Checked = false;
                 radioButton_EN.Checked = false;
-                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Architecture", "0", RegistryValueKind.String);
-                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Region", "JP", RegistryValueKind.String);
+                fSettings.IniWriteValue("Settings", "Architecture", "0");
+                fSettings.IniWriteValue("Settings", "Region", "JP");
                 groupBox_west_lang.Hide();
-                // Size = new Size(254, 178);
             }
         }
 
@@ -222,10 +257,9 @@ namespace BnS_TwLauncher
                 radioButton_JP.Checked = false;
                 radioButton_KR.Checked = false;
                 radioButton_EN.Checked = false;
-                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Architecture", "0", RegistryValueKind.String);
-                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Region", "TW", RegistryValueKind.String);
+                fSettings.IniWriteValue("Settings", "Architecture", "0");
+                fSettings.IniWriteValue("Settings", "Region", "TW");
                 groupBox_west_lang.Hide();
-                // Size = new Size(254, 178);
             }
         }
 
@@ -236,41 +270,9 @@ namespace BnS_TwLauncher
                 radioButton_JP.Checked = false;
                 radioButton_TW.Checked = false;
                 radioButton_EN.Checked = false;
-                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Region", "KR", RegistryValueKind.String);
+                fSettings.IniWriteValue("Settings", "Architecture", "0");
+                fSettings.IniWriteValue("Settings", "Region", "KR");
                 groupBox_west_lang.Hide();
-                //Size = new Size(254, 178);
-            }
-        }
-
-        private void radioButton_EN_CheckedChanged(object sender, EventArgs e)
-        {
-
-            if (radioButton_EN.Checked == true)
-            {
-                radioButton_JP.Checked = false;
-                radioButton_TW.Checked = false;
-                radioButton_KR.Checked = false;
-                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Region", "EN", RegistryValueKind.String);
-                groupBox_west_lang.Show();
-                // Size = new Size(254, 220);
-            }
-        }
-
-        private void checkBox_AllCores_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!UseAllCoresInit)
-                return;
-            if (UseAllCoresBool == "false")
-            {
-                UseAllCoresBool = "true";
-                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "UseAllCores", "true", RegistryValueKind.String);
-                Sts_Label.Text = "Use all cores enabled.";
-            }
-            else
-            {
-                UseAllCoresBool = "false";
-                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "UseAllCores", "false", RegistryValueKind.String);
-                Sts_Label.Text = "Use all cores disabled.";
             }
         }
 
@@ -281,42 +283,56 @@ namespace BnS_TwLauncher
                 radioButton_JP.Checked = false;
                 radioButton_TW.Checked = false;
                 radioButton_EN.Checked = false;
-                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Region", "KR_TEST", RegistryValueKind.String);
+                fSettings.IniWriteValue("Settings", "Architecture", "0");
+                fSettings.IniWriteValue("Settings", "Region", "KR_TEST");
                 groupBox_west_lang.Hide();
-                //Size = new Size(254, 178);
+            }
+        }
+
+        private void radioButton_EN_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton_EN.Checked == true)
+            {
+                radioButton_JP.Checked = false;
+                radioButton_TW.Checked = false;
+                radioButton_KR.Checked = false;
+                fSettings.IniWriteValue("Settings", "Architecture", "0");
+                fSettings.IniWriteValue("Settings", "Region", "EN");
+                groupBox_west_lang.Show();
             }
         }
 
         private void radioButton_Eng_CheckedChanged(object sender, EventArgs e)
         {
-            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "language", "English", RegistryValueKind.String);
+            fSettings.IniWriteValue("Settings", "language", "English");
         }
 
         private void radioButton_Ger_CheckedChanged(object sender, EventArgs e)
         {
-            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "language", "German", RegistryValueKind.String);
+            fSettings.IniWriteValue("Settings", "language", "German");
         }
 
         private void radioButton_Fre_CheckedChanged(object sender, EventArgs e)
         {
-            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "language", "French", RegistryValueKind.String);
+            fSettings.IniWriteValue("Settings", "language", "French");
         }
 
         private void x86_rB_CheckedChanged(object sender, EventArgs e)
         {
-            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Architecture", "0", RegistryValueKind.String);
+            fSettings.IniWriteValue("Settings", "Architecture", "0");
         }
 
         private void x64_Rb_CheckedChanged(object sender, EventArgs e)
         {
-            Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Architecture", "1", RegistryValueKind.String);
+            fSettings.IniWriteValue("Settings", "Architecture", "1");
         }
 
         private void cbx_disableImg_CheckedChanged(object sender, EventArgs e)
         {
             {
                 if (LoadingDisabledInit == false) { return; }
-                else {
+                else
+                {
                     if (LoadingDisabled == false)
                     {
                         LoadingDisabled = true;
@@ -346,6 +362,43 @@ namespace BnS_TwLauncher
                         }
                     }
                 }
+            }
+        }
+
+        private void FomrSettings_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                document = new XmlDocument();
+                document.Load(XmlSettings);
+                node = document.SelectSingleNode("config");
+                if (node != null)
+                {
+                    foreach (XmlNode node2 in node.ChildNodes)
+                    {
+                        element = (XmlElement)node2;
+                        if ((element.GetAttribute("name") == "maxZoom"))
+                        {
+                            element.SetAttribute("value", txb_zoom.Text);
+                        }
+                    }
+                }
+                document.Save(XmlSettings);
+                str2 = XmlSettings;
+                stream = new FileStream(str2, FileMode.Open, FileAccess.Read);
+                reader = new StreamReader(stream);
+                str3 = reader.ReadToEnd().Replace("\"", "'");
+                reader.Close();
+                stream.Close();
+                stream2 = new FileStream(str2, FileMode.Open, FileAccess.Write);
+                writer = new StreamWriter(stream2, Encoding.Unicode);
+                writer.WriteLine(str3);
+                writer.Close();
+                stream2.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

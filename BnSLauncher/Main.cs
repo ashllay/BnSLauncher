@@ -18,73 +18,79 @@ using System.Diagnostics;
 using Microsoft.Win32;
 using System.Web.Security;
 using System.Management;
+using Ini;
 
 namespace BnS_TwLauncher
 {
     public partial class Main : Form
     {
+
         private string InstallPath = "";
-        private string DatPath = "";
         private string LaunchPath = "";
-        private string NoTextureStreamingBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "NoTextureStreaming", "false");
-        private string UnattendedBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Unattended", "false");
-        private string RegionBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Region", "");
-        private string RegionIDBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "RegionID", "");
-        private string languageIDBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "language", "");
-        private string UseAllCoresBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "UseAllCores", "false");
+        private string mNoTextureStreaming = "";
+        private string mUnattended = "";
+        private string mRegion = "";
+        private string mlanguageID = "";
+        private string mUseAllCores = "";
+        private string mArchitecture = "";
+
         private string NoTextureStreaming = "";
         private string Unattended = "";
         private string UseAllCores = "";
+        
 
-        private string ArchitectureBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Architecture", "");
-        private string IsFirstRun = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "FirstRun", "");
-
+        IniFile Settings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
         public Main()
         {
             InitializeComponent();
-            //if(IsFirstRun == "0")
-            //{
-            //    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "NoTextureStreaming", "false", RegistryValueKind.String);
-            //    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Unattended", "false", RegistryValueKind.String);
-            //    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Region", "0", RegistryValueKind.String);
-            //    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "RegionID", "0",RegistryValueKind.String);
-            //    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "language", "English", RegistryValueKind.String);
-            //    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "UseAllCores", "false", RegistryValueKind.String);
-            //}
-            if (RegionBool == null)
+            mNoTextureStreaming = Settings.IniReadValue("Settings", "NoTextureStreaming");
+            mUnattended = Settings.IniReadValue("Settings", "Unattended");
+            mRegion = Settings.IniReadValue("Settings", "Region");
+            mlanguageID = Settings.IniReadValue("Settings", "language");
+            mUseAllCores = Settings.IniReadValue("Settings", "UseAllCores");
+            mArchitecture = Settings.IniReadValue("Settings", "Architecture");
+
+            var settingsFile = Environment.CurrentDirectory + "\\Settings.ini";
+            if (!File.Exists(settingsFile))
             {
-                MessageBox.Show("Error: Game Region not set defalt is JAPAN!!");
-                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Region", "JP", RegistryValueKind.String);
+                File.Create(settingsFile);
             }
-            if (ArchitectureBool == null)
+
+            if (string.IsNullOrEmpty(mUseAllCores))
+                Settings.IniWriteValue("Settings", "UseAllCores", "false");
+            if (string.IsNullOrEmpty(mNoTextureStreaming))
+                Settings.IniWriteValue("Settings", "NoTextureStreaming", "false");
+            if (string.IsNullOrEmpty(mArchitecture))
+                Settings.IniWriteValue("Settings", "Architecture", "0");
+            if (string.IsNullOrEmpty(mUnattended))
+                Settings.IniWriteValue("Settings", "Unattended", "false");
+
+            if (string.IsNullOrEmpty(mRegion))
+            {
+                MessageBox.Show("Error: Game Region not set defalt is West!!");
+                Settings.IniWriteValue("Settings", "Region", "EN");
+                Settings.IniWriteValue("Settings", "language", "English");
+            }
+            if (string.IsNullOrEmpty(mArchitecture))
             {
                 MessageBox.Show("Error: Game Architecture not set defalt is x86!!");
-                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Architecture", "0");
+                Settings.IniWriteValue("Settings", "Architecture", "0");
             }
-            //AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
         }
 
        
         private void FormMain_Load(object sender, EventArgs e)
         {
-            //string wdid = getUniqueID("C");
             //NC West login
-            string SavedMail = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "mail", "");
-            txb_Mail.Text = Dec(SavedMail);
-            string SavedPass = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "pass", "");
-            txb_Pass.Text = Dec(SavedPass);
+            string SavedMail = Settings.IniReadValue("Account", "Mail");
+            string SavedPass =  Settings.IniReadValue("Account", "Password");
 
-            if (string.IsNullOrWhiteSpace(SavedPass))
-                cbox_Smail.Checked = false;
-            else
-                cbox_Smail.Checked = true;
+            if (!LauncherInfo())
+                Close();
+            RegionCB.DataSource = regions;
 
-            if (string.IsNullOrWhiteSpace(SavedPass))
-                cbox_Spass.Checked = false;
-            else
-                cbox_Spass.Checked = true;
-
-            if (RegionBool == "EN")
+            string mlRegion = Settings.IniReadValue("Settings", "Region");
+            if (mlRegion == "EN")
             {
                 box_WestLogin.Visible = true;
                 Btn_play.Enabled = false;
@@ -95,39 +101,44 @@ namespace BnS_TwLauncher
                 Btn_play.Enabled = true;
             }
 
-            if (!LauncherInfo())
-                Close();
-            RegionCB.DataSource = regions;
-            // Btn_play
-            // Find Client.exe and set file paths
-            // Check the registry
-            if (NoTextureStreamingBool == "true")
+
+            if (string.IsNullOrWhiteSpace(SavedPass))
             {
-                NoTextureStreaming = "-NOTEXTURESTREAMING";
+                cbox_Smail.Checked = false;
             }
-            if (UnattendedBool == "true")
+            else
             {
-                Unattended = "-UNATTENDED";
+                txb_Mail.Text = Dec(SavedMail);
+                cbox_Smail.Checked = true;
+            }
+
+            if (string.IsNullOrWhiteSpace(SavedPass))
+            {
+                cbox_Spass.Checked = false;
+            }
+            else
+            {
+                txb_Pass.Text = Dec(SavedPass);
+                cbox_Spass.Checked = true;
             }
         }
 
 
         private void Btn_play_Click(object sender, EventArgs e)
         {
-            string NoTextureStreamingBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "NoTextureStreaming", "false");
-            string UnattendedBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Unattended", "false");
-            string RegionBoolCurrent = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Region", "");
-            string UseAllCoresCurrent = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "UseAllCores", "false");
-            string RegionIDBoolCurrent = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "RegionID", "");
-            string languageIDBoolCurrent = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "language", "");
-            string ArchitectureBoolCurrent = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Architecture", "");
+            string mpNoTextureStreaming = Settings.IniReadValue("Settings", "NoTextureStreaming");
+            string mpUnattended = Settings.IniReadValue("Settings", "Unattended");
+            string mpRegionCurrent = Settings.IniReadValue("Settings", "Region");
+            string mpUseAllCoresCurrent = Settings.IniReadValue("Settings", "UseAllCores");
+            string mplanguageIDCurrent = Settings.IniReadValue("Settings", "language");
+            string mpArchitectureCurrent = Settings.IniReadValue("Settings", "Architecture");
 
-            if (RegionBoolCurrent == "JP")
+            if (mpRegionCurrent == "JP")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_JPN", "BaseDir", null);
                 if (InstallPath != null)
                 {
-                    if (ArchitectureBoolCurrent == "0")
+                    if (mpArchitectureCurrent == "0")
                     {
                         LaunchPath = InstallPath + "\\bin\\Client.exe";
                     }
@@ -142,7 +153,7 @@ namespace BnS_TwLauncher
                     LaunchPath = ".\\Client.exe";
                 }
             }
-            else if (RegionBoolCurrent == "TW")
+            else if (mpRegionCurrent == "TW")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
                 if (InstallPath != null)
@@ -155,12 +166,12 @@ namespace BnS_TwLauncher
                     LaunchPath = ".\\Client.exe";
                 }
             }
-            else if (RegionBoolCurrent == "KR")
+            else if (mpRegionCurrent == "KR")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
                 if (InstallPath != null)
                 {
-                    if (ArchitectureBoolCurrent == "0")
+                    if (mpArchitectureCurrent == "0")
                     {
                         LaunchPath = InstallPath + "\\bin\\Client.exe";
                     }
@@ -175,12 +186,12 @@ namespace BnS_TwLauncher
                     LaunchPath = ".\\Client.exe";
                 }
             }
-            else if (RegionBoolCurrent == "KR_TEST")
+            else if (mpRegionCurrent == "KR_TEST")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
                 if (InstallPath != null)
                 {
-                    if (ArchitectureBoolCurrent == "0")
+                    if (mpArchitectureCurrent == "0")
                     {
                         LaunchPath = InstallPath + "\\bin\\Client.exe";
                     }
@@ -195,12 +206,12 @@ namespace BnS_TwLauncher
                     LaunchPath = ".\\Client.exe";
                 }
             }
-            else if (RegionBoolCurrent == "EN")
+            else if (mpRegionCurrent == "EN")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
                 if (InstallPath != null)
                 {
-                    if (ArchitectureBoolCurrent == "0")
+                    if (mpArchitectureCurrent == "0")
                     {
                         LaunchPath = InstallPath + "\\bin\\Client.exe";
                     }
@@ -216,49 +227,38 @@ namespace BnS_TwLauncher
                     LaunchPath = ".\\Client.exe";
                 }
             }
-            UseAllCores = !(UseAllCoresCurrent == "true") ? "" : " -USEALLAVAILABLECORES";
-
-            if (NoTextureStreamingBool == "true")
-            {
-                NoTextureStreaming = " -NOTEXTURESTREAMING";
-            }
-            else
-            {
-                NoTextureStreaming = "";
-            }
-            if (UnattendedBool == "true")
-            {
-                Unattended = " -UNATTENDED";
-            }
-            else { Unattended = ""; }
+            UseAllCores = !(mpUseAllCoresCurrent == "true") ? "" : " -USEALLAVAILABLECORES";
+            NoTextureStreaming = !(mpNoTextureStreaming == "true") ? "" : " -NOTEXTURESTREAMING";
+            Unattended = !(mpUnattended == "true") ? "" : " -UNATTENDED";
 
             Process proc = new Process();
             proc.StartInfo.FileName = LaunchPath;
 
-            if (RegionBoolCurrent == "JP")
+            if (mpRegionCurrent == "JP")
             {
-
-                proc.StartInfo.Arguments = "/launchbylauncher /sesskey /CompanyID:" + "14" + "/ChannelGroupIndex:" + " - 1" + " /LoginMode 2 " + " " + UseAllCores + " " + Unattended + " " + NoTextureStreaming;
+                // Generated by Nc Launcher /LaunchByLauncher /Sesskey /SessKey:"" /CompanyID:"14" /ChannelGroupIndex:"-1" 
+                proc.StartInfo.Arguments = "/launchbylauncher /sesskey /CompanyID:" + "14" + "/ChannelGroupIndex:" + " - 1" + " /LoginMode 2 " + "" + UseAllCores + "" + Unattended + "" + NoTextureStreaming;
                 proc.StartInfo.UseShellExecute = false;
                 proc.StartInfo.RedirectStandardError = true;
             }
-            else if (RegionBoolCurrent == "TW")
+            else if (mpRegionCurrent == "TW")
             {
-                proc.StartInfo.Arguments = "/launchbylauncher /sesskey /ServiceRegion:" + "15" + "/ChannelGroupIndex:" + " - 1" + " /PresenceId:" + "TWBNS22" + " /LoginMode 2 " + " " + UseAllCores + " " + Unattended + " " + NoTextureStreaming;
+                // generated by Nc Launcher /LaunchByLauncher  /AuthnToken:"" /SessKey:"" /ServiceRegion:"15" /AuthProviderCode:"np"  /NPServerAddr:"210.64.136.126:6600" /PresenceId:"TWBNS22"
+                proc.StartInfo.Arguments = "/launchbylauncher /sesskey /ServiceRegion:" + "15" + "/ChannelGroupIndex:" + " - 1" + " /PresenceId:" + "TWBNS22" + " /LoginMode 2 " + "" + UseAllCores + "" + Unattended + "" + NoTextureStreaming;
                 proc.StartInfo.UseShellExecute = false;
                 proc.StartInfo.RedirectStandardError = true;
             }
-            else if (RegionBoolCurrent == "KR")
+            else if (mpRegionCurrent == "KR")
             {
                 // /LaunchByLauncher /SessKey:"" /CompanyID:"0" /ChannelGroupIndex:"-1" /youth:"false"  -lite:8
-                proc.StartInfo.Arguments = "/launchbylauncher /sesskey" + "/ChannelGroupIndex:" + " - 1" + " /youth:" + "false" + "-lite:8" + " / LoginMode 2 " + " " + UseAllCores + " " + Unattended + " " + NoTextureStreaming;
+                proc.StartInfo.Arguments = "/launchbylauncher /sesskey" + "/ChannelGroupIndex:" + " - 1" + " /youth:" + "false" + "-lite:8" + " / LoginMode 2 " + "" + UseAllCores + "" + Unattended + "" + NoTextureStreaming;
                 proc.StartInfo.UseShellExecute = false;
                 proc.StartInfo.RedirectStandardError = true;
             }
-            else if (RegionBoolCurrent == "EN")
+            else if (mpRegionCurrent == "EN")
             {
                 // generated by Nc Launcher /launchbylauncher /sesskey -lang:english /CompanyID:"12" /ChannelGroupIndex:"-1" /AuthnToken:"==" /AuthProviderCode:"np"  -lang:English -lite:2 -region:0
-                proc.StartInfo.Arguments = "/launchbylauncher /sesskey -lang:english /CompanyID:\"12\" /ChannelGroupIndex:\"-1\" " + string.Format(args, token) + " /AuthProviderCode:\"np\"" + "-lang:" + languageIDBoolCurrent + " -lite:2 -region:" + currentValue + Unattended + "" + NoTextureStreaming + "" + UseAllCores + "";
+                proc.StartInfo.Arguments = "/launchbylauncher /sesskey -lang:english /CompanyID:\"12\" /ChannelGroupIndex:\"-1\" " + string.Format(args, token) + " /AuthProviderCode:\"np\"" + "-lang:" + mplanguageIDCurrent + " -lite:2 -region:" + currentValue + Unattended + "" + NoTextureStreaming + "" + UseAllCores + "";
                 proc.StartInfo.UseShellExecute = false;
                 proc.StartInfo.RedirectStandardError = true;
             }
@@ -272,6 +272,7 @@ namespace BnS_TwLauncher
                     worker.CancelAsync();
                     Btn_play.Enabled = false;
                     btn_Login.Enabled = true;
+                    btn_Login.Text = "Login";
                 }
             }
             catch
@@ -289,18 +290,24 @@ namespace BnS_TwLauncher
 
         private void Settings_FormClosing(object sender, FormClosingEventArgs e)
         {
-            string CurrentRegionBool = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Region", "");
+            string CurrentRegion = Settings.IniReadValue("Settings", "Region");
 
             //check region if west enable login box
-            if (CurrentRegionBool == "EN")
+            if (CurrentRegion == "EN")
             {
                 box_WestLogin.Visible = true;
-                
+
                 //if open settings with logged account play button stay enabled
                 if (worker != null && worker.IsBusy)
+                {
                     Btn_play.Enabled = true;
+                }
                 else
+                {
+                    btn_Login.Text = "Login";
+                    btn_Login.Enabled = true;//if change to other region and change back to NA enable login btn
                     Btn_play.Enabled = false;
+                }
             }
             else
             {
@@ -317,8 +324,8 @@ namespace BnS_TwLauncher
 
         private void btn_Slider_Click(object sender, EventArgs e)
         {
-            string ArchitectureBoolCurrent = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "Architecture", "");
-            if (ArchitectureBoolCurrent == "0")
+            string ArchitectureCurrent = Settings.IniReadValue("Settings", "Architecture");
+            if (ArchitectureCurrent == "0")
             {
                 new BnS_Launcher.Slider.Slider_Form().Show();
             }
@@ -348,17 +355,31 @@ namespace BnS_TwLauncher
         }
         private void cbox_Smail_CheckedChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txb_Mail.Text))
-                MessageBox.Show("Error: Email field is empty!!");
-            else
-                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "mail", Enc(txb_Mail.Text), RegistryValueKind.String);
+            if (cbox_Smail.Checked == true)
+            {
+                if (string.IsNullOrWhiteSpace(txb_Mail.Text))
+                {
+                    MessageBox.Show("Error: Email field is empty!!");
+                }
+                else
+                {
+                    Settings.IniWriteValue("Account", "Mail", Enc(txb_Mail.Text));
+                }
+            }
         }
         private void cbox_Spass_CheckedChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txb_Pass.Text))
-                MessageBox.Show("Error: Password field is empty!!");
-            else
-                Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EDW_Works\BnS", "pass", Enc(txb_Pass.Text), RegistryValueKind.String);
+            if (cbox_Spass.Checked == true)
+            {
+                if (string.IsNullOrWhiteSpace(txb_Pass.Text))
+                {
+                    MessageBox.Show("Error: Password field is empty!!");
+                }
+                else
+                {
+                    Settings.IniWriteValue("Account", "Password", Enc(txb_Pass.Text));
+                }
+            }
         }
 
         bool Debugging = false;
@@ -775,6 +796,7 @@ namespace BnS_TwLauncher
 
             try
             {
+                
                 LoginServer = new TcpClient(LoginIp, LoginPort);
                 LoginServer.ReceiveBufferSize = 1024;
                 NetworkStream ns = LoginServer.GetStream();
@@ -984,6 +1006,7 @@ namespace BnS_TwLauncher
                         }
                         ns.Write(buffer, 0, buffer.Length);
                         lastSent = DateTime.Now;
+                        
                     }
                 }
             }
@@ -998,6 +1021,7 @@ namespace BnS_TwLauncher
         void login_enable(bool yes)
         {
             Btn_play.Enabled = yes;
+            btn_Login.Text = "Logged!";
             btn_Login.Enabled = false;
         }
 
@@ -1062,8 +1086,8 @@ namespace BnS_TwLauncher
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
-            /*if (string.IsNullOrWhiteSpace(txb_Mail.Text))
-                MessageBox.Show("Error: Game Architecture not set defalt is x86!!");*/
+
+            btn_Login.Text = "Logging in...";
             Btn_play.Enabled = false;
 
             if (worker != null && worker.IsBusy)
@@ -1092,11 +1116,20 @@ namespace BnS_TwLauncher
         }
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
+            string mcRegion = Settings.IniReadValue("Settings", "language");
             //kill login thread(west)
             if (worker != null && worker.IsBusy)
             {
                 LoginServer.Close();
                 worker.CancelAsync();
+            }
+
+            if (mcRegion == "EN")
+            {
+                if (cbox_Smail.Checked == true)
+                Settings.IniWriteValue("Account", "Mail", Enc(txb_Mail.Text));
+                if (cbox_Spass.Checked == true)
+                Settings.IniWriteValue("Account", "Password", Enc(txb_Pass.Text));
             }
         }
         // NC Login

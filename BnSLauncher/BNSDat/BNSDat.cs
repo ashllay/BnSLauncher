@@ -262,7 +262,7 @@ namespace BnS_Launcher.BNSDat
             fs.Close();
             br = null;
             fs = null;
-            Console.WriteLine("\r\nDone!");
+            Console.Write("\nDone!");
         }
 
         public static void Compress(string Folder, bool is64 = false, int compression = 9)
@@ -356,7 +356,7 @@ namespace BnS_Launcher.BNSDat
                 mosTable.Write(FileTableEntry.Padding);
             }
 
-            Console.Write("\nWriting File Entries...\n");
+            Console.Write("\r\nWriting File Entries...\n");
 
             MemoryStream output = new MemoryStream();
             BinaryWriter bw = new BinaryWriter(output);
@@ -429,7 +429,7 @@ namespace BnS_Launcher.BNSDat
             output.Close();
             bw = null;
             output = null;
-            Console.WriteLine("\r\nDone!");
+            Console.Write("\nDone!");
         }
 
         private static void Convert(Stream iStream, BXML_TYPE iType, Stream oStream, BXML_TYPE oType)

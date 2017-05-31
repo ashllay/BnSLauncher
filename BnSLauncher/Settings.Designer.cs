@@ -43,10 +43,12 @@
             this.radioButton_TW = new System.Windows.Forms.RadioButton();
             this.radioButton_JP = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txb_zoom = new System.Windows.Forms.TextBox();
+            this.cbx_disableImg = new System.Windows.Forms.CheckBox();
             this.cBallCores = new System.Windows.Forms.CheckBox();
             this.cBmsBox = new System.Windows.Forms.CheckBox();
             this.cBtextureStr = new System.Windows.Forms.CheckBox();
-            this.cbx_disableImg = new System.Windows.Forms.CheckBox();
             this.sts_ = new System.Windows.Forms.StatusStrip();
             this.Sts_Label = new System.Windows.Forms.ToolStripStatusLabel();
             this.SettingsTab.SuspendLayout();
@@ -230,6 +232,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label1);
+            this.tabPage2.Controls.Add(this.txb_zoom);
             this.tabPage2.Controls.Add(this.cbx_disableImg);
             this.tabPage2.Controls.Add(this.cBallCores);
             this.tabPage2.Controls.Add(this.cBmsBox);
@@ -237,10 +241,37 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(217, 159);
+            this.tabPage2.Size = new System.Drawing.Size(217, 147);
             this.tabPage2.TabIndex = 0;
             this.tabPage2.Text = "Others";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 113);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(52, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Zoom-out";
+            // 
+            // txb_zoom
+            // 
+            this.txb_zoom.Location = new System.Drawing.Point(66, 110);
+            this.txb_zoom.Name = "txb_zoom";
+            this.txb_zoom.Size = new System.Drawing.Size(100, 20);
+            this.txb_zoom.TabIndex = 8;
+            // 
+            // cbx_disableImg
+            // 
+            this.cbx_disableImg.AutoSize = true;
+            this.cbx_disableImg.Location = new System.Drawing.Point(11, 60);
+            this.cbx_disableImg.Name = "cbx_disableImg";
+            this.cbx_disableImg.Size = new System.Drawing.Size(134, 17);
+            this.cbx_disableImg.TabIndex = 7;
+            this.cbx_disableImg.Text = "Disable loading images";
+            this.cbx_disableImg.UseVisualStyleBackColor = true;
+            this.cbx_disableImg.CheckedChanged += new System.EventHandler(this.cbx_disableImg_CheckedChanged);
             // 
             // cBallCores
             // 
@@ -275,17 +306,6 @@
             this.cBtextureStr.UseVisualStyleBackColor = true;
             this.cBtextureStr.CheckedChanged += new System.EventHandler(this.cBtextureStr_CheckedChanged);
             // 
-            // cbx_disableImg
-            // 
-            this.cbx_disableImg.AutoSize = true;
-            this.cbx_disableImg.Location = new System.Drawing.Point(11, 60);
-            this.cbx_disableImg.Name = "cbx_disableImg";
-            this.cbx_disableImg.Size = new System.Drawing.Size(134, 17);
-            this.cbx_disableImg.TabIndex = 7;
-            this.cbx_disableImg.Text = "Disable loading images";
-            this.cbx_disableImg.UseVisualStyleBackColor = true;
-            this.cbx_disableImg.CheckedChanged += new System.EventHandler(this.cbx_disableImg_CheckedChanged);
-            // 
             // sts_
             // 
             this.sts_.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -313,6 +333,7 @@
             this.ShowInTaskbar = false;
             this.Text = "Settings";
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FomrSettings_FormClosing);
             this.Load += new System.EventHandler(this.FomrSettings_Load);
             this.SettingsTab.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -352,5 +373,7 @@
         private System.Windows.Forms.CheckBox cbx_disableImg;
         private System.Windows.Forms.StatusStrip sts_;
         private System.Windows.Forms.ToolStripStatusLabel Sts_Label;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txb_zoom;
     }
 }
