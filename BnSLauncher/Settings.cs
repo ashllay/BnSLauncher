@@ -28,7 +28,6 @@ namespace BnS_TwLauncher
         string sArchitecture = "";
 
         bool PathsFound = false;
-        bool LoadingDisabledInit = false;
         bool LoadingDisabled = false;
 
         XmlDocument document;
@@ -127,7 +126,7 @@ namespace BnS_TwLauncher
                     LoadingDisabled = true;
                     cbx_disableImg.Checked = true;
                 }
-                //LoadingDisabledInit = true;
+
                 //--
                 if (sNoTextureStreaming == "true")
                     cBtextureStr.Checked = true;
@@ -330,38 +329,36 @@ namespace BnS_TwLauncher
         private void cbx_disableImg_CheckedChanged(object sender, EventArgs e)
         {
             {
-                if (LoadingDisabledInit == false) { return; }
-                else
+
+                if (LoadingDisabled == false)
                 {
-                    if (LoadingDisabled == false)
+                    LoadingDisabled = true;
+                    try
                     {
-                        LoadingDisabled = true;
-                        try
-                        {
-                            File.Move(LocalCookedPCPath + "Loading.pkg", ModPath + "\\..\\loading\\loading.bak");
-                            File.Move(LocalCookedPCPath + "00009368.upk", ModPath + "\\..\\loading\\00009368.bak");
-                            Sts_Label.Text = "Loading screens disabled.";
-                        }
-                        catch
-                        {
-                            MessageBox.Show("Error: Could not disable loading screens!");
-                        }
+                        File.Move(LocalCookedPCPath + "Loading.pkg", ModPath + "\\..\\loading\\loading.bak");
+                        File.Move(LocalCookedPCPath + "00009368.upk", ModPath + "\\..\\loading\\00009368.bak");
+                        Sts_Label.Text = "Loading screens disabled.";
                     }
-                    else if (LoadingDisabled == true)
+                    catch
                     {
-                        LoadingDisabled = false;
-                        try
-                        {
-                            File.Move(ModPath + "\\..\\loading\\loading.bak", LocalCookedPCPath + "Loading.pkg");
-                            File.Move(ModPath + "\\..\\loading\\00009368.bak", LocalCookedPCPath + "00009368.upk");
-                            Sts_Label.Text = "Loading screens enabled.";
-                        }
-                        catch
-                        {
-                            MessageBox.Show("Error: Could not enable loading screens!");
-                        }
+                        MessageBox.Show("Error: Could not disable loading screens!");
                     }
                 }
+                else if (LoadingDisabled == true)
+                {
+                    LoadingDisabled = false;
+                    try
+                    {
+                        File.Move(ModPath + "\\..\\loading\\loading.bak", LocalCookedPCPath + "Loading.pkg");
+                        File.Move(ModPath + "\\..\\loading\\00009368.bak", LocalCookedPCPath + "00009368.upk");
+                        Sts_Label.Text = "Loading screens enabled.";
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Error: Could not enable loading screens!");
+                    }
+                }
+
             }
         }
 
