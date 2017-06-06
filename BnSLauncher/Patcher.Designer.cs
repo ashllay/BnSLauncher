@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Patcher));
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.tabPatcher = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.cbox_BakConfig = new System.Windows.Forms.CheckBox();
@@ -240,7 +239,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.TabControl tabPatcher;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.GroupBox groupBox2;

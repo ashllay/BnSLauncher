@@ -62,37 +62,37 @@ namespace BnS_Launcher
             if (pRegion == "JP")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_JPN", "BaseDir", null);
-                InstallPathRegion = "\\contents\\Local\\NCJAPAN\\data\\";
+                InstallPathRegion = "contents\\Local\\NCJAPAN\\data\\";
                 stRegion = "Japan";
             }
             else if (pRegion == "TW")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
-                InstallPathRegion = "\\contents\\Local\\NCTAIWAN\\data\\";
+                InstallPathRegion = "contents\\Local\\NCTAIWAN\\data\\";
                 stRegion = "Taiwan";
             }
             else if (pRegion == "KR")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
-                InstallPathRegion = "\\contents\\local\\NCSoft\\data\\";
+                InstallPathRegion = "contents\\local\\NCSoft\\data\\";
                 stRegion = "Korean";
             }
             else if (pRegion == "KR_TEST")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
-                InstallPathRegion = "\\contents\\local\\NCSoft\\data\\";
+                InstallPathRegion = "contents\\local\\NCSoft\\data\\";
                 stRegion = "Korean TEST";
             }
             else if (pRegion == "EN")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
-                InstallPathRegion = "\\contents\\Local\\NCWEST\\data\\";
+                InstallPathRegion = "contents\\Local\\NCWEST\\data\\";
                 checkBox_Webl.Enabled = false;
                 stRegion = "West";
             }
             if (InstallPath != null)
             {
-                DatPath = InstallPath + InstallPathRegion;
+                DatPath = Path.Combine(InstallPath, InstallPathRegion);
             }
 
             if (pArchitecture == "0")
@@ -111,8 +111,8 @@ namespace BnS_Launcher
             string strLabelID = String.Format("Detected Region: {0} and Architecture: {1} in Settings.", stRegion, stArchitecture);
             label1.Text = strLabelID;
 
-            ConfigFilePath = DatPath + ConfigFileName;
-            XmlFilePath = DatPath + XmlFileName;
+            ConfigFilePath = Path.Combine(DatPath, ConfigFileName);
+            XmlFilePath = Path.Combine(DatPath, XmlFileName);
 
             ConfigOutPath = ConfigFilePath + ".files"; //get full file path and add .files
             XmlOutPath = XmlFilePath + ".files";
@@ -153,7 +153,7 @@ namespace BnS_Launcher
         {
 
             ControlBox = false;
-            var resultconfig = MessageBox.Show(@"Do you want to patch Config.dat?", "Warning!!", MessageBoxButtons.YesNoCancel);
+            var resultconfig = MessageBox.Show(@"Do you want to patch Config.dat?", "Warning!!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
             switch (resultconfig)
             {
                 case DialogResult.Yes:
@@ -165,7 +165,7 @@ namespace BnS_Launcher
                 default:
                     break;
             }
-            var resultxml = MessageBox.Show(@"xml.dat unpack/repack process may take a longer time do you really want to continue?", "Warning!!", MessageBoxButtons.YesNoCancel);
+            var resultxml = MessageBox.Show(@"xml.dat unpack/repack process may take a longer time do you really want to continue?", "Warning!!", MessageBoxButtons.YesNoCancel,MessageBoxIcon.Information);
             switch (resultxml)
             {
                 case DialogResult.Yes:
@@ -197,7 +197,7 @@ namespace BnS_Launcher
             string time = DateTime.Now.ToString("hh.mm.ss"); // includes leading zeros
             if (cbox_BakConfig.Checked == true)
             {
-                var BackDir = DatPath + BackPath;  // folder location
+                var BackDir = Path.Combine(DatPath, BackPath);  // folder location
 
                 if (!Directory.Exists(BackDir))  // if it doesn't exist, create
                     Directory.CreateDirectory(BackDir);
@@ -238,7 +238,6 @@ namespace BnS_Launcher
         private void patchConfig()
         {
             //patch config2
-            
             try
             {
                 //patch only what is selected

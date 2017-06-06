@@ -140,11 +140,11 @@ namespace BnS_TwLauncher
                 {
                     if (mpArchitectureCurrent == "0")
                     {
-                        LaunchPath = InstallPath + "\\bin\\Client.exe";
+                        LaunchPath = Path.Combine(InstallPath , @"bin\Client.exe");
                     }
                     else
                     {
-                        LaunchPath = InstallPath + "\\bin64\\Client.exe";
+                        LaunchPath = Path.Combine(InstallPath + @"bin64\Client.exe");
                     }
                 }
                 // registry path not found, check for side-by-side install
@@ -158,7 +158,14 @@ namespace BnS_TwLauncher
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
                 if (InstallPath != null)
                 {
-                    LaunchPath = InstallPath + "\\bin\\Client.exe";
+                    if (mpArchitectureCurrent == "0")
+                    {
+                        LaunchPath = Path.Combine(InstallPath, @"bin\Client.exe");
+                    }
+                    else
+                    {
+                        LaunchPath = Path.Combine(InstallPath, @"bin64\Client.exe");
+                    }
                 }
                 // registry path not found, check for side-by-side install
                 else if (File.Exists(".\\Client.exe"))
@@ -173,11 +180,11 @@ namespace BnS_TwLauncher
                 {
                     if (mpArchitectureCurrent == "0")
                     {
-                        LaunchPath = InstallPath + "\\bin\\Client.exe";
+                        LaunchPath = Path.Combine(InstallPath, @"bin\Client.exe");
                     }
                     else
                     {
-                        LaunchPath = InstallPath + "\\bin64\\Client.exe";
+                        LaunchPath = Path.Combine(InstallPath, @"bin64\Client.exe");
                     }
                 }
                 // registry path not found, check for side-by-side install
@@ -193,11 +200,11 @@ namespace BnS_TwLauncher
                 {
                     if (mpArchitectureCurrent == "0")
                     {
-                        LaunchPath = InstallPath + "\\bin\\Client.exe";
+                        LaunchPath = Path.Combine(InstallPath, @"bin\Client.exe");
                     }
                     else
                     {
-                        LaunchPath = InstallPath + "\\bin64\\Client.exe";
+                        LaunchPath = Path.Combine(InstallPath, @"bin64\Client.exe");
                     }
                 }
                 // registry path not found, check for side-by-side install
@@ -213,11 +220,11 @@ namespace BnS_TwLauncher
                 {
                     if (mpArchitectureCurrent == "0")
                     {
-                        LaunchPath = InstallPath + "\\bin\\Client.exe";
+                        LaunchPath = Path.Combine(InstallPath, @"bin\Client.exe");
                     }
                     else
                     {
-                        LaunchPath = InstallPath + "\\bin64\\Client.exe";
+                        LaunchPath = Path.Combine(InstallPath, @"bin64\Client.exe");
                     }
 
                 }

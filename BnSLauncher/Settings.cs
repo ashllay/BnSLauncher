@@ -70,45 +70,45 @@ namespace BnS_TwLauncher
             if (sRegion == "JP")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_JPN", "BaseDir", null);
-                InstallPathRegion = "\\contents\\Local\\NCJAPAN\\";
-                LocalCookedPCPath = InstallPath + InstallPathRegion + "JAPANESE\\CookedPC\\";
-                ModPath = LocalCookedPCPath + "mod\\";
+                InstallPathRegion = @"contents\Local\NCJAPAN\";
+                LocalCookedPCPath = Path.Combine(InstallPath, InstallPathRegion, @"JAPANESE\CookedPC\");
+                ModPath = Path.Combine(LocalCookedPCPath + @"mod\");
                 radioButton_JP.Checked = true;
                 XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCJAPAN\ClientConfiguration.xml";
             }
             else if (sRegion == "TW")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
-                InstallPathRegion = "\\contents\\Local\\NCTAIWAN\\";
-                LocalCookedPCPath = InstallPathRegion + "CHINESET\\CookedPC\\";
-                ModPath = LocalCookedPCPath + "mod\\";
+                InstallPathRegion = @"contents\Local\NCTAIWAN\";
+                LocalCookedPCPath = Path.Combine(InstallPathRegion, @"CHINESET\CookedPC\");
+                ModPath = Path.Combine(LocalCookedPCPath, @"mod\");
                 radioButton_TW.Checked = true;
                 XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCTAIWAN\ClientConfiguration.xml";
             }
             else if (sRegion == "KR")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
-                InstallPathRegion = "\\contents\\local\\NCSoft\\";
-                ModPath = InstallPath + InstallPathRegion + "korean\\CookedPC\\mod\\";
-                LocalCookedPCPath = InstallPath + "\\contents\\bns\\CookedPC\\";
+                InstallPathRegion = @"contents\local\NCSoft\";
+                ModPath = Path.Combine(InstallPath, InstallPathRegion, @"korean\CookedPC\mod\");
+                LocalCookedPCPath = Path.Combine(InstallPath, @"contents\bns\CookedPC\");
                 radioButton_KR.Checked = true;
                 XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT\ClientConfiguration.xml";
             }
             else if (sRegion == "KR_TEST")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
-                InstallPathRegion = "\\contents\\local\\NCSoft\\";
-                ModPath = LocalCookedPCPath + InstallPathRegion + "korean\\CookedPC\\mod\\";
-                LocalCookedPCPath = InstallPath + "\\contents\\bns\\CookedPC\\";
+                InstallPathRegion = @"contents\local\NCSoft\";
+                ModPath = Path.Combine(LocalCookedPCPath, InstallPathRegion, @"korean\CookedPC\mod\");
+                LocalCookedPCPath = Path.Combine(InstallPath, @"contents\bns\CookedPC\");
                 radioButton_KR.Checked = true;
                 XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT_TEST\ClientConfiguration.xml";
             }
             else if (sRegion == "EN")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
-                InstallPathRegion = "\\contents\\Local\\NCWEST\\";
-                LocalCookedPCPath = InstallPath + InstallPathRegion + "ENGLISH\\CookedPC\\";
-                ModPath = LocalCookedPCPath + "mod\\";
+                InstallPathRegion = @"contents\Local\NCWEST\";
+                LocalCookedPCPath = Path.Combine(InstallPath, InstallPathRegion, @"ENGLISH\CookedPC\");
+                ModPath = Path.Combine(LocalCookedPCPath, @"mod\");
                 radioButton_EN.Checked = true;
                 XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCWEST\ClientConfiguration.xml";
             }
