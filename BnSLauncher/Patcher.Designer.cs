@@ -38,22 +38,26 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.cbox_BakXml = new System.Windows.Forms.CheckBox();
             this.cboxDPS = new System.Windows.Forms.CheckBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.gbox_patcher = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button_start = new System.Windows.Forms.Button();
             this.richOut = new System.Windows.Forms.RichTextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbox_cconfig = new System.Windows.Forms.CheckBox();
+            this.cbox_cxml = new System.Windows.Forms.CheckBox();
             this.tabPatcher.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.gbox_patcher.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabPatcher
             // 
             this.tabPatcher.Controls.Add(this.tabPage1);
             this.tabPatcher.Controls.Add(this.tabPage2);
-            this.tabPatcher.Location = new System.Drawing.Point(9, 42);
+            this.tabPatcher.Location = new System.Drawing.Point(9, 36);
             this.tabPatcher.Name = "tabPatcher";
             this.tabPatcher.SelectedIndex = 0;
             this.tabPatcher.Size = new System.Drawing.Size(276, 104);
@@ -152,27 +156,26 @@
             this.cboxDPS.Text = "Enable DPS metter 6 man";
             this.cboxDPS.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // gbox_patcher
             // 
-            this.groupBox2.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox2.BackgroundImage = global::BnS_Launcher.Properties.Resources._2x2;
-            this.groupBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.groupBox2.Controls.Add(this.tabPatcher);
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.button_start);
-            this.groupBox2.Controls.Add(this.richOut);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Location = new System.Drawing.Point(4, 11);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(372, 270);
-            this.groupBox2.TabIndex = 24;
-            this.groupBox2.TabStop = false;
+            this.gbox_patcher.BackColor = System.Drawing.Color.Transparent;
+            this.gbox_patcher.BackgroundImage = global::BnS_Launcher.Properties.Resources._2x2;
+            this.gbox_patcher.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.gbox_patcher.Controls.Add(this.groupBox1);
+            this.gbox_patcher.Controls.Add(this.tabPatcher);
+            this.gbox_patcher.Controls.Add(this.label1);
+            this.gbox_patcher.Controls.Add(this.button_start);
+            this.gbox_patcher.Location = new System.Drawing.Point(4, 4);
+            this.gbox_patcher.Name = "gbox_patcher";
+            this.gbox_patcher.Size = new System.Drawing.Size(372, 190);
+            this.gbox_patcher.TabIndex = 24;
+            this.gbox_patcher.TabStop = false;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(15, 18);
+            this.label1.Location = new System.Drawing.Point(15, 14);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(13, 13);
             this.label1.TabIndex = 23;
@@ -183,9 +186,9 @@
             this.button_start.BackColor = System.Drawing.Color.Transparent;
             this.button_start.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_start.ForeColor = System.Drawing.Color.White;
-            this.button_start.Location = new System.Drawing.Point(289, 52);
+            this.button_start.Location = new System.Drawing.Point(291, 36);
             this.button_start.Name = "button_start";
-            this.button_start.Size = new System.Drawing.Size(75, 94);
+            this.button_start.Size = new System.Drawing.Size(75, 104);
             this.button_start.TabIndex = 4;
             this.button_start.Text = "Start!";
             this.button_start.UseVisualStyleBackColor = false;
@@ -196,9 +199,9 @@
             this.richOut.BackColor = System.Drawing.SystemColors.Control;
             this.richOut.ForeColor = System.Drawing.Color.Black;
             this.richOut.HideSelection = false;
-            this.richOut.Location = new System.Drawing.Point(7, 165);
+            this.richOut.Location = new System.Drawing.Point(11, 213);
             this.richOut.Name = "richOut";
-            this.richOut.Size = new System.Drawing.Size(357, 95);
+            this.richOut.Size = new System.Drawing.Size(357, 91);
             this.richOut.TabIndex = 22;
             this.richOut.Text = "";
             // 
@@ -207,20 +210,53 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(6, 149);
+            this.label3.Location = new System.Drawing.Point(10, 197);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(63, 13);
             this.label3.TabIndex = 8;
             this.label3.Text = "Output Log:";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.cbox_cxml);
+            this.groupBox1.Controls.Add(this.cbox_cconfig);
+            this.groupBox1.ForeColor = System.Drawing.Color.White;
+            this.groupBox1.Location = new System.Drawing.Point(9, 142);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(172, 39);
+            this.groupBox1.TabIndex = 25;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Repack files";
+            // 
+            // cbox_cconfig
+            // 
+            this.cbox_cconfig.AutoSize = true;
+            this.cbox_cconfig.Location = new System.Drawing.Point(10, 15);
+            this.cbox_cconfig.Name = "cbox_cconfig";
+            this.cbox_cconfig.Size = new System.Drawing.Size(32, 17);
+            this.cbox_cconfig.TabIndex = 0;
+            this.cbox_cconfig.Text = "_";
+            this.cbox_cconfig.UseVisualStyleBackColor = true;
+            // 
+            // cbox_cxml
+            // 
+            this.cbox_cxml.AutoSize = true;
+            this.cbox_cxml.Location = new System.Drawing.Point(96, 15);
+            this.cbox_cxml.Name = "cbox_cxml";
+            this.cbox_cxml.Size = new System.Drawing.Size(32, 17);
+            this.cbox_cxml.TabIndex = 1;
+            this.cbox_cxml.Text = "_";
+            this.cbox_cxml.UseVisualStyleBackColor = true;
+            // 
             // Patcher
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::BnS_Launcher.Properties.Resources._3584283_16_9_aspect_ratio_belt_black_hair_blade___soul_bodysuit_boots_breasts_brown_e;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(379, 288);
-            this.Controls.Add(this.groupBox2);
+            this.ClientSize = new System.Drawing.Size(379, 310);
+            this.Controls.Add(this.gbox_patcher);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.richOut);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -232,16 +268,19 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.gbox_patcher.ResumeLayout(false);
+            this.gbox_patcher.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
         private System.Windows.Forms.TabControl tabPatcher;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox gbox_patcher;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button_start;
         private System.Windows.Forms.RichTextBox richOut;
@@ -253,5 +292,8 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.CheckBox cboxDPS;
         private System.Windows.Forms.CheckBox cbox_BakXml;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox cbox_cxml;
+        private System.Windows.Forms.CheckBox cbox_cconfig;
     }
 }

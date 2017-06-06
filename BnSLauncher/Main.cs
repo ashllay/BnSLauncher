@@ -53,9 +53,17 @@ namespace BnS_TwLauncher
             var settingsFile = Environment.CurrentDirectory + "\\Settings.ini";
             if (!File.Exists(settingsFile))
             {
-                File.Create(settingsFile);
+                File.Create(settingsFile).Dispose();
             }
 
+            //if (!File.Exists(settingsFile))
+            //{
+            //    using (var tw = new StreamWriter(settingsFile, true))
+            //    {
+            //        File.Create(settingsFile);
+            //        tw.Close();
+            //    }
+            //}
             if (string.IsNullOrEmpty(mUseAllCores))
                 Settings.IniWriteValue("Settings", "UseAllCores", "false");
             if (string.IsNullOrEmpty(mNoTextureStreaming))
@@ -389,6 +397,22 @@ namespace BnS_TwLauncher
             }
         }
 
+        private void txb_Mail_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txb_Pass.Focus();
+                e.Handled = true;
+            }
+        }
+        private void txb_Pass_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btn_Login_Click(this, new EventArgs());
+            }
+        }
+
         bool Debugging = false;
 
         BackgroundWorker worker;
@@ -522,7 +546,6 @@ namespace BnS_TwLauncher
             return dst;
         }
 
-       
         byte[] CombineBuffers(params byte[][] buffers)
         {
             int len = 0;
@@ -1031,6 +1054,7 @@ namespace BnS_TwLauncher
             btn_Login.Text = "Logged!";
             btn_Login.Enabled = false;
         }
+
 
         public class BNSXorEncryption
         {

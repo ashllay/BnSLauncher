@@ -46,31 +46,6 @@
             this.box_WestLogin.SuspendLayout();
             this.SuspendLayout();
             // 
-            // Main
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::BnS_Launcher.Properties.Resources._5334298_1girl_animal_ears_blade__amp__soul_blush_bodysuit_boots_brown_eyes_brown_hair;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(617, 417);
-            this.Controls.Add(this.box_WestLogin);
-            this.Controls.Add(this.btn_patcher);
-            this.Controls.Add(this.btn_Slider);
-            this.Controls.Add(this.btn_settings);
-            this.Controls.Add(this.Btn_play);
-            this.Cursor = System.Windows.Forms.Cursors.Default;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.Name = "Main";
-            this.Text = "BnS Custom Launcher";
-            this.TransparencyKey = System.Drawing.Color.Fuchsia;
-            this.Load += new System.EventHandler(this.FormMain_Load);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
-            this.box_WestLogin.ResumeLayout(false);
-            this.box_WestLogin.PerformLayout();
-            this.ResumeLayout(false);
-            // 
             // Btn_play
             // 
             this.Btn_play.BackColor = System.Drawing.Color.Transparent;
@@ -222,6 +197,7 @@
             this.txb_Pass.PasswordChar = '*';
             this.txb_Pass.Size = new System.Drawing.Size(187, 20);
             this.txb_Pass.TabIndex = 1;
+            this.txb_Pass.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txb_Pass_KeyDown);
             // 
             // txb_Mail
             // 
@@ -229,6 +205,30 @@
             this.txb_Mail.Name = "txb_Mail";
             this.txb_Mail.Size = new System.Drawing.Size(187, 20);
             this.txb_Mail.TabIndex = 0;
+            this.txb_Mail.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txb_Mail_KeyDown);
+            // 
+            // Main
+            // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackgroundImage = global::BnS_Launcher.Properties.Resources._5334298_1girl_animal_ears_blade__amp__soul_blush_bodysuit_boots_brown_eyes_brown_hair;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.ClientSize = new System.Drawing.Size(617, 417);
+            this.Controls.Add(this.box_WestLogin);
+            this.Controls.Add(this.btn_patcher);
+            this.Controls.Add(this.btn_Slider);
+            this.Controls.Add(this.btn_settings);
+            this.Controls.Add(this.Btn_play);
+            this.Cursor = System.Windows.Forms.Cursors.Default;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.Name = "Main";
+            this.Text = "BnS Custom Launcher";
+            this.TransparencyKey = System.Drawing.Color.Fuchsia;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
+            this.Load += new System.EventHandler(this.FormMain_Load);
+            this.box_WestLogin.ResumeLayout(false);
+            this.box_WestLogin.PerformLayout();
+            this.ResumeLayout(false);
 
         }
 

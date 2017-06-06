@@ -17,7 +17,7 @@ namespace BnS_Launcher
 {
     public partial class Patcher : Form
     {
-        //OpenFileDialog OfileDat = new OpenFileDialog();
+
         private string BackPath = "Backup\\";
         private string ConfigOutPath;
         private string XmlOutPath;
@@ -110,13 +110,14 @@ namespace BnS_Launcher
 
             string strLabelID = String.Format("Detected Region: {0} and Architecture: {1} in Settings.", stRegion, stArchitecture);
             label1.Text = strLabelID;
-
+            cbox_cconfig.Text = ConfigFileName;
+            cbox_cxml.Text = XmlFileName;
             ConfigFilePath = Path.Combine(DatPath, ConfigFileName);
             XmlFilePath = Path.Combine(DatPath, XmlFileName);
 
             ConfigOutPath = ConfigFilePath + ".files"; //get full file path and add .files
             XmlOutPath = XmlFilePath + ".files";
-           // Console.Write("{0}\n{1}", ConfigFilePath, XmlFilePath);
+            // Console.Write("{0}\n{1}", ConfigFilePath, XmlFilePath);
         }
 
         public void Extractor(string datFile)
@@ -148,35 +149,27 @@ namespace BnS_Launcher
             patchConfig();
         }
 
-        
         private void button_start_Click(object sender, EventArgs e)
         {
+            //ControlBox = false;
+            gbox_patcher.Enabled = false;
 
-            ControlBox = false;
-            var resultconfig = MessageBox.Show(@"Do you want to patch Config.dat?", "Warning!!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
-            switch (resultconfig)
+            if (!cbox_cconfig.Checked && !cbox_cxml.Checked)
             {
-                case DialogResult.Yes:
-                    PatchConfig = true;
-                    break;
-                case DialogResult.No:
-                    PatchConfig = false;
-                    break;
-                default:
-                    break;
+                MessageBox.Show("Please select a file to repack!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                gbox_patcher.Enabled = true;
             }
-            var resultxml = MessageBox.Show(@"xml.dat unpack/repack process may take a longer time do you really want to continue?", "Warning!!", MessageBoxButtons.YesNoCancel,MessageBoxIcon.Information);
-            switch (resultxml)
-            {
-                case DialogResult.Yes:
-                    PatchXml = true;
-                    break;
-                case DialogResult.No:
-                    PatchXml = false;
-                    break;
-                default:
-                    break;
-            }
+
+            if (cbox_cconfig.Checked == true)
+                PatchConfig = true;
+            else
+                PatchConfig = false;
+
+            if (cbox_cxml.Checked == true)
+                PatchXml = true;
+            else
+                PatchXml = false;
+
             //Console.Write("Patching: Wait until patch finish!\n");
             BakcUpManager();
 
@@ -325,7 +318,7 @@ namespace BnS_Launcher
             //Console.Write("Done!!\n");
             GC.Collect();
             MessageBox.Show("Patch Finished now you can close the window", "Patch.");
-            ControlBox = true;
+            gbox_patcher.Enabled = true;
         }
         private void compileDat()
         {

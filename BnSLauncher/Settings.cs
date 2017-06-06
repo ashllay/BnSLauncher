@@ -64,7 +64,6 @@ namespace BnS_TwLauncher
 
         private void FomrSettings_Load(object sender, EventArgs e)
         {
-            
             // Find Client.exe and set file paths
             // Check the registry
             if (sRegion == "JP")
@@ -91,7 +90,7 @@ namespace BnS_TwLauncher
                 InstallPathRegion = @"contents\local\NCSoft\";
                 ModPath = Path.Combine(InstallPath, InstallPathRegion, @"korean\CookedPC\mod\");
                 LocalCookedPCPath = Path.Combine(InstallPath, @"contents\bns\CookedPC\");
-                radioButton_KR.Checked = true;
+                radioButton_KR_TEST.Checked = true;
                 XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT\ClientConfiguration.xml";
             }
             else if (sRegion == "KR_TEST")
@@ -397,6 +396,7 @@ namespace BnS_TwLauncher
             {
                 MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
     }
 }
