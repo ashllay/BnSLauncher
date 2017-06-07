@@ -33,6 +33,7 @@ namespace BnS_TwLauncher
         private string mlanguageID = "";
         private string mUseAllCores = "";
         private string mArchitecture = "";
+        private string mServerType = "";
 
         private string NoTextureStreaming = "";
         private string Unattended = "";
@@ -49,6 +50,7 @@ namespace BnS_TwLauncher
             mlanguageID = Settings.IniReadValue("Settings", "language");
             mUseAllCores = Settings.IniReadValue("Settings", "UseAllCores");
             mArchitecture = Settings.IniReadValue("Settings", "Architecture");
+            mServerType = Settings.IniReadValue("Settings", "ServerType");
 
             var settingsFile = Environment.CurrentDirectory + "\\Settings.ini";
             if (!File.Exists(settingsFile))
@@ -140,6 +142,7 @@ namespace BnS_TwLauncher
             string mpUseAllCoresCurrent = Settings.IniReadValue("Settings", "UseAllCores");
             string mplanguageIDCurrent = Settings.IniReadValue("Settings", "language");
             string mpArchitectureCurrent = Settings.IniReadValue("Settings", "Architecture");
+            string mServerTypeCurrent = Settings.IniReadValue("Settings", "ServerType");
 
             if (mpRegionCurrent == "JP")
             {
@@ -147,19 +150,13 @@ namespace BnS_TwLauncher
                 if (InstallPath != null)
                 {
                     if (mpArchitectureCurrent == "0")
-                    {
-                        LaunchPath = Path.Combine(InstallPath , @"bin\Client.exe");
-                    }
+                        LaunchPath = Path.Combine(InstallPath, @"bin\Client.exe");
                     else
-                    {
                         LaunchPath = Path.Combine(InstallPath + @"bin64\Client.exe");
-                    }
                 }
                 // registry path not found, check for side-by-side install
                 else if (File.Exists(".\\Client.exe"))
-                {
                     LaunchPath = ".\\Client.exe";
-                }
             }
             else if (mpRegionCurrent == "TW")
             {
@@ -167,74 +164,59 @@ namespace BnS_TwLauncher
                 if (InstallPath != null)
                 {
                     if (mpArchitectureCurrent == "0")
-                    {
                         LaunchPath = Path.Combine(InstallPath, @"bin\Client.exe");
-                    }
                     else
-                    {
                         LaunchPath = Path.Combine(InstallPath, @"bin64\Client.exe");
-                    }
                 }
                 // registry path not found, check for side-by-side install
                 else if (File.Exists(".\\Client.exe"))
-                {
                     LaunchPath = ".\\Client.exe";
-                }
             }
             else if (mpRegionCurrent == "KR")
             {
-                InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
-                if (InstallPath != null)
+                if (mServerTypeCurrent == "Live")
                 {
-                    if (mpArchitectureCurrent == "0")
+                    InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
+                    if (InstallPath != null)
                     {
-                        LaunchPath = Path.Combine(InstallPath, @"bin\Client.exe");
+                        if (mpArchitectureCurrent == "0")
+                            LaunchPath = Path.Combine(InstallPath, @"bin\Client.exe");
+                        else
+                            LaunchPath = Path.Combine(InstallPath, @"bin64\Client.exe");
                     }
-                    else
+                    // registry path not found, check for side-by-side install
+                    else if (File.Exists(".\\Client.exe"))
                     {
-                        LaunchPath = Path.Combine(InstallPath, @"bin64\Client.exe");
-                    }
-                }
-                // registry path not found, check for side-by-side install
-                else if (File.Exists(".\\Client.exe"))
-                {
-                    LaunchPath = ".\\Client.exe";
-                }
-            }
-            else if (mpRegionCurrent == "KR_TEST")
-            {
-                InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
-                if (InstallPath != null)
-                {
-                    if (mpArchitectureCurrent == "0")
-                    {
-                        LaunchPath = Path.Combine(InstallPath, @"bin\Client.exe");
-                    }
-                    else
-                    {
-                        LaunchPath = Path.Combine(InstallPath, @"bin64\Client.exe");
+                        LaunchPath = ".\\Client.exe";
                     }
                 }
-                // registry path not found, check for side-by-side install
-                else if (File.Exists(".\\Client.exe"))
+                else if (mServerTypeCurrent == "Test")
                 {
-                    LaunchPath = ".\\Client.exe";
+                    InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
+                    if (InstallPath != null)
+                    {
+                        if (mpArchitectureCurrent == "0")
+                            LaunchPath = Path.Combine(InstallPath, @"bin\Client.exe");
+                        else
+                            LaunchPath = Path.Combine(InstallPath, @"bin64\Client.exe");
+                    }
+                    // registry path not found, check for side-by-side install
+                    else if (File.Exists(".\\Client.exe"))
+                    {
+                        LaunchPath = ".\\Client.exe";
+                    }
                 }
             }
+
             else if (mpRegionCurrent == "EN")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
                 if (InstallPath != null)
                 {
                     if (mpArchitectureCurrent == "0")
-                    {
                         LaunchPath = Path.Combine(InstallPath, @"bin\Client.exe");
-                    }
                     else
-                    {
                         LaunchPath = Path.Combine(InstallPath, @"bin64\Client.exe");
-                    }
-
                 }
                 // registry path not found, check for side-by-side install
                 else if (File.Exists(".\\Client.exe"))
@@ -256,6 +238,8 @@ namespace BnS_TwLauncher
                 proc.StartInfo.UseShellExecute = false;
                 proc.StartInfo.RedirectStandardError = true;
             }
+
+
             else if (mpRegionCurrent == "TW")
             {
                 // generated by Nc Launcher /LaunchByLauncher  /AuthnToken:"" /SessKey:"" /ServiceRegion:"15" /AuthProviderCode:"np"  /NPServerAddr:"210.64.136.126:6600" /PresenceId:"TWBNS22"
@@ -265,11 +249,24 @@ namespace BnS_TwLauncher
             }
             else if (mpRegionCurrent == "KR")
             {
-                // /LaunchByLauncher /SessKey:"" /CompanyID:"0" /ChannelGroupIndex:"-1" /youth:"false"  -lite:8
-                proc.StartInfo.Arguments = "/launchbylauncher /sesskey" + "/ChannelGroupIndex:" + " - 1" + " /youth:" + "false" + "-lite:8" + " / LoginMode 2 " + "" + UseAllCores + "" + Unattended + "" + NoTextureStreaming;
-                proc.StartInfo.UseShellExecute = false;
-                proc.StartInfo.RedirectStandardError = true;
+                if (mServerTypeCurrent == "Live")
+                {
+                    // /LaunchByLauncher /SessKey:"" /CompanyID:"0" /ChannelGroupIndex:"-1" /youth:"false"  -lite:8
+                    proc.StartInfo.Arguments = "/launchbylauncher /sesskey" + "/ChannelGroupIndex:" + " - 1" + " /youth:" + "false" + "-lite:8" + " / LoginMode 2 " + "" + UseAllCores + "" + Unattended + "" + NoTextureStreaming;
+                    proc.StartInfo.UseShellExecute = false;
+                    proc.StartInfo.RedirectStandardError = true;
+                }
+
+                else if (mServerTypeCurrent == "Test")
+                {
+                    // /LaunchByLauncher /SessKey:"" /CompanyID:"0" /ChannelGroupIndex:"-1" /youth:"false"  -lite:8
+                    proc.StartInfo.Arguments = "/launchbylauncher /sesskey" + "/ChannelGroupIndex:" + " - 1" + " /youth:" + "false" + "-lite:8" + " / LoginMode 2 " + "" + UseAllCores + "" + Unattended + "" + NoTextureStreaming;
+                    proc.StartInfo.UseShellExecute = false;
+                    proc.StartInfo.RedirectStandardError = true;
+                }
             }
+        
+
             else if (mpRegionCurrent == "EN")
             {
                 // generated by Nc Launcher /launchbylauncher /sesskey -lang:english /CompanyID:"12" /ChannelGroupIndex:"-1" /AuthnToken:"==" /AuthProviderCode:"np"  -lang:English -lite:2 -region:0

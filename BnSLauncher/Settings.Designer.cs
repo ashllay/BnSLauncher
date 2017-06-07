@@ -30,7 +30,10 @@
         {
             this.SettingsTab = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.radioButton_KR_TEST = new System.Windows.Forms.RadioButton();
+            this.rB_KR = new System.Windows.Forms.RadioButton();
+            this.gbox_krserver = new System.Windows.Forms.GroupBox();
+            this.rB_KRTest = new System.Windows.Forms.RadioButton();
+            this.rB_KRLive = new System.Windows.Forms.RadioButton();
             this.gBox_Arc = new System.Windows.Forms.GroupBox();
             this.x64_Rb = new System.Windows.Forms.RadioButton();
             this.x86_rB = new System.Windows.Forms.RadioButton();
@@ -39,7 +42,6 @@
             this.radioButton_Ger = new System.Windows.Forms.RadioButton();
             this.radioButton_Eng = new System.Windows.Forms.RadioButton();
             this.radioButton_EN = new System.Windows.Forms.RadioButton();
-            this.radioButton_KR = new System.Windows.Forms.RadioButton();
             this.radioButton_TW = new System.Windows.Forms.RadioButton();
             this.radioButton_JP = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -53,6 +55,7 @@
             this.Sts_Label = new System.Windows.Forms.ToolStripStatusLabel();
             this.SettingsTab.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.gbox_krserver.SuspendLayout();
             this.gBox_Arc.SuspendLayout();
             this.groupBox_west_lang.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -75,11 +78,11 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
-            this.tabPage1.Controls.Add(this.radioButton_KR_TEST);
+            this.tabPage1.Controls.Add(this.rB_KR);
+            this.tabPage1.Controls.Add(this.gbox_krserver);
             this.tabPage1.Controls.Add(this.gBox_Arc);
             this.tabPage1.Controls.Add(this.groupBox_west_lang);
             this.tabPage1.Controls.Add(this.radioButton_EN);
-            this.tabPage1.Controls.Add(this.radioButton_KR);
             this.tabPage1.Controls.Add(this.radioButton_TW);
             this.tabPage1.Controls.Add(this.radioButton_JP);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -90,16 +93,49 @@
             this.tabPage1.Text = "Region";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // radioButton_KR_TEST
+            // rB_KR
             // 
-            this.radioButton_KR_TEST.AutoSize = true;
-            this.radioButton_KR_TEST.Location = new System.Drawing.Point(72, 35);
-            this.radioButton_KR_TEST.Name = "radioButton_KR_TEST";
-            this.radioButton_KR_TEST.Size = new System.Drawing.Size(117, 17);
-            this.radioButton_KR_TEST.TabIndex = 16;
-            this.radioButton_KR_TEST.Text = "Korean Test Server";
-            this.radioButton_KR_TEST.UseVisualStyleBackColor = true;
-            this.radioButton_KR_TEST.CheckedChanged += new System.EventHandler(this.radioButton_KR_TEST_CheckedChanged);
+            this.rB_KR.AutoSize = true;
+            this.rB_KR.Location = new System.Drawing.Point(138, 12);
+            this.rB_KR.Name = "rB_KR";
+            this.rB_KR.Size = new System.Drawing.Size(59, 17);
+            this.rB_KR.TabIndex = 16;
+            this.rB_KR.Text = "Korean";
+            this.rB_KR.UseVisualStyleBackColor = true;
+            this.rB_KR.CheckedChanged += new System.EventHandler(this.rB_KR_CheckedChanged);
+            // 
+            // gbox_krserver
+            // 
+            this.gbox_krserver.Controls.Add(this.rB_KRTest);
+            this.gbox_krserver.Controls.Add(this.rB_KRLive);
+            this.gbox_krserver.Location = new System.Drawing.Point(107, 58);
+            this.gbox_krserver.Name = "gbox_krserver";
+            this.gbox_krserver.Size = new System.Drawing.Size(104, 40);
+            this.gbox_krserver.TabIndex = 17;
+            this.gbox_krserver.TabStop = false;
+            this.gbox_krserver.Text = "Server";
+            // 
+            // rB_KRTest
+            // 
+            this.rB_KRTest.AutoSize = true;
+            this.rB_KRTest.Location = new System.Drawing.Point(52, 15);
+            this.rB_KRTest.Name = "rB_KRTest";
+            this.rB_KRTest.Size = new System.Drawing.Size(46, 17);
+            this.rB_KRTest.TabIndex = 16;
+            this.rB_KRTest.Text = "Test";
+            this.rB_KRTest.UseVisualStyleBackColor = true;
+            this.rB_KRTest.CheckedChanged += new System.EventHandler(this.rB_KRTest_CheckedChanged);
+            // 
+            // rB_KRLive
+            // 
+            this.rB_KRLive.AutoSize = true;
+            this.rB_KRLive.Location = new System.Drawing.Point(6, 15);
+            this.rB_KRLive.Name = "rB_KRLive";
+            this.rB_KRLive.Size = new System.Drawing.Size(45, 17);
+            this.rB_KRLive.TabIndex = 6;
+            this.rB_KRLive.Text = "Live";
+            this.rB_KRLive.UseVisualStyleBackColor = true;
+            this.rB_KRLive.CheckedChanged += new System.EventHandler(this.rB_KRLive_CheckedChanged);
             // 
             // gBox_Arc
             // 
@@ -194,17 +230,6 @@
             this.radioButton_EN.Text = "West";
             this.radioButton_EN.UseVisualStyleBackColor = true;
             this.radioButton_EN.CheckedChanged += new System.EventHandler(this.radioButton_EN_CheckedChanged);
-            // 
-            // radioButton_KR
-            // 
-            this.radioButton_KR.AutoSize = true;
-            this.radioButton_KR.Location = new System.Drawing.Point(138, 12);
-            this.radioButton_KR.Name = "radioButton_KR";
-            this.radioButton_KR.Size = new System.Drawing.Size(59, 17);
-            this.radioButton_KR.TabIndex = 6;
-            this.radioButton_KR.Text = "Korean";
-            this.radioButton_KR.UseVisualStyleBackColor = true;
-            this.radioButton_KR.CheckedChanged += new System.EventHandler(this.radioButton_KR_CheckedChanged);
             // 
             // radioButton_TW
             // 
@@ -338,6 +363,8 @@
             this.SettingsTab.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.gbox_krserver.ResumeLayout(false);
+            this.gbox_krserver.PerformLayout();
             this.gBox_Arc.ResumeLayout(false);
             this.gBox_Arc.PerformLayout();
             this.groupBox_west_lang.ResumeLayout(false);
@@ -358,7 +385,7 @@
         private System.Windows.Forms.CheckBox cBmsBox;
         private System.Windows.Forms.RadioButton radioButton_TW;
         private System.Windows.Forms.RadioButton radioButton_JP;
-        private System.Windows.Forms.RadioButton radioButton_KR;
+        private System.Windows.Forms.RadioButton rB_KRLive;
         private System.Windows.Forms.RadioButton radioButton_EN;
         private System.Windows.Forms.CheckBox cBallCores;
         private System.Windows.Forms.GroupBox groupBox_west_lang;
@@ -369,11 +396,13 @@
         private System.Windows.Forms.RadioButton x64_Rb;
         private System.Windows.Forms.RadioButton x86_rB;
         private System.Windows.Forms.TabControl SettingsTab;
-        private System.Windows.Forms.RadioButton radioButton_KR_TEST;
+        private System.Windows.Forms.RadioButton rB_KRTest;
         private System.Windows.Forms.CheckBox cbx_disableImg;
         private System.Windows.Forms.StatusStrip sts_;
         private System.Windows.Forms.ToolStripStatusLabel Sts_Label;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txb_zoom;
+        private System.Windows.Forms.GroupBox gbox_krserver;
+        private System.Windows.Forms.RadioButton rB_KR;
     }
 }

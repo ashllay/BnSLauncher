@@ -33,6 +33,7 @@ namespace BnS_Launcher
 
         string pRegion = "";
         string pArchitecture = "";
+        string pServerType = "";
 
         public BackgroundWorker ebnsdat;
         public BackgroundWorker cbnsdat;
@@ -53,6 +54,7 @@ namespace BnS_Launcher
 
             pArchitecture = pSettings.IniReadValue("Settings", "Architecture");
             pRegion = pSettings.IniReadValue("Settings", "Region");
+            pServerType = pSettings.IniReadValue("Settings", "ServerType");
 
             _writer = new StreamWriter(richOut);
             Console.SetOut(_writer);
@@ -73,16 +75,21 @@ namespace BnS_Launcher
             }
             else if (pRegion == "KR")
             {
-                InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
-                InstallPathRegion = "contents\\local\\NCSoft\\data\\";
-                stRegion = "Korean";
+                if (pServerType == "Live")
+                {
+                    InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
+                    InstallPathRegion = "contents\\local\\NCSoft\\data\\";
+                    stRegion = "Korean";
+                }
+                else if (pServerType == "Test")
+                {
+                    InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
+                    InstallPathRegion = "contents\\local\\NCSoft\\data\\";
+                    stRegion = "Korean TEST";
+                }
+                
             }
-            else if (pRegion == "KR_TEST")
-            {
-                InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
-                InstallPathRegion = "contents\\local\\NCSoft\\data\\";
-                stRegion = "Korean TEST";
-            }
+           
             else if (pRegion == "EN")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);

@@ -26,6 +26,7 @@ namespace BnS_TwLauncher
         string slanguageID = "";
         string sUseAllCores = "";
         string sArchitecture = "";
+        string sServerType = "";
 
         bool PathsFound = false;
         bool LoadingDisabled = false;
@@ -52,6 +53,7 @@ namespace BnS_TwLauncher
             slanguageID = fSettings.IniReadValue("Settings", "language");
             sUseAllCores = fSettings.IniReadValue("Settings", "UseAllCores");
             sArchitecture = fSettings.IniReadValue("Settings", "Architecture");
+            sServerType = fSettings.IniReadValue("Settings", "ServerType");
 
             if (string.IsNullOrEmpty(sArchitecture))
             {
@@ -84,24 +86,6 @@ namespace BnS_TwLauncher
                 radioButton_TW.Checked = true;
                 XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCTAIWAN\ClientConfiguration.xml";
             }
-            else if (sRegion == "KR")
-            {
-                InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
-                InstallPathRegion = @"contents\local\NCSoft\";
-                ModPath = Path.Combine(InstallPath, InstallPathRegion, @"korean\CookedPC\mod\");
-                LocalCookedPCPath = Path.Combine(InstallPath, @"contents\bns\CookedPC\");
-                radioButton_KR_TEST.Checked = true;
-                XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT\ClientConfiguration.xml";
-            }
-            else if (sRegion == "KR_TEST")
-            {
-                InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
-                InstallPathRegion = @"contents\local\NCSoft\";
-                ModPath = Path.Combine(LocalCookedPCPath, InstallPathRegion, @"korean\CookedPC\mod\");
-                LocalCookedPCPath = Path.Combine(InstallPath, @"contents\bns\CookedPC\");
-                radioButton_KR.Checked = true;
-                XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT_TEST\ClientConfiguration.xml";
-            }
             else if (sRegion == "EN")
             {
                 InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
@@ -110,6 +94,29 @@ namespace BnS_TwLauncher
                 ModPath = Path.Combine(LocalCookedPCPath, @"mod\");
                 radioButton_EN.Checked = true;
                 XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCWEST\ClientConfiguration.xml";
+            }
+            else if (sRegion == "KR")
+            {
+                if (sServerType == "Live")
+                {
+                    InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
+                    InstallPathRegion = @"contents\local\NCSoft\";
+                    ModPath = Path.Combine(InstallPath, InstallPathRegion, @"korean\CookedPC\mod\");
+                    LocalCookedPCPath = Path.Combine(InstallPath, @"contents\bns\CookedPC\");
+                    gbox_krserver.Show();
+                    rB_KR.Checked = true;
+                    XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT\ClientConfiguration.xml";
+                }
+                else if(sServerType == "Test")
+                {
+                    InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
+                    InstallPathRegion = @"contents\local\NCSoft\";
+                    ModPath = Path.Combine(LocalCookedPCPath, InstallPathRegion, @"korean\CookedPC\mod\");
+                    LocalCookedPCPath = Path.Combine(InstallPath, @"contents\bns\CookedPC\");
+                    gbox_krserver.Show();
+                    rB_KR.Checked = true;
+                    XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT_TEST\ClientConfiguration.xml";
+                }
             }
             if (InstallPath != null)
             {
@@ -147,11 +154,22 @@ namespace BnS_TwLauncher
                     radioButton_Fre.Checked = true;
 
                 //--
+                if(sServerType == "Live")
+                    rB_KRLive.Checked = true;
+
+                if(sServerType == "Test")
+                    rB_KRTest.Checked = true;
+
+                //--
                 if (radioButton_EN.Checked)
                     groupBox_west_lang.Show();
                 else
                     groupBox_west_lang.Hide();
 
+                if (rB_KR.Checked)
+                    gbox_krserver.Show();
+                else
+                    gbox_krserver.Hide();
                 //--
                 if (sArchitecture == "0")
                 {
@@ -240,11 +258,12 @@ namespace BnS_TwLauncher
             if (radioButton_JP.Checked == true)
             {
                 radioButton_TW.Checked = false;
-                radioButton_KR.Checked = false;
+               // rB_KRLive.Checked = false;
                 radioButton_EN.Checked = false;
                 fSettings.IniWriteValue("Settings", "Architecture", "0");
                 fSettings.IniWriteValue("Settings", "Region", "JP");
                 groupBox_west_lang.Hide();
+                gbox_krserver.Hide();
             }
         }
 
@@ -253,37 +272,50 @@ namespace BnS_TwLauncher
             if (radioButton_TW.Checked == true)
             {
                 radioButton_JP.Checked = false;
-                radioButton_KR.Checked = false;
+                //rB_KRLive.Checked = false;
                 radioButton_EN.Checked = false;
                 fSettings.IniWriteValue("Settings", "Architecture", "0");
                 fSettings.IniWriteValue("Settings", "Region", "TW");
                 groupBox_west_lang.Hide();
+                gbox_krserver.Hide();
             }
         }
 
-        private void radioButton_KR_CheckedChanged(object sender, EventArgs e)
+        private void rB_KR_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButton_KR.Checked == true)
+            string pRegion = fSettings.IniReadValue("Settings", "Region");
+
+            gbox_krserver.Show();
+            groupBox_west_lang.Hide();
+
+            fSettings.IniWriteValue("Settings", "Region", "KR");
+
+        }
+
+        private void rB_KRLive_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rB_KRLive.Checked == true)
             {
                 radioButton_JP.Checked = false;
                 radioButton_TW.Checked = false;
                 radioButton_EN.Checked = false;
+                rB_KRTest.Checked = false;
                 fSettings.IniWriteValue("Settings", "Architecture", "0");
-                fSettings.IniWriteValue("Settings", "Region", "KR");
-                groupBox_west_lang.Hide();
+                fSettings.IniWriteValue("Settings", "ServerType", "Live");
+                // groupBox_west_lang.Hide();
             }
         }
-
-        private void radioButton_KR_TEST_CheckedChanged(object sender, EventArgs e)
+        private void rB_KRTest_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButton_KR_TEST.Checked == true)
+            if (rB_KRTest.Checked == true)
             {
                 radioButton_JP.Checked = false;
                 radioButton_TW.Checked = false;
                 radioButton_EN.Checked = false;
+                rB_KRLive.Checked = false;
                 fSettings.IniWriteValue("Settings", "Architecture", "0");
-                fSettings.IniWriteValue("Settings", "Region", "KR_TEST");
-                groupBox_west_lang.Hide();
+                fSettings.IniWriteValue("Settings", "ServerType", "Test");
+                // groupBox_west_lang.Hide();
             }
         }
 
@@ -293,10 +325,12 @@ namespace BnS_TwLauncher
             {
                 radioButton_JP.Checked = false;
                 radioButton_TW.Checked = false;
-                radioButton_KR.Checked = false;
+               // rB_KRLive.Checked = false;
                 fSettings.IniWriteValue("Settings", "Architecture", "0");
                 fSettings.IniWriteValue("Settings", "Region", "EN");
+                fSettings.IniWriteValue("Settings", "language", "English");
                 groupBox_west_lang.Show();
+                gbox_krserver.Hide();
             }
         }
 
@@ -357,7 +391,6 @@ namespace BnS_TwLauncher
                         MessageBox.Show("Error: Could not enable loading screens!");
                     }
                 }
-
             }
         }
 
@@ -398,5 +431,6 @@ namespace BnS_TwLauncher
             }
 
         }
+
     }
 }
