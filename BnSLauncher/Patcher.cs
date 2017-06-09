@@ -23,17 +23,17 @@ namespace BnS_Launcher
         private string XmlOutPath;
         TextWriter _writer = null;
 
-        string InstallPath = "";
+        //string InstallPath = "";
         string DatPath = "";
-        string InstallPathRegion = "";
+        //string InstallPathRegion = "";
         string ConfigFileName = "";
         string ConfigFilePath = "";
         string XmlFileName = "";
         string XmlFilePath = "";
 
-        string pRegion = "";
-        string pArchitecture = "";
-        string pServerType = "";
+        //string pRegion = "";
+        //string pArchitecture = "";
+        //string pServerType = "";
 
         public BackgroundWorker ebnsdat;
         public BackgroundWorker cbnsdat;
@@ -42,6 +42,7 @@ namespace BnS_Launcher
 
         IniFile pSettings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
 
+        SettingsClass sSettings = new SettingsClass();
         public Patcher()
         {
             InitializeComponent();
@@ -52,57 +53,57 @@ namespace BnS_Launcher
             string stRegion = "";
             string stArchitecture = "";
 
-            pArchitecture = pSettings.IniReadValue("Settings", "Architecture");
-            pRegion = pSettings.IniReadValue("Settings", "Region");
-            pServerType = pSettings.IniReadValue("Settings", "ServerType");
+            sSettings.sArchitecture = pSettings.IniReadValue("Settings", "Architecture");
+            sSettings.sRegion = pSettings.IniReadValue("Settings", "Region");
+            sSettings.sServerType = pSettings.IniReadValue("Settings", "ServerType");
 
             _writer = new StreamWriter(richOut);
             Console.SetOut(_writer);
 
             // Find and set file paths
             // Check the registry
-            if (pRegion == "JP")
+            if (sSettings.sRegion == "JP")
             {
-                InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_JPN", "BaseDir", null);
-                InstallPathRegion = "contents\\Local\\NCJAPAN\\data\\";
+                //InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_JPN", "BaseDir", null);
+                //InstallPathRegion = "contents\\Local\\NCJAPAN\\data\\";
                 stRegion = "Japan";
             }
-            else if (pRegion == "TW")
+            else if (sSettings.sRegion == "TW")
             {
-                InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
-                InstallPathRegion = "contents\\Local\\NCTAIWAN\\data\\";
+                //InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
+                //InstallPathRegion = "contents\\Local\\NCTAIWAN\\data\\";
                 stRegion = "Taiwan";
             }
-            else if (pRegion == "KR")
+            else if (sSettings.sRegion == "KR")
             {
-                if (pServerType == "Live")
+                if (sSettings.sServerType == "Live")
                 {
-                    InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
-                    InstallPathRegion = "contents\\local\\NCSoft\\data\\";
+                    //InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
+                    //InstallPathRegion = "contents\\local\\NCSoft\\data\\";
                     stRegion = "Korean";
                 }
-                else if (pServerType == "Test")
+                else if (sSettings.sServerType == "Test")
                 {
-                    InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
-                    InstallPathRegion = "contents\\local\\NCSoft\\data\\";
+                   // InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
+                    //InstallPathRegion = "contents\\local\\NCSoft\\data\\";
                     stRegion = "Korean TEST";
                 }
                 
             }
            
-            else if (pRegion == "EN")
+            else if (sSettings.sRegion == "EN")
             {
-                InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
-                InstallPathRegion = "contents\\Local\\NCWEST\\data\\";
+                // = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
+                //InstallPathRegion = "contents\\Local\\NCWEST\\data\\";
                 checkBox_Webl.Enabled = false;
                 stRegion = "West";
             }
-            if (InstallPath != null)
+            if (sSettings.sInstallPath != null)
             {
-                DatPath = Path.Combine(InstallPath, InstallPathRegion);
+                DatPath = Path.Combine(sSettings.sInstallPath, sSettings.sInstallPathRegion);
             }
 
-            if (pArchitecture == "0")
+            if (sSettings.sArchitecture == "0")
             {
                 ConfigFileName = "config.dat";
                 XmlFileName = "xml.dat";

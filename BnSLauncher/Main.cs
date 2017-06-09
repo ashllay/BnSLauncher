@@ -25,55 +25,63 @@ namespace BnS_TwLauncher
     public partial class Main : Form
     {
 
-        private string InstallPath = "";
+        //private string InstallPath = "";
         private string LaunchPath = "";
-        private string mNoTextureStreaming = "";
-        private string mUnattended = "";
-        private string mRegion = "";
-        private string mlanguageID = "";
-        private string mUseAllCores = "";
-        private string mArchitecture = "";
-        private string mServerType = "";
+        //private string mNoTextureStreaming = "";
+        //private string mUnattended = "";
+        //private string mRegion = "";
+        //private string mlanguageID = "";
+        //private string mUseAllCores = "";
+        //private string mArchitecture = "";
+        //private string mServerType = "";
 
         private string NoTextureStreaming = "";
         private string Unattended = "";
         private string UseAllCores = "";
-        
 
+        SettingsClass sSettings = new SettingsClass();
         IniFile Settings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
         public Main()
         {
             InitializeComponent();
-            mNoTextureStreaming = Settings.IniReadValue("Settings", "NoTextureStreaming");
-            mUnattended = Settings.IniReadValue("Settings", "Unattended");
-            mRegion = Settings.IniReadValue("Settings", "Region");
-            mlanguageID = Settings.IniReadValue("Settings", "language");
-            mUseAllCores = Settings.IniReadValue("Settings", "UseAllCores");
-            mArchitecture = Settings.IniReadValue("Settings", "Architecture");
-            mServerType = Settings.IniReadValue("Settings", "ServerType");
+            //mNoTextureStreaming = Settings.IniReadValue("Settings", "NoTextureStreaming");
+            //mUnattended = Settings.IniReadValue("Settings", "Unattended");
+            //mRegion = Settings.IniReadValue("Settings", "Region");
+            //mlanguageID = Settings.IniReadValue("Settings", "language");
+            //mUseAllCores = Settings.IniReadValue("Settings", "UseAllCores");
+            //mArchitecture = Settings.IniReadValue("Settings", "Architecture");
+            //mServerType = Settings.IniReadValue("Settings", "ServerType");
+
+            sSettings.sNoTextureStreaming = Settings.IniReadValue("Settings", "NoTextureStreaming");
+            sSettings.sUnattended = Settings.IniReadValue("Settings", "Unattended");
+            sSettings.sRegion = Settings.IniReadValue("Settings", "Region");
+            sSettings.sLanguageID = Settings.IniReadValue("Settings", "language");
+            sSettings.sUseAllCores = Settings.IniReadValue("Settings", "UseAllCores");
+            sSettings.sArchitecture = Settings.IniReadValue("Settings", "Architecture");
+            sSettings.sServerType = Settings.IniReadValue("Settings", "ServerType");
 
             var settingsFile = Environment.CurrentDirectory + "\\Settings.ini";
             if (!File.Exists(settingsFile))
                 File.Create(settingsFile).Dispose();
 
-            if (string.IsNullOrEmpty(mUseAllCores))
+            if (string.IsNullOrEmpty(sSettings.sUseAllCores))
                 Settings.IniWriteValue("Settings", "UseAllCores", "false");
-            if (string.IsNullOrEmpty(mNoTextureStreaming))
+            if (string.IsNullOrEmpty(sSettings.sNoTextureStreaming))
                 Settings.IniWriteValue("Settings", "NoTextureStreaming", "false");
-            if (string.IsNullOrEmpty(mArchitecture))
+            if (string.IsNullOrEmpty(sSettings.sArchitecture))
                 Settings.IniWriteValue("Settings", "Architecture", "0");
-            if (string.IsNullOrEmpty(mUnattended))
+            if (string.IsNullOrEmpty(sSettings.sUnattended))
                 Settings.IniWriteValue("Settings", "Unattended", "false");
-            if (string.IsNullOrEmpty(mUnattended))
+            if (string.IsNullOrEmpty(sSettings.sUnattended))
                 Settings.IniWriteValue("Settings", "ServerType", "Live");
 
-            if (string.IsNullOrEmpty(mRegion))
+            if (string.IsNullOrEmpty(sSettings.sRegion))
             {
                 MessageBox.Show("Error: Game Region not set defalt is West!!");
                 Settings.IniWriteValue("Settings", "Region", "EN");
                 Settings.IniWriteValue("Settings", "language", "English");
             }
-            if (string.IsNullOrEmpty(mArchitecture))
+            if (string.IsNullOrEmpty(sSettings.sArchitecture))
             {
                 MessageBox.Show("Error: Game Architecture not set defalt is x86!!");
                 Settings.IniWriteValue("Settings", "Architecture", "0");
@@ -132,53 +140,53 @@ namespace BnS_TwLauncher
 
         private void Btn_play_Click(object sender, EventArgs e)
         {
-            string mpNoTextureStreaming = Settings.IniReadValue("Settings", "NoTextureStreaming");
-            string mpUnattended = Settings.IniReadValue("Settings", "Unattended");
-            string mpRegionCurrent = Settings.IniReadValue("Settings", "Region");
-            string mpUseAllCoresCurrent = Settings.IniReadValue("Settings", "UseAllCores");
-            string mplanguageIDCurrent = Settings.IniReadValue("Settings", "language");
-            string mpArchitectureCurrent = Settings.IniReadValue("Settings", "Architecture");
-            string mServerTypeCurrent = Settings.IniReadValue("Settings", "ServerType");
+            //string mpNoTextureStreaming = Settings.IniReadValue("Settings", "NoTextureStreaming");
+            //string mpUnattended = Settings.IniReadValue("Settings", "Unattended");
+            //string mpRegionCurrent = Settings.IniReadValue("Settings", "Region");
+            //string mpUseAllCoresCurrent = Settings.IniReadValue("Settings", "UseAllCores");
+            //string mplanguageIDCurrent = Settings.IniReadValue("Settings", "language");
+            //string mpArchitectureCurrent = Settings.IniReadValue("Settings", "Architecture");
+            //string mServerTypeCurrent = Settings.IniReadValue("Settings", "ServerType");
 
-            if (mpRegionCurrent == "JP")
+            if (sSettings.sRegion == "JP")
             {
-                InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_JPN", "BaseDir", null);
-                if (InstallPath != null)
+                sSettings.sInstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_JPN", "BaseDir", null);
+                if (sSettings.sInstallPath != null)
                 {
-                    if (mpArchitectureCurrent == "0")
-                        LaunchPath = Path.Combine(InstallPath, @"bin\Client.exe");
+                    if (sSettings.sArchitecture == "0")
+                        LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin\Client.exe");
                     else
-                        LaunchPath = Path.Combine(InstallPath + @"bin64\Client.exe");
+                        LaunchPath = Path.Combine(sSettings.sInstallPath + @"bin64\Client.exe");
                 }
                 // registry path not found, check for side-by-side install
                 else if (File.Exists(".\\Client.exe"))
                     LaunchPath = ".\\Client.exe";
             }
-            else if (mpRegionCurrent == "TW")
+            else if (sSettings.sRegion == "TW")
             {
-                InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
-                if (InstallPath != null)
+                sSettings.sInstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
+                if (sSettings.sInstallPath != null)
                 {
-                    if (mpArchitectureCurrent == "0")
-                        LaunchPath = Path.Combine(InstallPath, @"bin\Client.exe");
+                    if (sSettings.sArchitecture == "0")
+                        LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin\Client.exe");
                     else
-                        LaunchPath = Path.Combine(InstallPath, @"bin64\Client.exe");
+                        LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin64\Client.exe");
                 }
                 // registry path not found, check for side-by-side install
                 else if (File.Exists(".\\Client.exe"))
                     LaunchPath = ".\\Client.exe";
             }
-            else if (mpRegionCurrent == "KR")
+            else if (sSettings.sRegion == "KR")
             {
-                if (mServerTypeCurrent == "Live")
+                if (sSettings.sServerType == "Live")
                 {
-                    InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
-                    if (InstallPath != null)
+                    sSettings.sInstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
+                    if (sSettings.sInstallPath != null)
                     {
-                        if (mpArchitectureCurrent == "0")
-                            LaunchPath = Path.Combine(InstallPath, @"bin\Client.exe");
+                        if (sSettings.sArchitecture == "0")
+                            LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin\Client.exe");
                         else
-                            LaunchPath = Path.Combine(InstallPath, @"bin64\Client.exe");
+                            LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin64\Client.exe");
                     }
                     // registry path not found, check for side-by-side install
                     else if (File.Exists(".\\Client.exe"))
@@ -186,15 +194,15 @@ namespace BnS_TwLauncher
                         LaunchPath = ".\\Client.exe";
                     }
                 }
-                else if (mServerTypeCurrent == "Test")
+                else if (sSettings.sServerType == "Test")
                 {
-                    InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
-                    if (InstallPath != null)
+                    sSettings.sInstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
+                    if (sSettings.sInstallPath != null)
                     {
-                        if (mpArchitectureCurrent == "0")
-                            LaunchPath = Path.Combine(InstallPath, @"bin\Client.exe");
+                        if (sSettings.sArchitecture == "0")
+                            LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin\Client.exe");
                         else
-                            LaunchPath = Path.Combine(InstallPath, @"bin64\Client.exe");
+                            LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin64\Client.exe");
                     }
                     // registry path not found, check for side-by-side install
                     else if (File.Exists(".\\Client.exe"))
@@ -204,15 +212,15 @@ namespace BnS_TwLauncher
                 }
             }
 
-            else if (mpRegionCurrent == "EN")
+            else if (sSettings.sRegion == "EN")
             {
-                InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
-                if (InstallPath != null)
+                sSettings.sInstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
+                if (sSettings.sInstallPath != null)
                 {
-                    if (mpArchitectureCurrent == "0")
-                        LaunchPath = Path.Combine(InstallPath, @"bin\Client.exe");
+                    if (sSettings.sArchitecture == "0")
+                        LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin\Client.exe");
                     else
-                        LaunchPath = Path.Combine(InstallPath, @"bin64\Client.exe");
+                        LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin64\Client.exe");
                 }
                 // registry path not found, check for side-by-side install
                 else if (File.Exists(".\\Client.exe"))
@@ -220,14 +228,14 @@ namespace BnS_TwLauncher
                     LaunchPath = ".\\Client.exe";
                 }
             }
-            UseAllCores = !(mpUseAllCoresCurrent == "true") ? "" : " -USEALLAVAILABLECORES";
-            NoTextureStreaming = !(mpNoTextureStreaming == "true") ? "" : " -NOTEXTURESTREAMING";
-            Unattended = !(mpUnattended == "true") ? "" : " -UNATTENDED";
+            UseAllCores = !(sSettings.sUseAllCores == "true") ? "" : " -USEALLAVAILABLECORES";
+            NoTextureStreaming = !(sSettings.sNoTextureStreaming == "true") ? "" : " -NOTEXTURESTREAMING";
+            Unattended = !(sSettings.sUnattended == "true") ? "" : " -UNATTENDED";
 
             Process proc = new Process();
             proc.StartInfo.FileName = LaunchPath;
 
-            if (mpRegionCurrent == "JP")
+            if (sSettings.sRegion == "JP")
             {
                 // Generated by Nc Launcher /LaunchByLauncher /Sesskey /SessKey:"" /CompanyID:"14" /ChannelGroupIndex:"-1" 
                 proc.StartInfo.Arguments = "/launchbylauncher /sesskey /CompanyID:" + "14" + "/ChannelGroupIndex:" + " - 1" + " /LoginMode 2 " + "" + UseAllCores + "" + Unattended + "" + NoTextureStreaming;
@@ -236,16 +244,16 @@ namespace BnS_TwLauncher
             }
 
 
-            else if (mpRegionCurrent == "TW")
+            else if (sSettings.sRegion == "TW")
             {
                 // generated by Nc Launcher /LaunchByLauncher  /AuthnToken:"" /SessKey:"" /ServiceRegion:"15" /AuthProviderCode:"np"  /NPServerAddr:"210.64.136.126:6600" /PresenceId:"TWBNS22"
                 proc.StartInfo.Arguments = "/launchbylauncher /sesskey /ServiceRegion:" + "15" + "/ChannelGroupIndex:" + " - 1" + " /PresenceId:" + "TWBNS22" + " /LoginMode 2 " + "" + UseAllCores + "" + Unattended + "" + NoTextureStreaming;
                 proc.StartInfo.UseShellExecute = false;
                 proc.StartInfo.RedirectStandardError = true;
             }
-            else if (mpRegionCurrent == "KR")
+            else if (sSettings.sRegion == "KR")
             {
-                if (mServerTypeCurrent == "Live")
+                if (sSettings.sServerType == "Live")
                 {
                     // generated by Nc Launcher /LaunchByLauncher  /AuthnToken:"" /SessKey:"" /ServiceRegion:"0" /AuthProviderCode:"np"  /NPServerAddr:"112.175.209.97:6600" -lite:8 /PresenceId:"BNS_KOR"
                     proc.StartInfo.Arguments = "/launchbylauncher /sesskey /ServiceRegion:" + "0" + " -lite:8" + " /PresenceId:" + "BNS_KOR" + " /LoginMode 2 " + "" + UseAllCores + "" + Unattended + "" + NoTextureStreaming;
@@ -253,7 +261,7 @@ namespace BnS_TwLauncher
                     proc.StartInfo.RedirectStandardError = true;
                 }
 
-                else if (mServerTypeCurrent == "Test")
+                else if (sSettings.sServerType == "Test")
                 {
                     // generated by Nc Launcher /LaunchByLauncher  /AuthnToken:"" /SessKey:"" /ServiceRegion:"0" /AuthProviderCode:"np"  /NPServerAddr:"112.175.209.97:6600" -lite:8 /PresenceId:"BNS_KOR_TEST"
                     proc.StartInfo.Arguments = "/launchbylauncher /sesskey /ServiceRegion:" + "0" + " -lite:8" + " /PresenceId:" + "BNS_KOR_TEST" + " /LoginMode 2 " + "" + UseAllCores + "" + Unattended + "" + NoTextureStreaming;
@@ -263,10 +271,10 @@ namespace BnS_TwLauncher
             }
         
 
-            else if (mpRegionCurrent == "EN")
+            else if (sSettings.sRegion == "EN")
             {
                 // generated by Nc Launcher /launchbylauncher /sesskey -lang:english /CompanyID:"12" /ChannelGroupIndex:"-1" /AuthnToken:"==" /AuthProviderCode:"np"  -lang:English -lite:2 -region:0
-                proc.StartInfo.Arguments = "/launchbylauncher /sesskey -lang:english /CompanyID:\"12\" /ChannelGroupIndex:\"-1\" " + string.Format(args, token) + " /AuthProviderCode:\"np\"" + "-lang:" + mplanguageIDCurrent + " -lite:2 -region:" + currentValue + Unattended + "" + NoTextureStreaming + "" + UseAllCores + "";
+                proc.StartInfo.Arguments = "/launchbylauncher /sesskey -lang:english /CompanyID:\"12\" /ChannelGroupIndex:\"-1\" " + string.Format(args, token) + " /AuthProviderCode:\"np\"" + "-lang:" + sSettings.sLanguageID + " -lite:2 -region:" + currentValue + Unattended + "" + NoTextureStreaming + "" + UseAllCores + "";
                 proc.StartInfo.UseShellExecute = false;
                 proc.StartInfo.RedirectStandardError = true;
             }

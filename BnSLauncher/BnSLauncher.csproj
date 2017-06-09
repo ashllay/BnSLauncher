@@ -122,6 +122,7 @@
     <Compile Include="Patcher.Designer.cs">
       <DependentUpon>Patcher.cs</DependentUpon>
     </Compile>
+    <Compile Include="SettingsClass.cs" />
     <Compile Include="Slider\Configuration.cs" />
     <Compile Include="Slider\Memory.cs" />
     <Compile Include="Slider\MemoryScanner.cs" />

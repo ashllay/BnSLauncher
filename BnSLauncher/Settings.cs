@@ -16,17 +16,17 @@ namespace BnS_TwLauncher
     public partial class Settings : Form
     {
         //
-        string InstallPath = "";
-        string InstallPathRegion = "";
-        string ModPath = "";
-        string LocalCookedPCPath = "";
-        string sNoTextureStreaming = "";
-        string sUnattended = "";
-        public string sRegion = "";
-        string slanguageID = "";
-        string sUseAllCores = "";
-        string sArchitecture = "";
-        string sServerType = "";
+        //string InstallPath = "";
+        //string InstallPathRegion = "";
+        //string ModPath = "";
+        //string LocalCookedPCPath = "";
+        //string sNoTextureStreaming = "";
+        //string sUnattended = "";
+        //public string sRegion = "";
+        //string slanguageID = "";
+        //string sUseAllCores = "";
+        //string sArchitecture = "";
+        //string sServerType = "";
 
         bool PathsFound = false;
         bool LoadingDisabled = false;
@@ -43,19 +43,20 @@ namespace BnS_TwLauncher
         string XmlSettings = "";
 
         IniFile fSettings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
-
+        SettingsClass sSettings = new SettingsClass();
         public Settings()
         {
             InitializeComponent();
-            sNoTextureStreaming = fSettings.IniReadValue("Settings", "NoTextureStreaming");
-            sUnattended = fSettings.IniReadValue("Settings", "Unattended");
-            sRegion = fSettings.IniReadValue("Settings", "Region");
-            slanguageID = fSettings.IniReadValue("Settings", "language");
-            sUseAllCores = fSettings.IniReadValue("Settings", "UseAllCores");
-            sArchitecture = fSettings.IniReadValue("Settings", "Architecture");
-            sServerType = fSettings.IniReadValue("Settings", "ServerType");
+            
+            sSettings.sNoTextureStreaming = fSettings.IniReadValue("Settings", "NoTextureStreaming");
+            sSettings.sUnattended = fSettings.IniReadValue("Settings", "Unattended");
+            sSettings.sRegion = fSettings.IniReadValue("Settings", "Region");
+            sSettings.sLanguageID = fSettings.IniReadValue("Settings", "language");
+            sSettings.sUseAllCores = fSettings.IniReadValue("Settings", "UseAllCores");
+            sSettings.sArchitecture = fSettings.IniReadValue("Settings", "Architecture");
+            sSettings.sServerType = fSettings.IniReadValue("Settings", "ServerType");
 
-            if (string.IsNullOrEmpty(sArchitecture))
+            if (string.IsNullOrEmpty(sSettings.sArchitecture))
             {
                 fSettings.IniWriteValue("Settings", "Architecture", "0");
                 x86_rB.Checked = true;
@@ -66,57 +67,57 @@ namespace BnS_TwLauncher
         {
             // Find Client.exe and set file paths
             // Check the registry
-            if (sRegion == "JP")
+            if (sSettings.sRegion == "JP")
             {
-                InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_JPN", "BaseDir", null);
-                InstallPathRegion = @"contents\Local\NCJAPAN\";
-                LocalCookedPCPath = Path.Combine(InstallPath, InstallPathRegion, @"JAPANESE\CookedPC\");
-                ModPath = Path.Combine(LocalCookedPCPath + @"mod\");
+                sSettings.sInstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_JPN", "BaseDir", null);
+                sSettings.sInstallPathRegion = @"contents\Local\NCJAPAN\";
+                sSettings.sLocalCookedPCPath = Path.Combine(sSettings.sInstallPath, sSettings.sInstallPathRegion, @"JAPANESE\CookedPC\");
+                sSettings.sModPath = Path.Combine(sSettings.sLocalCookedPCPath + @"mod\");
                 rB_JP.Checked = true;
                 XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCJAPAN\ClientConfiguration.xml";
             }
-            else if (sRegion == "TW")
+            else if (sSettings.sRegion == "TW")
             {
-                InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
-                InstallPathRegion = @"contents\Local\NCTAIWAN\";
-                LocalCookedPCPath = Path.Combine(InstallPathRegion, @"CHINESET\CookedPC\");
-                ModPath = Path.Combine(LocalCookedPCPath, @"mod\");
+                sSettings.sInstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
+                sSettings.sInstallPathRegion = @"contents\Local\NCTAIWAN\";
+                sSettings.sLocalCookedPCPath = Path.Combine(sSettings.sInstallPathRegion, @"CHINESET\CookedPC\");
+                sSettings.sModPath = Path.Combine(sSettings.sLocalCookedPCPath, @"mod\");
                 rB_TW.Checked = true;
                 XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCTAIWAN\ClientConfiguration.xml";
             }
-            else if (sRegion == "EN")
+            else if (sSettings.sRegion == "EN")
             {
-                InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
-                InstallPathRegion = @"contents\Local\NCWEST\";
-                LocalCookedPCPath = Path.Combine(InstallPath, InstallPathRegion, @"ENGLISH\CookedPC\");
-                ModPath = Path.Combine(LocalCookedPCPath, @"mod\");
+                sSettings.sInstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
+                sSettings.sInstallPathRegion = @"contents\Local\NCWEST\";
+                sSettings.sLocalCookedPCPath = Path.Combine(sSettings.sInstallPath, sSettings.sInstallPathRegion, @"ENGLISH\CookedPC\");
+                sSettings.sModPath = Path.Combine(sSettings.sLocalCookedPCPath, @"mod\");
                 rB_EN.Checked = true;
                 XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCWEST\ClientConfiguration.xml";
             }
-            else if (sRegion == "KR")
+            else if (sSettings.sRegion == "KR")
             {
                 rB_KR.Checked = true;
 
-                if (sServerType == "Live")
+                if (sSettings.sServerType == "Live")
                 {
-                    InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
-                    InstallPathRegion = @"contents\local\NCSoft\";
-                    ModPath = Path.Combine(InstallPath, InstallPathRegion, @"korean\CookedPC\mod\");
-                    LocalCookedPCPath = Path.Combine(InstallPath, @"contents\bns\CookedPC\");
+                    sSettings.sInstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
+                    sSettings.sInstallPathRegion = @"contents\local\NCSoft\";
+                    sSettings.sModPath = Path.Combine(sSettings.sInstallPath, sSettings.sInstallPathRegion, @"korean\CookedPC\mod\");
+                    sSettings.sLocalCookedPCPath = Path.Combine(sSettings.sInstallPath, @"contents\bns\CookedPC\");
                     rB_KRLive.Checked = true;
                     XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT\ClientConfiguration.xml";
                 }
-                else if (sServerType == "Test")
+                else if (sSettings.sServerType == "Test")
                 {
-                    InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
-                    InstallPathRegion = @"contents\local\NCSoft\";
-                    ModPath = Path.Combine(LocalCookedPCPath, InstallPathRegion, @"korean\CookedPC\mod\");
-                    LocalCookedPCPath = Path.Combine(InstallPath, @"contents\bns\CookedPC\");
+                    sSettings.sInstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
+                    sSettings.sInstallPathRegion = @"contents\local\NCSoft\";
+                    sSettings.sModPath = Path.Combine(sSettings.sLocalCookedPCPath, sSettings.sInstallPathRegion, @"korean\CookedPC\mod\");
+                    sSettings.sLocalCookedPCPath = Path.Combine(sSettings.sInstallPath, @"contents\bns\CookedPC\");
                     rB_KRTest.Checked = true;
                     XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT_TEST\ClientConfiguration.xml";
                 }
             }
-            if (InstallPath != null)
+            if (sSettings.sInstallPath != null)
             {
                 PathsFound = true;
                 // dbg_txb.Text = ModPath;
@@ -124,33 +125,33 @@ namespace BnS_TwLauncher
             if (PathsFound == true)
             {
                 //--
-                if (!Directory.Exists(ModPath + "\\..\\loading"))
-                    Directory.CreateDirectory(ModPath + "\\..\\loading");
+                if (!Directory.Exists(sSettings.sModPath + "\\..\\loading"))
+                    Directory.CreateDirectory(sSettings.sModPath + "\\..\\loading");
                 
-                if (File.Exists(ModPath + "\\..\\loading\\00009368.bak"))
+                if (File.Exists(sSettings.sModPath + "\\..\\loading\\00009368.bak"))
                 {
                     LoadingDisabled = true;
                     cbx_disableImg.Checked = true;
                 }
 
                 //--
-                if (sNoTextureStreaming == "true")
+                if (sSettings.sNoTextureStreaming == "true")
                     cBtextureStr.Checked = true;
 
-                if (sUnattended == "true")
+                if (sSettings.sUnattended == "true")
                     cBmsBox.Checked = true;
 
-                if (sUseAllCores == "true")
+                if (sSettings.sUseAllCores == "true")
                     cBallCores.Checked = true;
 
                 //--
-                if (slanguageID == "English")
+                if (sSettings.sLanguageID == "English")
                     radioButton_Eng.Checked = true;
 
-                if (slanguageID == "German")
+                if (sSettings.sLanguageID == "German")
                     radioButton_Ger.Checked = true;
 
-                if (slanguageID == "French")
+                if (sSettings.sLanguageID == "French")
                     radioButton_Fre.Checked = true;
 
                 //--
@@ -164,7 +165,7 @@ namespace BnS_TwLauncher
                 else
                     gbox_krserver.Hide();
                 //--
-                if (sArchitecture == "0")
+                if (sSettings.sArchitecture == "0")
                 {
                     x86_rB.Checked = true;
                     x64_Rb.Checked = false;
@@ -203,13 +204,13 @@ namespace BnS_TwLauncher
         {
             if (cBtextureStr.Checked == true)
             {
-                sNoTextureStreaming = "true";
+                sSettings.sNoTextureStreaming = "true";
                 fSettings.IniWriteValue("Settings", "NoTextureStreaming", "true");
                 Sts_Label.Text = "Texture streaming disabled.";
             }
             else
             {
-                sNoTextureStreaming = "false";
+                sSettings.sNoTextureStreaming = "false";
                 fSettings.IniWriteValue("Settings", "NoTextureStreaming", "false");
                 Sts_Label.Text = "Texture streaming enabled.";
             }
@@ -219,13 +220,13 @@ namespace BnS_TwLauncher
         {
             if (cBmsBox.Checked == true)
             {
-                sUnattended = "true";
+                sSettings.sUnattended = "true";
                 fSettings.IniWriteValue("Settings", "Unattended", "true");
                 Sts_Label.Text = "Message boxes disabled.";
             }
             else
             {
-                sUnattended = "false";
+                sSettings.sUnattended = "false";
                 fSettings.IniWriteValue("Settings", "Unattended", "false");
                 Sts_Label.Text = "Message boxes enabled.";
             }
@@ -235,13 +236,13 @@ namespace BnS_TwLauncher
         {
             if (cBallCores.Checked == true)
             {
-                sUseAllCores = "true";
+                sSettings.sUseAllCores = "true";
                 fSettings.IniWriteValue("Settings", "UseAllCores", "true");
                 Sts_Label.Text = "Use all cores enabled.";
             }
             else
             {
-                sUseAllCores = "false";
+                sSettings.sUseAllCores = "false";
                 fSettings.IniWriteValue("Settings", "UseAllCores", "false");
                 Sts_Label.Text = "Use all cores disabled.";
             }
@@ -250,7 +251,7 @@ namespace BnS_TwLauncher
         {
             if (rB_JP.Checked == true)
             {
-                sRegion = "JP";
+                sSettings.sRegion = "JP";
                 fSettings.IniWriteValue("Settings", "Region", "JP");
                 groupBox_west_lang.Hide();
                 gbox_krserver.Hide();
@@ -261,7 +262,7 @@ namespace BnS_TwLauncher
         {
             if (rB_TW.Checked == true)
             {
-                sRegion = "TW";
+                sSettings.sRegion = "TW";
                 fSettings.IniWriteValue("Settings", "Region", "TW");
                 groupBox_west_lang.Hide();
                 gbox_krserver.Hide();
@@ -272,12 +273,12 @@ namespace BnS_TwLauncher
         {
             if (rB_KR.Checked == true)
             {
-                if (sServerType == "Live")
+                if (sSettings.sServerType == "Live")
                     rB_KRLive.Checked = true;
-                if (sServerType == "Test")
+                if (sSettings.sServerType == "Test")
                     rB_KRTest.Checked = true;
 
-                sRegion = "KR";
+                sSettings.sRegion = "KR";
 
                 gbox_krserver.Show();
                 groupBox_west_lang.Hide();
@@ -290,7 +291,7 @@ namespace BnS_TwLauncher
         {
             if (rB_KRLive.Checked == true)
             {
-                sServerType = "Live";
+                sSettings.sServerType = "Live";
                 rB_KRTest.Checked = false;
                 fSettings.IniWriteValue("Settings", "ServerType", "Live");
             }
@@ -299,7 +300,7 @@ namespace BnS_TwLauncher
         {
             if (rB_KRTest.Checked == true)
             {
-                sServerType = "Test";
+                sSettings.sServerType = "Test";
                 rB_KRLive.Checked = false;
                 fSettings.IniWriteValue("Settings", "ServerType", "Test");
             }
@@ -309,7 +310,7 @@ namespace BnS_TwLauncher
         {
             if (rB_EN.Checked == true)
             {
-                sRegion = "EN";
+                sSettings.sRegion = "EN";
                 fSettings.IniWriteValue("Settings", "Region", "EN");
                 fSettings.IniWriteValue("Settings", "language", "English");
                 groupBox_west_lang.Show();
@@ -354,8 +355,8 @@ namespace BnS_TwLauncher
                 LoadingDisabled = true;
                 try
                 {
-                    File.Move(LocalCookedPCPath + "Loading.pkg", ModPath + "\\..\\loading\\loading.bak");
-                    File.Move(LocalCookedPCPath + "00009368.upk", ModPath + "\\..\\loading\\00009368.bak");
+                    File.Move(sSettings.sLocalCookedPCPath + "Loading.pkg", sSettings.sModPath + "\\..\\loading\\loading.bak");
+                    File.Move(sSettings.sLocalCookedPCPath + "00009368.upk", sSettings.sModPath + "\\..\\loading\\00009368.bak");
                     Sts_Label.Text = "Loading screens disabled.";
                 }
                 catch
@@ -368,8 +369,8 @@ namespace BnS_TwLauncher
                 LoadingDisabled = false;
                 try
                 {
-                    File.Move(ModPath + "\\..\\loading\\loading.bak", LocalCookedPCPath + "Loading.pkg");
-                    File.Move(ModPath + "\\..\\loading\\00009368.bak", LocalCookedPCPath + "00009368.upk");
+                    File.Move(sSettings.sModPath + "\\..\\loading\\loading.bak", sSettings.sLocalCookedPCPath + "Loading.pkg");
+                    File.Move(sSettings.sModPath + "\\..\\loading\\00009368.bak", sSettings.sLocalCookedPCPath + "00009368.upk");
                     Sts_Label.Text = "Loading screens enabled.";
                 }
                 catch
