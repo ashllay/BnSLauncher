@@ -245,44 +245,37 @@ namespace BnS_Launcher
                 {
                     Console.Write("\r\nPatching system.config2.xml\n");
                     string configFile = File.ReadAllText(ConfigOutPath + "\\system.config2.xml");
+
                     if (checkBox_Webl.Checked == true)
-                    {
                         configFile = configFile.Replace("\"use-web-launching\" value=\"true\"", "\"use-web-launching\" value=\"false\"");
-                    }
                     else
-                    {
                         configFile = configFile.Replace("\"use-web-launching\" value=\"false\"", "\"use-web-launching\" value=\"true\"");
-                    }
                     if (checkBox_minimize.Checked == true)
-                    {
                         configFile = configFile.Replace("\"minimize-window\" value=\"true\"", "\"minimize-window\" value=\"false\"");
-                    }
                     else
-                    {
                         configFile = configFile.Replace("\"minimize-window\" value=\"false\"", "\"minimize-window\" value=\"true\"");
-                    }
                     if (checkBox_clause.Checked == true)
-                    {
                         configFile = configFile.Replace("\"show-clause\" value=\"true\"", "\"show-clause\" value=\"false\"");
-                    }
                     else
-                    {
                         configFile = configFile.Replace("\"show-clause\" value=\"false\"", "\"show-clause\" value=\"true\"");
-                    }
+
                     File.WriteAllText(ConfigOutPath + "\\system.config2.xml", configFile);
                 }
                 if (PatchXml == true)
                 {
                     Console.Write("\r\nPatching client.config2.xml\n");
                     string xmlFile = File.ReadAllText(XmlOutPath + "\\client.config2.xml");
+
                     if (cboxDPS.Checked == true)
-                    {
                         xmlFile = xmlFile.Replace("\"show-party-6-dungeon-and-cave\" value=\"n\"", "\"show-party-6-dungeon-and-cave\" value=\"y\"");
-                    }
                     else
-                    {
                         xmlFile = xmlFile.Replace("\"show-party-6-dungeon-and-cave\" value=\"y\"", "\"show-party-6-dungeon-and-cave\" value=\"n\"");
-                    }
+                    
+                    if (cbox_perfmod.Checked == true)
+                        xmlFile = xmlFile.Replace("\"use-optimal-performance-mode-option\" value=\"false\"", "\"use-optimal-performance-mode-option\" value=\"true\"");
+                    else
+                        xmlFile = xmlFile.Replace("\"use-optimal-performance-mode-option\" value=\"true\"", "\"use-optimal-performance-mode-option\" value=\"false\"");
+
                     File.WriteAllText(XmlOutPath + "\\client.config2.xml", xmlFile);
                 }
             }

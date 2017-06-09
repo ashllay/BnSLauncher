@@ -54,18 +54,8 @@ namespace BnS_TwLauncher
 
             var settingsFile = Environment.CurrentDirectory + "\\Settings.ini";
             if (!File.Exists(settingsFile))
-            {
                 File.Create(settingsFile).Dispose();
-            }
 
-            //if (!File.Exists(settingsFile))
-            //{
-            //    using (var tw = new StreamWriter(settingsFile, true))
-            //    {
-            //        File.Create(settingsFile);
-            //        tw.Close();
-            //    }
-            //}
             if (string.IsNullOrEmpty(mUseAllCores))
                 Settings.IniWriteValue("Settings", "UseAllCores", "false");
             if (string.IsNullOrEmpty(mNoTextureStreaming))
@@ -74,6 +64,8 @@ namespace BnS_TwLauncher
                 Settings.IniWriteValue("Settings", "Architecture", "0");
             if (string.IsNullOrEmpty(mUnattended))
                 Settings.IniWriteValue("Settings", "Unattended", "false");
+            if (string.IsNullOrEmpty(mUnattended))
+                Settings.IniWriteValue("Settings", "ServerType", "Live");
 
             if (string.IsNullOrEmpty(mRegion))
             {
@@ -102,6 +94,9 @@ namespace BnS_TwLauncher
             string mlRegion = Settings.IniReadValue("Settings", "Region");
             if (mlRegion == "EN")
             {
+                if (!LauncherInfo())
+                    Close();
+                RegionCB.DataSource = regions;
                 box_WestLogin.Visible = true;
                 Btn_play.Enabled = false;
             }
@@ -307,6 +302,9 @@ namespace BnS_TwLauncher
             //check region if west enable login box
             if (CurrentRegion == "EN")
             {
+                if (!LauncherInfo())
+                    Close();
+                RegionCB.DataSource = regions;
                 box_WestLogin.Visible = true;
 
                 //if open settings with logged account play button stay enabled

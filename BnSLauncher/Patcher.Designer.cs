@@ -39,13 +39,14 @@
             this.cbox_BakXml = new System.Windows.Forms.CheckBox();
             this.cboxDPS = new System.Windows.Forms.CheckBox();
             this.gbox_patcher = new System.Windows.Forms.GroupBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbox_cxml = new System.Windows.Forms.CheckBox();
+            this.cbox_cconfig = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button_start = new System.Windows.Forms.Button();
             this.richOut = new System.Windows.Forms.RichTextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cbox_cconfig = new System.Windows.Forms.CheckBox();
-            this.cbox_cxml = new System.Windows.Forms.CheckBox();
+            this.cbox_perfmod = new System.Windows.Forms.CheckBox();
             this.tabPatcher.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -125,6 +126,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.cbox_perfmod);
             this.tabPage2.Controls.Add(this.cbox_BakXml);
             this.tabPage2.Controls.Add(this.cboxDPS);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -171,6 +173,38 @@
             this.gbox_patcher.TabIndex = 24;
             this.gbox_patcher.TabStop = false;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.cbox_cxml);
+            this.groupBox1.Controls.Add(this.cbox_cconfig);
+            this.groupBox1.ForeColor = System.Drawing.Color.White;
+            this.groupBox1.Location = new System.Drawing.Point(9, 142);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(172, 39);
+            this.groupBox1.TabIndex = 25;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Repack files";
+            // 
+            // cbox_cxml
+            // 
+            this.cbox_cxml.AutoSize = true;
+            this.cbox_cxml.Location = new System.Drawing.Point(96, 15);
+            this.cbox_cxml.Name = "cbox_cxml";
+            this.cbox_cxml.Size = new System.Drawing.Size(32, 17);
+            this.cbox_cxml.TabIndex = 1;
+            this.cbox_cxml.Text = "_";
+            this.cbox_cxml.UseVisualStyleBackColor = true;
+            // 
+            // cbox_cconfig
+            // 
+            this.cbox_cconfig.AutoSize = true;
+            this.cbox_cconfig.Location = new System.Drawing.Point(10, 15);
+            this.cbox_cconfig.Name = "cbox_cconfig";
+            this.cbox_cconfig.Size = new System.Drawing.Size(32, 17);
+            this.cbox_cconfig.TabIndex = 0;
+            this.cbox_cconfig.Text = "_";
+            this.cbox_cconfig.UseVisualStyleBackColor = true;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -216,37 +250,15 @@
             this.label3.TabIndex = 8;
             this.label3.Text = "Output Log:";
             // 
-            // groupBox1
+            // cbox_perfmod
             // 
-            this.groupBox1.Controls.Add(this.cbox_cxml);
-            this.groupBox1.Controls.Add(this.cbox_cconfig);
-            this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(9, 142);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(172, 39);
-            this.groupBox1.TabIndex = 25;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Repack files";
-            // 
-            // cbox_cconfig
-            // 
-            this.cbox_cconfig.AutoSize = true;
-            this.cbox_cconfig.Location = new System.Drawing.Point(10, 15);
-            this.cbox_cconfig.Name = "cbox_cconfig";
-            this.cbox_cconfig.Size = new System.Drawing.Size(32, 17);
-            this.cbox_cconfig.TabIndex = 0;
-            this.cbox_cconfig.Text = "_";
-            this.cbox_cconfig.UseVisualStyleBackColor = true;
-            // 
-            // cbox_cxml
-            // 
-            this.cbox_cxml.AutoSize = true;
-            this.cbox_cxml.Location = new System.Drawing.Point(96, 15);
-            this.cbox_cxml.Name = "cbox_cxml";
-            this.cbox_cxml.Size = new System.Drawing.Size(32, 17);
-            this.cbox_cxml.TabIndex = 1;
-            this.cbox_cxml.Text = "_";
-            this.cbox_cxml.UseVisualStyleBackColor = true;
+            this.cbox_perfmod.AutoSize = true;
+            this.cbox_perfmod.Location = new System.Drawing.Point(5, 29);
+            this.cbox_perfmod.Name = "cbox_perfmod";
+            this.cbox_perfmod.Size = new System.Drawing.Size(144, 17);
+            this.cbox_perfmod.TabIndex = 10;
+            this.cbox_perfmod.Text = "Enable performace mode";
+            this.cbox_perfmod.UseVisualStyleBackColor = true;
             // 
             // Patcher
             // 
@@ -295,5 +307,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox cbox_cxml;
         private System.Windows.Forms.CheckBox cbox_cconfig;
+        private System.Windows.Forms.CheckBox cbox_perfmod;
     }
 }
