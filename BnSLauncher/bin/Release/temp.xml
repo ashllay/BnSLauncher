@@ -333,7 +333,7 @@
     </Value>
     <Value id="2">
       <Min>-1</Min>
-      <Max>3</Max>
+      <Max>5</Max>
     </Value>
     <Value id="3">
       <Min>-1</Min>
@@ -417,7 +417,7 @@
     </Value>
     <Value id="23">
       <Min>-1</Min>
-      <Max>1</Max>
+      <Max>-1</Max>
     </Value>
     <Value id="24">
       <Min>-1</Min>
@@ -425,7 +425,7 @@
     </Value>
     <Value id="25">
       <Min>-1</Min>
-      <Max>2</Max>
+      <Max>3</Max>
     </Value>
     <Value id="26">
       <Min>-1</Min>

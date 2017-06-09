@@ -41,9 +41,9 @@
             this.radioButton_Fre = new System.Windows.Forms.RadioButton();
             this.radioButton_Ger = new System.Windows.Forms.RadioButton();
             this.radioButton_Eng = new System.Windows.Forms.RadioButton();
-            this.radioButton_EN = new System.Windows.Forms.RadioButton();
-            this.radioButton_TW = new System.Windows.Forms.RadioButton();
-            this.radioButton_JP = new System.Windows.Forms.RadioButton();
+            this.rB_EN = new System.Windows.Forms.RadioButton();
+            this.rB_TW = new System.Windows.Forms.RadioButton();
+            this.rB_JP = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.txb_zoom = new System.Windows.Forms.TextBox();
@@ -82,9 +82,9 @@
             this.tabPage1.Controls.Add(this.gbox_krserver);
             this.tabPage1.Controls.Add(this.gBox_Arc);
             this.tabPage1.Controls.Add(this.groupBox_west_lang);
-            this.tabPage1.Controls.Add(this.radioButton_EN);
-            this.tabPage1.Controls.Add(this.radioButton_TW);
-            this.tabPage1.Controls.Add(this.radioButton_JP);
+            this.tabPage1.Controls.Add(this.rB_EN);
+            this.tabPage1.Controls.Add(this.rB_TW);
+            this.tabPage1.Controls.Add(this.rB_JP);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -220,40 +220,40 @@
             this.radioButton_Eng.UseVisualStyleBackColor = true;
             this.radioButton_Eng.CheckedChanged += new System.EventHandler(this.radioButton_Eng_CheckedChanged);
             // 
-            // radioButton_EN
+            // rB_EN
             // 
-            this.radioButton_EN.AutoSize = true;
-            this.radioButton_EN.Location = new System.Drawing.Point(12, 35);
-            this.radioButton_EN.Name = "radioButton_EN";
-            this.radioButton_EN.Size = new System.Drawing.Size(50, 17);
-            this.radioButton_EN.TabIndex = 7;
-            this.radioButton_EN.Text = "West";
-            this.radioButton_EN.UseVisualStyleBackColor = true;
-            this.radioButton_EN.CheckedChanged += new System.EventHandler(this.radioButton_EN_CheckedChanged);
+            this.rB_EN.AutoSize = true;
+            this.rB_EN.Location = new System.Drawing.Point(12, 35);
+            this.rB_EN.Name = "rB_EN";
+            this.rB_EN.Size = new System.Drawing.Size(50, 17);
+            this.rB_EN.TabIndex = 7;
+            this.rB_EN.Text = "West";
+            this.rB_EN.UseVisualStyleBackColor = true;
+            this.rB_EN.CheckedChanged += new System.EventHandler(this.rB_EN_CheckedChanged);
             // 
-            // radioButton_TW
+            // rB_TW
             // 
-            this.radioButton_TW.AutoSize = true;
-            this.radioButton_TW.Location = new System.Drawing.Point(72, 12);
-            this.radioButton_TW.Name = "radioButton_TW";
-            this.radioButton_TW.Size = new System.Drawing.Size(60, 17);
-            this.radioButton_TW.TabIndex = 5;
-            this.radioButton_TW.Text = "Taiwan";
-            this.radioButton_TW.UseVisualStyleBackColor = true;
-            this.radioButton_TW.CheckedChanged += new System.EventHandler(this.radioButton_TW_CheckedChanged);
+            this.rB_TW.AutoSize = true;
+            this.rB_TW.Location = new System.Drawing.Point(72, 12);
+            this.rB_TW.Name = "rB_TW";
+            this.rB_TW.Size = new System.Drawing.Size(60, 17);
+            this.rB_TW.TabIndex = 5;
+            this.rB_TW.Text = "Taiwan";
+            this.rB_TW.UseVisualStyleBackColor = true;
+            this.rB_TW.CheckedChanged += new System.EventHandler(this.rB_TW_CheckedChanged);
             // 
-            // radioButton_JP
+            // rB_JP
             // 
-            this.radioButton_JP.AutoSize = true;
-            this.radioButton_JP.Checked = true;
-            this.radioButton_JP.Location = new System.Drawing.Point(12, 12);
-            this.radioButton_JP.Name = "radioButton_JP";
-            this.radioButton_JP.Size = new System.Drawing.Size(54, 17);
-            this.radioButton_JP.TabIndex = 4;
-            this.radioButton_JP.TabStop = true;
-            this.radioButton_JP.Text = "Japan";
-            this.radioButton_JP.UseVisualStyleBackColor = true;
-            this.radioButton_JP.CheckedChanged += new System.EventHandler(this.radioButton_JP_CheckedChanged);
+            this.rB_JP.AutoSize = true;
+            this.rB_JP.Checked = true;
+            this.rB_JP.Location = new System.Drawing.Point(12, 12);
+            this.rB_JP.Name = "rB_JP";
+            this.rB_JP.Size = new System.Drawing.Size(54, 17);
+            this.rB_JP.TabIndex = 4;
+            this.rB_JP.TabStop = true;
+            this.rB_JP.Text = "Japan";
+            this.rB_JP.UseVisualStyleBackColor = true;
+            this.rB_JP.CheckedChanged += new System.EventHandler(this.rB_JP_CheckedChanged);
             // 
             // tabPage2
             // 
@@ -383,10 +383,10 @@
         private System.Windows.Forms.CheckBox cBtextureStr;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.CheckBox cBmsBox;
-        private System.Windows.Forms.RadioButton radioButton_TW;
-        private System.Windows.Forms.RadioButton radioButton_JP;
+        private System.Windows.Forms.RadioButton rB_TW;
+        private System.Windows.Forms.RadioButton rB_JP;
         private System.Windows.Forms.RadioButton rB_KRLive;
-        private System.Windows.Forms.RadioButton radioButton_EN;
+        private System.Windows.Forms.RadioButton rB_EN;
         private System.Windows.Forms.CheckBox cBallCores;
         private System.Windows.Forms.GroupBox groupBox_west_lang;
         private System.Windows.Forms.RadioButton radioButton_Fre;

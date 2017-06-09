@@ -22,7 +22,7 @@ namespace BnS_TwLauncher
         string LocalCookedPCPath = "";
         string sNoTextureStreaming = "";
         string sUnattended = "";
-        string sRegion = "";
+        public string sRegion = "";
         string slanguageID = "";
         string sUseAllCores = "";
         string sArchitecture = "";
@@ -57,8 +57,6 @@ namespace BnS_TwLauncher
 
             if (string.IsNullOrEmpty(sArchitecture))
             {
-                // Key does not exist
-                MessageBox.Show("Error: Game Architecture not set defalt is x86!!");
                 fSettings.IniWriteValue("Settings", "Architecture", "0");
                 x86_rB.Checked = true;
             }
@@ -74,7 +72,7 @@ namespace BnS_TwLauncher
                 InstallPathRegion = @"contents\Local\NCJAPAN\";
                 LocalCookedPCPath = Path.Combine(InstallPath, InstallPathRegion, @"JAPANESE\CookedPC\");
                 ModPath = Path.Combine(LocalCookedPCPath + @"mod\");
-                radioButton_JP.Checked = true;
+                rB_JP.Checked = true;
                 XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCJAPAN\ClientConfiguration.xml";
             }
             else if (sRegion == "TW")
@@ -83,7 +81,7 @@ namespace BnS_TwLauncher
                 InstallPathRegion = @"contents\Local\NCTAIWAN\";
                 LocalCookedPCPath = Path.Combine(InstallPathRegion, @"CHINESET\CookedPC\");
                 ModPath = Path.Combine(LocalCookedPCPath, @"mod\");
-                radioButton_TW.Checked = true;
+                rB_TW.Checked = true;
                 XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCTAIWAN\ClientConfiguration.xml";
             }
             else if (sRegion == "EN")
@@ -92,29 +90,29 @@ namespace BnS_TwLauncher
                 InstallPathRegion = @"contents\Local\NCWEST\";
                 LocalCookedPCPath = Path.Combine(InstallPath, InstallPathRegion, @"ENGLISH\CookedPC\");
                 ModPath = Path.Combine(LocalCookedPCPath, @"mod\");
-                radioButton_EN.Checked = true;
+                rB_EN.Checked = true;
                 XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCWEST\ClientConfiguration.xml";
             }
             else if (sRegion == "KR")
             {
+                rB_KR.Checked = true;
+
                 if (sServerType == "Live")
                 {
                     InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
                     InstallPathRegion = @"contents\local\NCSoft\";
                     ModPath = Path.Combine(InstallPath, InstallPathRegion, @"korean\CookedPC\mod\");
                     LocalCookedPCPath = Path.Combine(InstallPath, @"contents\bns\CookedPC\");
-                    gbox_krserver.Show();
-                    rB_KR.Checked = true;
+                    rB_KRLive.Checked = true;
                     XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT\ClientConfiguration.xml";
                 }
-                else if(sServerType == "Test")
+                else if (sServerType == "Test")
                 {
                     InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
                     InstallPathRegion = @"contents\local\NCSoft\";
                     ModPath = Path.Combine(LocalCookedPCPath, InstallPathRegion, @"korean\CookedPC\mod\");
                     LocalCookedPCPath = Path.Combine(InstallPath, @"contents\bns\CookedPC\");
-                    gbox_krserver.Show();
-                    rB_KR.Checked = true;
+                    rB_KRTest.Checked = true;
                     XmlSettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT_TEST\ClientConfiguration.xml";
                 }
             }
@@ -126,7 +124,9 @@ namespace BnS_TwLauncher
             if (PathsFound == true)
             {
                 //--
-                if (!Directory.Exists(ModPath + "\\..\\loading")) { Directory.CreateDirectory(ModPath + "\\..\\loading"); }
+                if (!Directory.Exists(ModPath + "\\..\\loading"))
+                    Directory.CreateDirectory(ModPath + "\\..\\loading");
+                
                 if (File.Exists(ModPath + "\\..\\loading\\00009368.bak"))
                 {
                     LoadingDisabled = true;
@@ -154,14 +154,7 @@ namespace BnS_TwLauncher
                     radioButton_Fre.Checked = true;
 
                 //--
-                if(sServerType == "Live")
-                    rB_KRLive.Checked = true;
-
-                if(sServerType == "Test")
-                    rB_KRTest.Checked = true;
-
-                //--
-                if (radioButton_EN.Checked)
+                if (rB_EN.Checked)
                     groupBox_west_lang.Show();
                 else
                     groupBox_west_lang.Hide();
@@ -253,28 +246,22 @@ namespace BnS_TwLauncher
                 Sts_Label.Text = "Use all cores disabled.";
             }
         }
-        private void radioButton_JP_CheckedChanged(object sender, EventArgs e)
+        private void rB_JP_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButton_JP.Checked == true)
+            if (rB_JP.Checked == true)
             {
-                radioButton_TW.Checked = false;
-               // rB_KRLive.Checked = false;
-                radioButton_EN.Checked = false;
-                fSettings.IniWriteValue("Settings", "Architecture", "0");
+                sRegion = "JP";
                 fSettings.IniWriteValue("Settings", "Region", "JP");
                 groupBox_west_lang.Hide();
                 gbox_krserver.Hide();
             }
         }
 
-        private void radioButton_TW_CheckedChanged(object sender, EventArgs e)
+        private void rB_TW_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButton_TW.Checked == true)
+            if (rB_TW.Checked == true)
             {
-                radioButton_JP.Checked = false;
-                //rB_KRLive.Checked = false;
-                radioButton_EN.Checked = false;
-                fSettings.IniWriteValue("Settings", "Architecture", "0");
+                sRegion = "TW";
                 fSettings.IniWriteValue("Settings", "Region", "TW");
                 groupBox_west_lang.Hide();
                 gbox_krserver.Hide();
@@ -283,50 +270,46 @@ namespace BnS_TwLauncher
 
         private void rB_KR_CheckedChanged(object sender, EventArgs e)
         {
-            string pRegion = fSettings.IniReadValue("Settings", "Region");
+            if (rB_KR.Checked == true)
+            {
+                if (sServerType == "Live")
+                    rB_KRLive.Checked = true;
+                if (sServerType == "Test")
+                    rB_KRTest.Checked = true;
 
-            gbox_krserver.Show();
-            groupBox_west_lang.Hide();
+                sRegion = "KR";
 
-            fSettings.IniWriteValue("Settings", "Region", "KR");
+                gbox_krserver.Show();
+                groupBox_west_lang.Hide();
 
+                fSettings.IniWriteValue("Settings", "Region", "KR");
+            }
         }
 
         private void rB_KRLive_CheckedChanged(object sender, EventArgs e)
         {
             if (rB_KRLive.Checked == true)
             {
-                radioButton_JP.Checked = false;
-                radioButton_TW.Checked = false;
-                radioButton_EN.Checked = false;
+                sServerType = "Live";
                 rB_KRTest.Checked = false;
-                fSettings.IniWriteValue("Settings", "Architecture", "0");
                 fSettings.IniWriteValue("Settings", "ServerType", "Live");
-                // groupBox_west_lang.Hide();
             }
         }
         private void rB_KRTest_CheckedChanged(object sender, EventArgs e)
         {
             if (rB_KRTest.Checked == true)
             {
-                radioButton_JP.Checked = false;
-                radioButton_TW.Checked = false;
-                radioButton_EN.Checked = false;
+                sServerType = "Test";
                 rB_KRLive.Checked = false;
-                fSettings.IniWriteValue("Settings", "Architecture", "0");
                 fSettings.IniWriteValue("Settings", "ServerType", "Test");
-                // groupBox_west_lang.Hide();
             }
         }
 
-        private void radioButton_EN_CheckedChanged(object sender, EventArgs e)
+        private void rB_EN_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButton_EN.Checked == true)
+            if (rB_EN.Checked == true)
             {
-                radioButton_JP.Checked = false;
-                radioButton_TW.Checked = false;
-               // rB_KRLive.Checked = false;
-                fSettings.IniWriteValue("Settings", "Architecture", "0");
+                sRegion = "EN";
                 fSettings.IniWriteValue("Settings", "Region", "EN");
                 fSettings.IniWriteValue("Settings", "language", "English");
                 groupBox_west_lang.Show();
@@ -336,60 +319,62 @@ namespace BnS_TwLauncher
 
         private void radioButton_Eng_CheckedChanged(object sender, EventArgs e)
         {
-            fSettings.IniWriteValue("Settings", "language", "English");
+            if (radioButton_Eng.Checked == true)
+                fSettings.IniWriteValue("Settings", "language", "English");
         }
 
         private void radioButton_Ger_CheckedChanged(object sender, EventArgs e)
         {
-            fSettings.IniWriteValue("Settings", "language", "German");
+            if (radioButton_Ger.Checked == true)
+                fSettings.IniWriteValue("Settings", "language", "German");
         }
 
         private void radioButton_Fre_CheckedChanged(object sender, EventArgs e)
         {
-            fSettings.IniWriteValue("Settings", "language", "French");
+            if (radioButton_Fre.Checked == true)
+                fSettings.IniWriteValue("Settings", "language", "French");
         }
 
         private void x86_rB_CheckedChanged(object sender, EventArgs e)
         {
-            fSettings.IniWriteValue("Settings", "Architecture", "0");
+            if (x86_rB.Checked == true)
+                fSettings.IniWriteValue("Settings", "Architecture", "0");
         }
 
         private void x64_Rb_CheckedChanged(object sender, EventArgs e)
         {
-            fSettings.IniWriteValue("Settings", "Architecture", "1");
+            if (x64_Rb.Checked == true)
+                fSettings.IniWriteValue("Settings", "Architecture", "1");
         }
 
         private void cbx_disableImg_CheckedChanged(object sender, EventArgs e)
         {
+            if (LoadingDisabled == false)
             {
-
-                if (LoadingDisabled == false)
+                LoadingDisabled = true;
+                try
                 {
-                    LoadingDisabled = true;
-                    try
-                    {
-                        File.Move(LocalCookedPCPath + "Loading.pkg", ModPath + "\\..\\loading\\loading.bak");
-                        File.Move(LocalCookedPCPath + "00009368.upk", ModPath + "\\..\\loading\\00009368.bak");
-                        Sts_Label.Text = "Loading screens disabled.";
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Error: Could not disable loading screens!");
-                    }
+                    File.Move(LocalCookedPCPath + "Loading.pkg", ModPath + "\\..\\loading\\loading.bak");
+                    File.Move(LocalCookedPCPath + "00009368.upk", ModPath + "\\..\\loading\\00009368.bak");
+                    Sts_Label.Text = "Loading screens disabled.";
                 }
-                else if (LoadingDisabled == true)
+                catch
                 {
-                    LoadingDisabled = false;
-                    try
-                    {
-                        File.Move(ModPath + "\\..\\loading\\loading.bak", LocalCookedPCPath + "Loading.pkg");
-                        File.Move(ModPath + "\\..\\loading\\00009368.bak", LocalCookedPCPath + "00009368.upk");
-                        Sts_Label.Text = "Loading screens enabled.";
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Error: Could not enable loading screens!");
-                    }
+                    MessageBox.Show("Error: Could not disable loading screens!");
+                }
+            }
+            else if (LoadingDisabled == true)
+            {
+                LoadingDisabled = false;
+                try
+                {
+                    File.Move(ModPath + "\\..\\loading\\loading.bak", LocalCookedPCPath + "Loading.pkg");
+                    File.Move(ModPath + "\\..\\loading\\00009368.bak", LocalCookedPCPath + "00009368.upk");
+                    Sts_Label.Text = "Loading screens enabled.";
+                }
+                catch
+                {
+                    MessageBox.Show("Error: Could not enable loading screens!");
                 }
             }
         }
@@ -429,8 +414,6 @@ namespace BnS_TwLauncher
             {
                 MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
-
     }
 }

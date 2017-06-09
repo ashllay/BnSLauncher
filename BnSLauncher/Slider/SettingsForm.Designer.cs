@@ -157,6 +157,8 @@
             this.Controls.Add(this.closeButton);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
             this.Name = "SettingsForm";
             this.Text = "SettingsForm";
             this.groupBox1.ResumeLayout(false);

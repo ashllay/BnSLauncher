@@ -83,13 +83,14 @@ namespace BnS_TwLauncher
        
         private void FormMain_Load(object sender, EventArgs e)
         {
+
             //NC West login
             string SavedMail = Settings.IniReadValue("Account", "Mail");
             string SavedPass =  Settings.IniReadValue("Account", "Password");
 
-            if (!LauncherInfo())
-                Close();
-            RegionCB.DataSource = regions;
+            //if (!LauncherInfo())
+            //    Close();
+            //RegionCB.DataSource = regions;
 
             string mlRegion = Settings.IniReadValue("Settings", "Region");
             if (mlRegion == "EN")
