@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
 using System.IO;
-using System.Threading;
-using Microsoft.Win32;
 using Ini;
 
 namespace BnS_Launcher
@@ -23,26 +14,22 @@ namespace BnS_Launcher
         private string XmlOutPath;
         TextWriter _writer = null;
 
-        //string InstallPath = "";
         string DatPath = "";
-        //string InstallPathRegion = "";
         string ConfigFileName = "";
         string ConfigFilePath = "";
         string XmlFileName = "";
         string XmlFilePath = "";
-
-        //string pRegion = "";
-        //string pArchitecture = "";
-        //string pServerType = "";
 
         public BackgroundWorker ebnsdat;
         public BackgroundWorker cbnsdat;
         public bool PatchConfig;
         public bool PatchXml;
 
+        SettingsClass sSettings = new SettingsClass();
+
         IniFile pSettings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
 
-        SettingsClass sSettings = new SettingsClass();
+        
         public Patcher()
         {
             InitializeComponent();
@@ -64,43 +51,33 @@ namespace BnS_Launcher
             // Check the registry
             if (sSettings.sRegion == "JP")
             {
-                //InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_JPN", "BaseDir", null);
-                //InstallPathRegion = "contents\\Local\\NCJAPAN\\data\\";
                 stRegion = "Japan";
             }
             else if (sSettings.sRegion == "TW")
             {
-                //InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
-                //InstallPathRegion = "contents\\Local\\NCTAIWAN\\data\\";
                 stRegion = "Taiwan";
             }
             else if (sSettings.sRegion == "KR")
             {
                 if (sSettings.sServerType == "Live")
                 {
-                    //InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
-                    //InstallPathRegion = "contents\\local\\NCSoft\\data\\";
                     stRegion = "Korean";
                 }
                 else if (sSettings.sServerType == "Test")
                 {
-                   // InstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
-                    //InstallPathRegion = "contents\\local\\NCSoft\\data\\";
                     stRegion = "Korean TEST";
                 }
-                
             }
-           
+
             else if (sSettings.sRegion == "EN")
             {
-                // = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
-                //InstallPathRegion = "contents\\Local\\NCWEST\\data\\";
                 checkBox_Webl.Enabled = false;
                 stRegion = "West";
             }
+
             if (sSettings.sInstallPath != null)
             {
-                DatPath = Path.Combine(sSettings.sInstallPath, sSettings.sInstallPathRegion);
+                DatPath = Path.Combine(sSettings.sInstallPath, sSettings.sInstallPathRegion,@"data\");
             }
 
             if (sSettings.sArchitecture == "0")
@@ -125,7 +102,7 @@ namespace BnS_Launcher
 
             ConfigOutPath = ConfigFilePath + ".files"; //get full file path and add .files
             XmlOutPath = XmlFilePath + ".files";
-            // Console.Write("{0}\n{1}", ConfigFilePath, XmlFilePath);
+            //Console.Write("{0}", DatPath);
         }
 
         public void Extractor(string datFile)
@@ -159,12 +136,12 @@ namespace BnS_Launcher
 
         private void button_start_Click(object sender, EventArgs e)
         {
-            //ControlBox = false;
+
             gbox_patcher.Enabled = false;
 
             if (!cbox_cconfig.Checked && !cbox_cxml.Checked)
             {
-                MessageBox.Show("Please select a file to repack!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                MessageBox.Show("Please select a file to repack!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 gbox_patcher.Enabled = true;
             }
 
@@ -271,7 +248,7 @@ namespace BnS_Launcher
                         xmlFile = xmlFile.Replace("\"show-party-6-dungeon-and-cave\" value=\"n\"", "\"show-party-6-dungeon-and-cave\" value=\"y\"");
                     else
                         xmlFile = xmlFile.Replace("\"show-party-6-dungeon-and-cave\" value=\"y\"", "\"show-party-6-dungeon-and-cave\" value=\"n\"");
-                    
+
                     if (cbox_perfmod.Checked == true)
                         xmlFile = xmlFile.Replace("\"use-optimal-performance-mode-option\" value=\"false\"", "\"use-optimal-performance-mode-option\" value=\"true\"");
                     else

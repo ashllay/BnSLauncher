@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.IO;
+using Microsoft.Win32;
+using Ini;
 
 class SettingsClass
 {
@@ -18,11 +16,15 @@ class SettingsClass
     string useallcores = "";
     string architeture = "";
     string servertype = "";
+    string xmlsettings = "";
+
+    IniFile fSettings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
+    
 
     // Declare a Name property of type string:
     public string sInstallPath
     {
-        get { return installpath; }
+        get{return installpath;}
         set { installpath = value; }
     }
 
@@ -43,38 +45,111 @@ class SettingsClass
     }
     public string sNoTextureStreaming
     {
-        get { return notexturestreaming; }
+        get
+        {
+            notexturestreaming = fSettings.IniReadValue("Settings", "NoTextureStreaming");
+            return notexturestreaming;
+        }
         set { notexturestreaming = value; }
     }
     public string sUnattended
     {
-        get { return unnatended; }
+        get
+        {
+            unnatended = fSettings.IniReadValue("Settings", "Unattended");
+            return unnatended;
+        }
         set { unnatended = value; }
     }
     public string sRegion
     {
-        get { return region; }
+        get
+        {
+            region = fSettings.IniReadValue("Settings", "Region");
+            if (region == "JP")
+            {
+                installpath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_JPN", "BaseDir", null);
+                installpathregion = @"contents\Local\NCJAPAN\";
+                localcoockedpcpath = Path.Combine(sInstallPath, sInstallPathRegion, @"JAPANESE\CookedPC\");
+                modpath = Path.Combine(sLocalCookedPCPath + @"mod\");
+                xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCJAPAN\ClientConfiguration.xml";
+            }
+            else if (region == "TW")
+            {
+                installpath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
+                installpathregion = @"contents\Local\NCTAIWAN\";
+                localcoockedpcpath = Path.Combine(sInstallPath, sInstallPathRegion, @"CHINESET\CookedPC\");
+                modpath = Path.Combine(sLocalCookedPCPath, @"mod\");
+                xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCTAIWAN\ClientConfiguration.xml";
+            }
+            else if (region == "EN")
+            {
+                installpath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
+                installpathregion = @"contents\Local\NCWEST\";
+                localcoockedpcpath = Path.Combine(sInstallPath, sInstallPathRegion, @"ENGLISH\CookedPC\");
+                modpath = Path.Combine(localcoockedpcpath, @"mod\");
+                xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCWEST\ClientConfiguration.xml";
+            }
+            else if (region == "KR")
+            {
+                servertype = fSettings.IniReadValue("Settings", "ServerType");
+                if (servertype == "Live")
+                {
+                    installpath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
+                    installpathregion = @"contents\local\NCSoft\";
+                    modpath = Path.Combine(sInstallPath, sInstallPathRegion, @"korean\CookedPC\mod\");
+                    localcoockedpcpath = Path.Combine(sInstallPath, @"contents\bns\CookedPC\");
+                    xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT\ClientConfiguration.xml";
+                }
+                else if (servertype == "Test")
+                {
+                    installpath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
+                    installpathregion = @"contents\local\NCSoft\";
+                    modpath = Path.Combine(sInstallPath, sInstallPathRegion, @"korean\CookedPC\mod\");
+                    localcoockedpcpath = Path.Combine(sInstallPath, @"contents\bns\CookedPC\");
+                    xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT_TEST\ClientConfiguration.xml";
+                }
+            }
+            return region;
+        }
         set { region = value; }
     }
     public string sLanguageID
     {
-        get { return languageid; }
+        get
+        {
+            languageid = fSettings.IniReadValue("Settings", "language");
+            return languageid;
+        }
         set { languageid = value; }
     }
     public string sUseAllCores
     {
-        get { return useallcores; }
+        get
+        {
+            useallcores = fSettings.IniReadValue("Settings", "UseAllCores");
+            return useallcores;
+        }
         set { useallcores = value; }
     }
     public string sArchitecture
     {
-        get { return architeture; }
+        get
+        {
+            architeture = fSettings.IniReadValue("Settings", "Architecture");
+            return architeture;
+        }
         set { architeture = value; }
     }
-
     public string sServerType
     {
         get { return servertype; }
         set { servertype = value; }
+    }
+
+    public string XmlSettings
+    {
+        get { return xmlsettings; }
+        set { xmlsettings = value; }
     }
 }

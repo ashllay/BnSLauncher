@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Mono.Math;
 using System.Security.Cryptography;
@@ -15,9 +11,7 @@ using System.IO;
 using System.Xml;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
-using Microsoft.Win32;
 using System.Web.Security;
-using System.Management;
 using Ini;
 
 namespace BnS_TwLauncher
@@ -25,15 +19,7 @@ namespace BnS_TwLauncher
     public partial class Main : Form
     {
 
-        //private string InstallPath = "";
         private string LaunchPath = "";
-        //private string mNoTextureStreaming = "";
-        //private string mUnattended = "";
-        //private string mRegion = "";
-        //private string mlanguageID = "";
-        //private string mUseAllCores = "";
-        //private string mArchitecture = "";
-        //private string mServerType = "";
 
         private string NoTextureStreaming = "";
         private string Unattended = "";
@@ -44,13 +30,6 @@ namespace BnS_TwLauncher
         public Main()
         {
             InitializeComponent();
-            //mNoTextureStreaming = Settings.IniReadValue("Settings", "NoTextureStreaming");
-            //mUnattended = Settings.IniReadValue("Settings", "Unattended");
-            //mRegion = Settings.IniReadValue("Settings", "Region");
-            //mlanguageID = Settings.IniReadValue("Settings", "language");
-            //mUseAllCores = Settings.IniReadValue("Settings", "UseAllCores");
-            //mArchitecture = Settings.IniReadValue("Settings", "Architecture");
-            //mServerType = Settings.IniReadValue("Settings", "ServerType");
 
             sSettings.sNoTextureStreaming = Settings.IniReadValue("Settings", "NoTextureStreaming");
             sSettings.sUnattended = Settings.IniReadValue("Settings", "Unattended");
@@ -77,7 +56,6 @@ namespace BnS_TwLauncher
 
             if (string.IsNullOrEmpty(sSettings.sRegion))
             {
-                MessageBox.Show("Error: Game Region not set defalt is West!!");
                 Settings.IniWriteValue("Settings", "Region", "EN");
                 Settings.IniWriteValue("Settings", "language", "English");
             }
@@ -88,22 +66,20 @@ namespace BnS_TwLauncher
             }
         }
 
-       
+
         private void FormMain_Load(object sender, EventArgs e)
         {
-
             //NC West login
             string SavedMail = Settings.IniReadValue("Account", "Mail");
-            string SavedPass =  Settings.IniReadValue("Account", "Password");
+            string SavedPass = Settings.IniReadValue("Account", "Password");
 
             //if (!LauncherInfo())
             //    Close();
             //RegionCB.DataSource = regions;
 
-            string mlRegion = Settings.IniReadValue("Settings", "Region");
-            if (mlRegion == "EN")
+            if (sSettings.sRegion == "EN")
             {
-                if (!LauncherInfo())
+                if (!LauncherInfo())//
                     Close();
                 RegionCB.DataSource = regions;
                 box_WestLogin.Visible = true;
@@ -137,26 +113,17 @@ namespace BnS_TwLauncher
             }
         }
 
-
         private void Btn_play_Click(object sender, EventArgs e)
         {
-            //string mpNoTextureStreaming = Settings.IniReadValue("Settings", "NoTextureStreaming");
-            //string mpUnattended = Settings.IniReadValue("Settings", "Unattended");
-            //string mpRegionCurrent = Settings.IniReadValue("Settings", "Region");
-            //string mpUseAllCoresCurrent = Settings.IniReadValue("Settings", "UseAllCores");
-            //string mplanguageIDCurrent = Settings.IniReadValue("Settings", "language");
-            //string mpArchitectureCurrent = Settings.IniReadValue("Settings", "Architecture");
-            //string mServerTypeCurrent = Settings.IniReadValue("Settings", "ServerType");
 
             if (sSettings.sRegion == "JP")
             {
-                sSettings.sInstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_JPN", "BaseDir", null);
                 if (sSettings.sInstallPath != null)
                 {
                     if (sSettings.sArchitecture == "0")
                         LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin\Client.exe");
                     else
-                        LaunchPath = Path.Combine(sSettings.sInstallPath + @"bin64\Client.exe");
+                        LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin64\Client.exe");
                 }
                 // registry path not found, check for side-by-side install
                 else if (File.Exists(".\\Client.exe"))
@@ -164,7 +131,6 @@ namespace BnS_TwLauncher
             }
             else if (sSettings.sRegion == "TW")
             {
-                sSettings.sInstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
                 if (sSettings.sInstallPath != null)
                 {
                     if (sSettings.sArchitecture == "0")
@@ -180,7 +146,6 @@ namespace BnS_TwLauncher
             {
                 if (sSettings.sServerType == "Live")
                 {
-                    sSettings.sInstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
                     if (sSettings.sInstallPath != null)
                     {
                         if (sSettings.sArchitecture == "0")
@@ -196,7 +161,6 @@ namespace BnS_TwLauncher
                 }
                 else if (sSettings.sServerType == "Test")
                 {
-                    sSettings.sInstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
                     if (sSettings.sInstallPath != null)
                     {
                         if (sSettings.sArchitecture == "0")
@@ -214,7 +178,6 @@ namespace BnS_TwLauncher
 
             else if (sSettings.sRegion == "EN")
             {
-                sSettings.sInstallPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
                 if (sSettings.sInstallPath != null)
                 {
                     if (sSettings.sArchitecture == "0")
@@ -269,7 +232,6 @@ namespace BnS_TwLauncher
                     proc.StartInfo.RedirectStandardError = true;
                 }
             }
-        
 
             else if (sSettings.sRegion == "EN")
             {
@@ -281,6 +243,7 @@ namespace BnS_TwLauncher
             try
             {
                 proc.Start();
+
                 //kill ping thread enable login button and disable play button(west)
                 if (worker != null && worker.IsBusy)
                 {
@@ -306,10 +269,8 @@ namespace BnS_TwLauncher
 
         private void Settings_FormClosing(object sender, FormClosingEventArgs e)
         {
-            string CurrentRegion = Settings.IniReadValue("Settings", "Region");
-
             //check region if west enable login box
-            if (CurrentRegion == "EN")
+            if (sSettings.sRegion == "EN")
             {
                 if (!LauncherInfo())
                     Close();
@@ -343,8 +304,7 @@ namespace BnS_TwLauncher
 
         private void btn_Slider_Click(object sender, EventArgs e)
         {
-            string ArchitectureCurrent = Settings.IniReadValue("Settings", "Architecture");
-            if (ArchitectureCurrent == "0")
+            if (sSettings.sArchitecture == "0")
             {
                 new BnS_Launcher.Slider.Slider_Form().Show();
             }
@@ -360,7 +320,6 @@ namespace BnS_TwLauncher
         }
 
         // NC login
-
         string Protect = "Basic Enc";
 
         string Enc(string s)
@@ -460,7 +419,6 @@ namespace BnS_TwLauncher
                 return name;
             }
         }
-
 
         BigInteger GetKeyExchange()
         {
@@ -830,7 +788,7 @@ namespace BnS_TwLauncher
 
             try
             {
-                
+
                 LoginServer = new TcpClient(LoginIp, LoginPort);
                 LoginServer.ReceiveBufferSize = 1024;
                 NetworkStream ns = LoginServer.GetStream();
@@ -1040,7 +998,7 @@ namespace BnS_TwLauncher
                         }
                         ns.Write(buffer, 0, buffer.Length);
                         lastSent = DateTime.Now;
-                        
+
                     }
                 }
             }
@@ -1151,7 +1109,7 @@ namespace BnS_TwLauncher
         }
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            string mcRegion = Settings.IniReadValue("Settings", "language");
+            //string mcRegion = Settings.IniReadValue("Settings", "language");
             //kill login thread(west)
             if (worker != null && worker.IsBusy)
             {
@@ -1159,12 +1117,12 @@ namespace BnS_TwLauncher
                 worker.CancelAsync();
             }
 
-            if (mcRegion == "EN")
+            if (sSettings.sRegion == "EN")
             {
                 if (cbox_Smail.Checked == true)
-                Settings.IniWriteValue("Account", "Mail", Enc(txb_Mail.Text));
+                    Settings.IniWriteValue("Account", "Mail", Enc(txb_Mail.Text));
                 if (cbox_Spass.Checked == true)
-                Settings.IniWriteValue("Account", "Password", Enc(txb_Pass.Text));
+                    Settings.IniWriteValue("Account", "Password", Enc(txb_Pass.Text));
             }
         }
         // NC Login
