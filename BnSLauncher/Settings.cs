@@ -42,6 +42,11 @@ namespace BnS_TwLauncher
                 fSettings.IniWriteValue("Settings", "Architecture", "0");
                 x86_rB.Checked = true;
             }
+            if (string.IsNullOrEmpty(sSettings.sArchitecture))
+            {
+                fSettings.IniWriteValue("Settings", "ServerType", "Live");
+                rB_KRLive.Checked = true;
+            }
         }
 
         private void FomrSettings_Load(object sender, EventArgs e)

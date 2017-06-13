@@ -8,18 +8,15 @@ namespace BnS_Launcher.Slider
     public class Memory : IDisposable
     {
         private System.Diagnostics.Process process;
-
         private IntPtr processHandle;
-
         private bool isDisposed;
-
         public const string OffsetPattern = "(\\+|\\-){0,1}(0x){0,1}[a-fA-F0-9]{1,}";
 
         public System.Diagnostics.Process Process
         {
             get
             {
-                return this.process;
+                return process;
             }
         }
 
@@ -30,8 +27,11 @@ namespace BnS_Launcher.Slider
                 throw new ArgumentNullException("process");
             }
             this.process = process;
-            this.processHandle = Win32.OpenProcess(Win32.ProcessAccessType.PROCESS_VM_OPERATION | Win32.ProcessAccessType.PROCESS_VM_READ | Win32.ProcessAccessType.PROCESS_VM_WRITE, true, (uint)process.Id);
-            if (this.processHandle == IntPtr.Zero)
+            processHandle = Win32.OpenProcess(
+                Win32.ProcessAccessType.PROCESS_VM_OPERATION | 
+                Win32.ProcessAccessType.PROCESS_VM_READ | 
+                Win32.ProcessAccessType.PROCESS_VM_WRITE, true, (uint)process.Id);
+            if (processHandle == IntPtr.Zero)
             {
                 throw new InvalidOperationException("Could not open the process");
             }
@@ -45,19 +45,19 @@ namespace BnS_Launcher.Slider
 
         private void Dispose(bool disposing)
         {
-            if (this.isDisposed)
+            if (isDisposed)
             {
                 return;
             }
-            Win32.CloseHandle(this.processHandle);
-            this.process = null;
-            this.processHandle = IntPtr.Zero;
-            this.isDisposed = true;
+            Win32.CloseHandle(processHandle);
+            process = null;
+            processHandle = IntPtr.Zero;
+            isDisposed = true;
         }
 
         ~Memory()
         {
-            this.Dispose(false);
+            Dispose(false);
         }
 
         public ProcessModule FindModule(string name)
@@ -67,7 +67,7 @@ namespace BnS_Launcher.Slider
             {
                 throw new ArgumentNullException("name");
             }
-            IEnumerator enumerator = this.process.Modules.GetEnumerator();
+            IEnumerator enumerator = process.Modules.GetEnumerator();
             try
             {
                 while (enumerator.MoveNext())
@@ -99,14 +99,14 @@ namespace BnS_Launcher.Slider
             {
                 throw new ArgumentNullException("moduleName");
             }
-            ProcessModule processModule = this.FindModule(moduleName);
+            ProcessModule processModule = FindModule(moduleName);
             if (processModule == null)
             {
                 return IntPtr.Zero;
             }
             IntPtr intPtr = processModule.BaseAddress;
             int num = intPtr.ToInt32() + baseAddress.ToInt32();
-            return this.GetAddress((IntPtr)num, offsets);
+            return GetAddress((IntPtr)num, offsets);
         }
 
         public IntPtr GetAddress(IntPtr baseAddress, int[] offsets)
@@ -123,7 +123,7 @@ namespace BnS_Launcher.Slider
                 for (int i = 0; i < (int)numArray1.Length; i++)
                 {
                     int num1 = numArray1[i];
-                    num = this.ReadInt32((IntPtr)num) + num1;
+                    num = ReadInt32((IntPtr)num) + num1;
                 }
             }
             return (IntPtr)num;
@@ -160,9 +160,9 @@ namespace BnS_Launcher.Slider
             }
             if (str == null)
             {
-                return this.GetAddress(intPtr, numArray);
+                return GetAddress(intPtr, numArray);
             }
-            return this.GetAddress(str, intPtr, numArray);
+            return GetAddress(str, intPtr, numArray);
         }
 
         protected static int[] GetAddressOffsets(string address)
@@ -190,27 +190,27 @@ namespace BnS_Launcher.Slider
         public double ReadDouble(IntPtr address)
         {
             byte[] numArray = new byte[8];
-            this.ReadMemory(address, numArray, 8);
+            ReadMemory(address, numArray, 8);
             return BitConverter.ToDouble(numArray, 0);
         }
 
         public float ReadFloat(IntPtr address)
         {
             byte[] numArray = new byte[4];
-            this.ReadMemory(address, numArray, 4);
+            ReadMemory(address, numArray, 4);
             return BitConverter.ToSingle(numArray, 0);
         }
 
         public int ReadInt32(IntPtr address)
         {
             byte[] numArray = new byte[4];
-            this.ReadMemory(address, numArray, 4);
+            ReadMemory(address, numArray, 4);
             return BitConverter.ToInt32(numArray, 0);
         }
 
         public void ReadMemory(IntPtr address, byte[] buffer, int size)
         {
-            if (this.isDisposed)
+            if (isDisposed)
             {
                 throw new ObjectDisposedException("Memory");
             }
@@ -236,28 +236,28 @@ namespace BnS_Launcher.Slider
         public uint ReadUInt32(IntPtr address)
         {
             byte[] numArray = new byte[4];
-            this.ReadMemory(address, numArray, 4);
+            ReadMemory(address, numArray, 4);
             return BitConverter.ToUInt32(numArray, 0);
         }
 
         public void WriteDouble(IntPtr address, double value)
         {
-            this.WriteMemory(address, BitConverter.GetBytes(value), 8);
+            WriteMemory(address, BitConverter.GetBytes(value), 8);
         }
 
         public void WriteFloat(IntPtr address, float value)
         {
-            this.WriteMemory(address, BitConverter.GetBytes(value), 4);
+            WriteMemory(address, BitConverter.GetBytes(value), 4);
         }
 
         public void WriteInt32(IntPtr address, int value)
         {
-            this.WriteMemory(address, BitConverter.GetBytes(value), 4);
+            WriteMemory(address, BitConverter.GetBytes(value), 4);
         }
 
         public void WriteMemory(IntPtr address, byte[] buffer, int size)
         {
-            if (this.isDisposed)
+            if (isDisposed)
             {
                 throw new ObjectDisposedException("Memory");
             }
@@ -282,7 +282,7 @@ namespace BnS_Launcher.Slider
 
         public void WriteUInt32(IntPtr address, uint value)
         {
-            this.WriteMemory(address, BitConverter.GetBytes(value), 4);
+            WriteMemory(address, BitConverter.GetBytes(value), 4);
         }
     }
 }

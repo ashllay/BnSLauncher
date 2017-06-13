@@ -25,31 +25,31 @@ namespace BnS_Launcher.Slider
         {
             InitializeComponent();
 
-            config = new Configuration(this.configFile);
-            Process process = this.LoadProcess();
+            config = new Configuration(configFile);
+            Process process = LoadProcess();
             LoadMemory(process);
             SetProcessBox(process);
             if (memory != null)
             {
                 ScanForRecordAddress();
             }
-            InitializeProfiles(this.config.DefaultProfile);
-            for (int i = 0; i < this.currentProfile.Records.Count; i++)
+            InitializeProfiles(config.DefaultProfile);
+            for (int i = 0; i < currentProfile.Records.Count; i++)
             {
-                this.selectBodyTypeBox.Items.Add(this.currentProfile.Records[i]);
+                selectBodyTypeBox.Items.Add(currentProfile.Records[i]);
             }
-            if (this.memory != null)
+            if (memory != null)
             {
-                if (this.firstRecordAddress != IntPtr.Zero)
+                if (firstRecordAddress != IntPtr.Zero)
                 {
-                    this.selectBodyTypeBox.Enabled = true;
+                    selectBodyTypeBox.Enabled = true;
                 }
                 else
                 {
                     MessageBox.Show("Found B&S process but got a bad address.  A patch may have changed memory addresses.\n\nTry selecting Full Scan in settings.");
                 }
             }
-            this.CreateTabs();
+            CreateTabs();
         }
         private void AddTextBoxEventHandlers(TextBox box, Record record, Slider slider, Slider_Form.UserValueChange function)
         {
@@ -290,7 +290,7 @@ namespace BnS_Launcher.Slider
             this.openFileMenu.Filter = "XML|*.xml|All files|*.*";
             this.openFileMenu.InitialDirectory = Application.StartupPath;
             string fileName = "";
-            if (this.openFileMenu.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (this.openFileMenu.ShowDialog() == DialogResult.OK)
             {
                 fileName = this.openFileMenu.FileName;
                 int selectedIndex = this.selectBodyTypeBox.SelectedIndex;
@@ -558,5 +558,6 @@ namespace BnS_Launcher.Slider
         }
 
         private delegate void UserValueChange(Record record, float value, Slider slider);
+
     }
 }

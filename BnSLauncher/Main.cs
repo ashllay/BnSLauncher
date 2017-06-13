@@ -56,7 +56,7 @@ namespace BnS_TwLauncher
 
             if (string.IsNullOrEmpty(sSettings.sRegion))
             {
-                Settings.IniWriteValue("Settings", "Region", "EN");
+                Settings.IniWriteValue("Settings", "Region", "KR");
                 Settings.IniWriteValue("Settings", "language", "English");
             }
             if (string.IsNullOrEmpty(sSettings.sArchitecture))
