@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BnS_TwLauncher
+namespace BnS_Launcher
 {
     static class Program
     {

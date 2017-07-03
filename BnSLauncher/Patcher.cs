@@ -44,35 +44,33 @@ namespace BnS_Launcher
             sSettings.sRegion = pSettings.IniReadValue("Settings", "Region");
             sSettings.sServerType = pSettings.IniReadValue("Settings", "ServerType");
 
-            _writer = new StreamWriter(richOut);
+            _writer = new StrWriter(richOut);
             Console.SetOut(_writer);
 
             // Find and set file paths
             // Check the registry
-            if (sSettings.sRegion == "JP")
-            {
-                stRegion = "Japan";
-            }
-            else if (sSettings.sRegion == "TW")
-            {
-                stRegion = "Taiwan";
-            }
-            else if (sSettings.sRegion == "KR")
-            {
-                if (sSettings.sServerType == "Live")
-                {
-                    stRegion = "Korean";
-                }
-                else if (sSettings.sServerType == "Test")
-                {
-                    stRegion = "Korean TEST";
-                }
-            }
 
-            else if (sSettings.sRegion == "EN")
+            switch (sSettings.sRegion)
             {
-                checkBox_Webl.Enabled = false;
-                stRegion = "West";
+                case "JP":
+                    stRegion = "Japan";
+                    break;
+                case "TW":
+                    stRegion = "Taiwan";
+                    break;
+                case "EN":
+                    checkBox_Webl.Enabled = false;
+                    stRegion = "West";
+                    break;
+                case "KR":
+                    checkBox_Webl.Enabled = false;
+                    if (sSettings.sServerType == "Live")
+                        stRegion = "Korean";
+                    else if (sSettings.sServerType == "Test")
+                        stRegion = "Korean TEST";
+                    break;
+                default:
+                    break;
             }
 
             if (sSettings.sInstallPath != null)

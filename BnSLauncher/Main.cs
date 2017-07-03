@@ -14,13 +14,11 @@ using System.Diagnostics;
 using System.Web.Security;
 using Ini;
 
-namespace BnS_TwLauncher
+namespace BnS_Launcher
 {
     public partial class Main : Form
     {
-
         private string LaunchPath = "";
-
         private string NoTextureStreaming = "";
         private string Unattended = "";
         private string UseAllCores = "";
@@ -70,25 +68,41 @@ namespace BnS_TwLauncher
         private void FormMain_Load(object sender, EventArgs e)
         {
             //NC West login
-            string SavedMail = Settings.IniReadValue("Account", "Mail");
-            string SavedPass = Settings.IniReadValue("Account", "Password");
+            string SavedMail = "";
+            string SavedPass = "";
 
             //if (!LauncherInfo())
             //    Close();
             //RegionCB.DataSource = regions;
+            switch (sSettings.sRegion)
+            {
+                case "EN":
+                    SavedMail = Settings.IniReadValue("Account", "Mail");
+                    SavedPass = Settings.IniReadValue("Account", "Password");
 
-            if (sSettings.sRegion == "EN")
-            {
-                if (!LauncherInfo())//
-                    Close();
-                RegionCB.DataSource = regions;
-                box_WestLogin.Visible = true;
-                Btn_play.Enabled = false;
-            }
-            else
-            {
-                box_WestLogin.Visible = false;
-                Btn_play.Enabled = true;
+                    if (!LauncherInfo())//
+                        Close();
+                    RegionCB.DataSource = regions;
+                    box_Login.Visible = true;
+                    Btn_play.Enabled = false;
+                    lbRegion.Visible = true;
+                    RegionCB.Visible = true;
+                    break;
+                case "KR":
+                    SavedMail = Settings.IniReadValue("KrAccount", "Mail");
+                    SavedPass = Settings.IniReadValue("KrAccount", "Password");
+
+                    if (!LauncherInfo())//
+                        Close();
+                    box_Login.Visible = true;
+                    Btn_play.Enabled = false;
+                    lbRegion.Visible = false;
+                    RegionCB.Visible = false;
+                    break;
+                default:
+                    box_Login.Visible = false;
+                    Btn_play.Enabled = true;
+                    break;
             }
 
 
@@ -115,133 +129,90 @@ namespace BnS_TwLauncher
 
         private void Btn_play_Click(object sender, EventArgs e)
         {
-
-            if (sSettings.sRegion == "JP")
-            {
-                if (sSettings.sInstallPath != null)
-                {
-                    if (sSettings.sArchitecture == "0")
-                        LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin\Client.exe");
-                    else
-                        LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin64\Client.exe");
-                }
-                // registry path not found, check for side-by-side install
-                else if (File.Exists(".\\Client.exe"))
-                    LaunchPath = ".\\Client.exe";
-            }
-            else if (sSettings.sRegion == "TW")
-            {
-                if (sSettings.sInstallPath != null)
-                {
-                    if (sSettings.sArchitecture == "0")
-                        LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin\Client.exe");
-                    else
-                        LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin64\Client.exe");
-                }
-                // registry path not found, check for side-by-side install
-                else if (File.Exists(".\\Client.exe"))
-                    LaunchPath = ".\\Client.exe";
-            }
-            else if (sSettings.sRegion == "KR")
-            {
-                if (sSettings.sServerType == "Live")
-                {
-                    if (sSettings.sInstallPath != null)
-                    {
-                        if (sSettings.sArchitecture == "0")
-                            LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin\Client.exe");
-                        else
-                            LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin64\Client.exe");
-                    }
-                    // registry path not found, check for side-by-side install
-                    else if (File.Exists(".\\Client.exe"))
-                    {
-                        LaunchPath = ".\\Client.exe";
-                    }
-                }
-                else if (sSettings.sServerType == "Test")
-                {
-                    if (sSettings.sInstallPath != null)
-                    {
-                        if (sSettings.sArchitecture == "0")
-                            LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin\Client.exe");
-                        else
-                            LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin64\Client.exe");
-                    }
-                    // registry path not found, check for side-by-side install
-                    else if (File.Exists(".\\Client.exe"))
-                    {
-                        LaunchPath = ".\\Client.exe";
-                    }
-                }
-            }
-
-            else if (sSettings.sRegion == "EN")
-            {
-                if (sSettings.sInstallPath != null)
-                {
-                    if (sSettings.sArchitecture == "0")
-                        LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin\Client.exe");
-                    else
-                        LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin64\Client.exe");
-                }
-                // registry path not found, check for side-by-side install
-                else if (File.Exists(".\\Client.exe"))
-                {
-                    LaunchPath = ".\\Client.exe";
-                }
-            }
             UseAllCores = !(sSettings.sUseAllCores == "true") ? "" : " -USEALLAVAILABLECORES";
             NoTextureStreaming = !(sSettings.sNoTextureStreaming == "true") ? "" : " -NOTEXTURESTREAMING";
             Unattended = !(sSettings.sUnattended == "true") ? "" : " -UNATTENDED";
 
             Process proc = new Process();
-            proc.StartInfo.FileName = LaunchPath;
+            string cliargs = "";
 
-            if (sSettings.sRegion == "JP")
+            switch (sSettings.sRegion)
             {
-                // Generated by Nc Launcher /LaunchByLauncher /Sesskey /SessKey:"" /CompanyID:"14" /ChannelGroupIndex:"-1" 
-                proc.StartInfo.Arguments = "/launchbylauncher /sesskey /CompanyID:" + "14" + "/ChannelGroupIndex:" + " - 1" + " /LoginMode 2 " + "" + UseAllCores + "" + Unattended + "" + NoTextureStreaming;
-                proc.StartInfo.UseShellExecute = false;
-                proc.StartInfo.RedirectStandardError = true;
+                case "JP":
+
+                    if (sSettings.sInstallPath != null)
+                    {
+                        if (sSettings.sArchitecture == "0")
+                            LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin\Client.exe");
+                        else
+                            LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin64\Client.exe");
+                    }
+
+                    // Generated by Nc Launcher /LaunchByLauncher /Sesskey /SessKey:"" /CompanyID:"14" /ChannelGroupIndex:"-1" 
+                    cliargs = "/launchbylauncher /sesskey /CompanyID:" + "14" + "/ChannelGroupIndex:" + " - 1" + " /LoginMode 2 " + "" + UseAllCores + "" + Unattended + "" + NoTextureStreaming;
+
+                    break;
+                case "TW":
+                    if (sSettings.sInstallPath != null)
+                    {
+                        if (sSettings.sArchitecture == "0")
+                            LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin\Client.exe");
+                        else
+                            LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin64\Client.exe");
+                    }
+
+                    // generated by Nc Launcher /LaunchByLauncher  /AuthnToken:"" /SessKey:"" /ServiceRegion:"15" /AuthProviderCode:"np"  /NPServerAddr:"210.64.136.126:6600" /PresenceId:"TWBNS22"
+                    cliargs = "/launchbylauncher /sesskey /ServiceRegion:" + "15" + "/ChannelGroupIndex:" + " - 1" + " /PresenceId:" + "TWBNS22" + " /LoginMode 2 " + "" + UseAllCores + "" + Unattended + "" + NoTextureStreaming;
+                    break;
+                case "KR":
+                    if (sSettings.sServerType == "Live")
+                    {
+                        if (sSettings.sInstallPath != null)
+                        {
+                            if (sSettings.sArchitecture == "0")
+                                LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin\Client.exe");
+                            else
+                                LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin64\Client.exe");
+                        }
+                        cliargs = "/launchbylauncher /AuthnToken:\"" + token + "\" /sesskey:\"" + token + "\" /ServiceRegion:\"0\" /AuthProviderCode:\"np\" /NPServerAddr:\"112.175.209.97:6600\" -lite:8 /PresenceId:\"BNS_KOR" + "" + UseAllCores + "" + Unattended + "" + NoTextureStreaming;
+                    }
+                    else if (sSettings.sServerType == "Test")
+                    {
+                        if (sSettings.sInstallPath != null)
+                        {
+                            if (sSettings.sArchitecture == "0")
+                                LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin\Client.exe");
+                            else
+                                LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin64\Client.exe");
+                        }
+                        cliargs = "/launchbylauncher /AuthnToken:\"" + token + "\" /sesskey:\"" + token + "\" /ServiceRegion:\"0\" /AuthProviderCode:\"np\" /NPServerAddr:\"112.175.209.97:6600\" -lite:8 /PresenceId:\"BNS_KOR_TEST" + "" + UseAllCores + "" + Unattended + "" + NoTextureStreaming;
+                    }
+
+                    break;
+
+                case "EN":
+                    if (sSettings.sInstallPath != null)
+                    {
+                        if (sSettings.sArchitecture == "0")
+                            LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin\Client.exe");
+                        else
+                            LaunchPath = Path.Combine(sSettings.sInstallPath, @"bin64\Client.exe");
+                    }
+
+                    // generated by Nc Launcher /launchbylauncher /sesskey -lang:english /CompanyID:"12" /ChannelGroupIndex:"-1" /AuthnToken:"==" /AuthProviderCode:"np"  -lang:English -lite:2 -region:0
+                    cliargs = "/launchbylauncher /sesskey -lang:english /CompanyID:\"12\" /ChannelGroupIndex:\"-1\" " + "/AuthnToken:\"" + token + "\" /sesskey /AuthProviderCode:\"np\"" + "-lang:" + sSettings.sLanguageID + " -lite:2 -region:" + currentValue + Unattended + "" + NoTextureStreaming + "" + UseAllCores + "";
+                    break;
+
+                default:
+                    break;
             }
 
-
-            else if (sSettings.sRegion == "TW")
-            {
-                // generated by Nc Launcher /LaunchByLauncher  /AuthnToken:"" /SessKey:"" /ServiceRegion:"15" /AuthProviderCode:"np"  /NPServerAddr:"210.64.136.126:6600" /PresenceId:"TWBNS22"
-                proc.StartInfo.Arguments = "/launchbylauncher /sesskey /ServiceRegion:" + "15" + "/ChannelGroupIndex:" + " - 1" + " /PresenceId:" + "TWBNS22" + " /LoginMode 2 " + "" + UseAllCores + "" + Unattended + "" + NoTextureStreaming;
-                proc.StartInfo.UseShellExecute = false;
-                proc.StartInfo.RedirectStandardError = true;
-            }
-            else if (sSettings.sRegion == "KR")
-            {
-                if (sSettings.sServerType == "Live")
-                {
-                    // generated by Nc Launcher /LaunchByLauncher  /AuthnToken:"" /SessKey:"" /ServiceRegion:"0" /AuthProviderCode:"np"  /NPServerAddr:"112.175.209.97:6600" -lite:8 /PresenceId:"BNS_KOR"
-                    proc.StartInfo.Arguments = "/launchbylauncher /sesskey /ServiceRegion:" + "0" + " -lite:8" + " /PresenceId:" + "BNS_KOR" + " /LoginMode 2 " + "" + UseAllCores + "" + Unattended + "" + NoTextureStreaming;
-                    proc.StartInfo.UseShellExecute = false;
-                    proc.StartInfo.RedirectStandardError = true;
-                }
-
-                else if (sSettings.sServerType == "Test")
-                {
-                    // generated by Nc Launcher /LaunchByLauncher  /AuthnToken:"" /SessKey:"" /ServiceRegion:"0" /AuthProviderCode:"np"  /NPServerAddr:"112.175.209.97:6600" -lite:8 /PresenceId:"BNS_KOR_TEST"
-                    proc.StartInfo.Arguments = "/launchbylauncher /sesskey /ServiceRegion:" + "0" + " -lite:8" + " /PresenceId:" + "BNS_KOR_TEST" + " /LoginMode 2 " + "" + UseAllCores + "" + Unattended + "" + NoTextureStreaming;
-                    proc.StartInfo.UseShellExecute = false;
-                    proc.StartInfo.RedirectStandardError = true;
-                }
-            }
-
-            else if (sSettings.sRegion == "EN")
-            {
-                // generated by Nc Launcher /launchbylauncher /sesskey -lang:english /CompanyID:"12" /ChannelGroupIndex:"-1" /AuthnToken:"==" /AuthProviderCode:"np"  -lang:English -lite:2 -region:0
-                proc.StartInfo.Arguments = "/launchbylauncher /sesskey -lang:english /CompanyID:\"12\" /ChannelGroupIndex:\"-1\" " + string.Format(args, token) + " /AuthProviderCode:\"np\"" + "-lang:" + sSettings.sLanguageID + " -lite:2 -region:" + currentValue + Unattended + "" + NoTextureStreaming + "" + UseAllCores + "";
-                proc.StartInfo.UseShellExecute = false;
-                proc.StartInfo.RedirectStandardError = true;
-            }
             try
             {
+                proc.StartInfo.FileName = LaunchPath;
+                proc.StartInfo.Arguments = cliargs;
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.RedirectStandardError = true;
                 proc.Start();
 
                 //kill ping thread enable login button and disable play button(west)
@@ -254,9 +225,9 @@ namespace BnS_TwLauncher
                     btn_Login.Text = "Login";
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Error: Could not start Client.exe!");
+                MessageBox.Show(ex.ToString());
             }
         }
 
@@ -269,54 +240,107 @@ namespace BnS_TwLauncher
 
         private void Settings_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //check region if west enable login box
-            if (sSettings.sRegion == "EN")
-            {
-                if (!LauncherInfo())
-                    Close();
-                RegionCB.DataSource = regions;
-                box_WestLogin.Visible = true;
+            string SavedMail = "";
+            string SavedPass = "";
 
-                //if open settings with logged account play button stay enabled
-                if (worker != null && worker.IsBusy)
+            txb_Mail.Text = "";
+            txb_Pass.Text = "";
+            //check region if west enable login box
+            try
+            {
+                if (sSettings.sRegion == "EN")
                 {
-                    Btn_play.Enabled = true;
+                    SavedMail = Settings.IniReadValue("Account", "Mail");
+                    SavedPass = Settings.IniReadValue("Account", "Password");
+                    if (!LauncherInfo())
+                        Close();
+                    RegionCB.DataSource = regions;
+                    box_Login.Visible = true;
+                    lbRegion.Visible = true;
+                    RegionCB.Visible = true;
+                    //if open settings with logged account play button stay enabled
+                    if (worker != null && worker.IsBusy)
+                    {
+                        Btn_play.Enabled = true;
+                    }
+                    else
+                    {
+                        btn_Login.Text = "Login";
+                        btn_Login.Enabled = true;//if change to other region and change back to NA enable login btn
+                        Btn_play.Enabled = false;
+                    }
+                }
+                else if (sSettings.sRegion == "KR")
+                {
+                    SavedMail = Settings.IniReadValue("KrAccount", "Mail");
+                    SavedPass = Settings.IniReadValue("KrAccount", "Password");
+                    if (!LauncherInfo())
+                        Close();
+                    //RegionCB.DataSource = regions;
+                    box_Login.Visible = true;
+                    lbRegion.Visible = false;
+                    RegionCB.Visible = false;
+
+                    //if open settings with logged account play button stay enabled
+                    if (worker != null && worker.IsBusy)
+                    {
+                        Btn_play.Enabled = true;
+                    }
+                    else
+                    {
+                        btn_Login.Text = "Login";
+                        btn_Login.Enabled = true;//if change to other region and change back to NA enable login btn
+                        Btn_play.Enabled = false;
+                    }
                 }
                 else
                 {
-                    btn_Login.Text = "Login";
-                    btn_Login.Enabled = true;//if change to other region and change back to NA enable login btn
-                    Btn_play.Enabled = false;
+                    //if not west or change region logged kill ping thread disable west login and enable play button
+                    if (worker != null && worker.IsBusy)
+                    {
+                        LoginServer.Close();
+                        worker.CancelAsync();
+                    }
+                    box_Login.Visible = false;
+                    Btn_play.Enabled = true;
+                }
+                if (string.IsNullOrWhiteSpace(SavedPass))
+                {
+                    cbox_Smail.Checked = false;
+                }
+                else
+                {
+                    txb_Mail.Text = Dec(SavedMail);
+                    cbox_Smail.Checked = true;
+                }
+
+                if (string.IsNullOrWhiteSpace(SavedPass))
+                {
+                    cbox_Spass.Checked = false;
+                }
+                else
+                {
+                    txb_Pass.Text = Dec(SavedPass);
+                    cbox_Spass.Checked = true;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                //if not west or change region logged kill ping thread disable west login and enable play button
-                if (worker != null && worker.IsBusy)
-                {
-                    LoginServer.Close();
-                    worker.CancelAsync();
-                }
-                box_WestLogin.Visible = false;
-                Btn_play.Enabled = true;
+                MessageBox.Show(ex.ToString());
             }
         }
 
         private void btn_Slider_Click(object sender, EventArgs e)
         {
             if (sSettings.sArchitecture == "0")
-            {
-                new BnS_Launcher.Slider.Slider_Form().Show();
-            }
+                new Slider.Slider_Form().Show();
             else
-            {
                 MessageBox.Show("Error: Slider works only on x86 Client!");
-            }
         }
 
         private void btn_patcher_Click(object sender, EventArgs e)
         {
-            new BnS_Launcher.Patcher().Show();
+            new Patcher().Show();
         }
 
         // NC login
@@ -341,7 +365,10 @@ namespace BnS_TwLauncher
                 }
                 else
                 {
-                    Settings.IniWriteValue("Account", "Mail", Enc(txb_Mail.Text));
+                    if (sSettings.sRegion == "EN")
+                        Settings.IniWriteValue("Account", "Mail", Enc(txb_Mail.Text));
+                    else if (sSettings.sRegion == "KR")
+                        Settings.IniWriteValue("KrAccount", "Mail", Enc(txb_Mail.Text));
                 }
             }
         }
@@ -355,7 +382,10 @@ namespace BnS_TwLauncher
                 }
                 else
                 {
-                    Settings.IniWriteValue("Account", "Password", Enc(txb_Pass.Text));
+                    if (sSettings.sRegion == "EN")
+                        Settings.IniWriteValue("Account", "Password", Enc(txb_Pass.Text));
+                    else if (sSettings.sRegion == "KR")
+                        Settings.IniWriteValue("KrAccount", "Password", Enc(txb_Pass.Text));
                 }
             }
         }
@@ -380,8 +410,7 @@ namespace BnS_TwLauncher
 
         BackgroundWorker worker;
         string username, password, epoch, pid, localIP;
-        //string args = "/launchbylauncher /sesskey -lang:english /CompanyID:\"12\" /ChannelGroupIndex:\"-1\" /AuthnToken:\"{0}\" /AuthProviderCode:\"np\"  -lang:English -lite:2 -region:{1}", token;
-        string args = "/AuthnToken:\"{0}\"", token;
+        string token;
         string LoginIp, LoginProgramid;
         int LoginPort, counter;
         BNSXorEncryption xor;
@@ -413,7 +442,6 @@ namespace BnS_TwLauncher
                 value = v;
                 appId = a;
             }
-
             public override string ToString()
             {
                 return name;
@@ -601,9 +629,20 @@ namespace BnS_TwLauncher
             //Get login server for BNS Info
             try
             {
+                string patch_server = "";
+                string game_id = "";
+
                 #region Get Login Server Info
-                string patch_server = "updater.nclauncher.ncsoft.com";
-                string game_id = "BnS";
+                if (sSettings.sRegion == "EN")
+                {
+                    patch_server = "updater.nclauncher.ncsoft.com";
+                    game_id = "BnS";
+                }
+                else if (sSettings.sRegion == "KR")
+                {
+                    patch_server = "up4svr.ncupdate.com";
+                    game_id = "ncLauncherS";
+                }
                 int port = 27500;
                 MemoryStream ms = new MemoryStream();
                 BinaryWriter bw = new BinaryWriter(ms);
@@ -657,12 +696,13 @@ namespace BnS_TwLauncher
 
                 XmlDocument xmldoc = new XmlDocument();
                 xmldoc.LoadXml(xml);
-
-                foreach (XmlElement regionEle in xmldoc.SelectNodes("//region"))
+                if (sSettings.sRegion == "EN")
                 {
-                    regions.Add(new region(regionEle.Attributes["name"].Value, regionEle.Attributes["value"].Value, regionEle.Attributes["appid"].Value));
+                    foreach (XmlElement regionEle in xmldoc.SelectNodes("//region"))
+                    {
+                        regions.Add(new region(regionEle.Attributes["name"].Value, regionEle.Attributes["value"].Value, regionEle.Attributes["appid"].Value));
+                    }
                 }
-
                 //MessageBox.Show(String.Format("IP: {0}\nPort: {1}\nProgramID: {2}\nAppID: {3}", LoginIp, LoginPort, LoginProgramid, LoginAppid));
             }
             catch (Exception ex)
@@ -785,7 +825,6 @@ namespace BnS_TwLauncher
 
         private void Try_Connection(object sender, DoWorkEventArgs e)
         {
-
             try
             {
 
@@ -1017,7 +1056,6 @@ namespace BnS_TwLauncher
             btn_Login.Enabled = false;
         }
 
-
         public class BNSXorEncryption
         {
             byte[] encKey, decKey;
@@ -1088,13 +1126,18 @@ namespace BnS_TwLauncher
                 LoginServer.Close();
                 worker.CancelAsync();
             }
-
-            currentAppId = ((region)RegionCB.SelectedValue).appId;
-            currentValue = ((region)RegionCB.SelectedValue).value;
-
+            if (sSettings.sRegion == "EN")
+            {
+                currentAppId = ((region)RegionCB.SelectedValue).appId;
+                currentValue = ((region)RegionCB.SelectedValue).value;
+            }
+            else if (sSettings.sRegion == "KR")
+            {
+                currentAppId = "B0D42105-0CB6-BC9F-3CB2-BE28A0662340";
+            }
             //Set some variables that are going to be used
             epoch = ((long)(DateTime.UtcNow - new DateTime(2001, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds).ToString();
-            username = txb_Mail.Text;
+            username = txb_Mail.Text.ToLower();
             password = txb_Pass.Text;
             pid = Process.GetCurrentProcess().Id.ToString();
             privateKey = new BigInteger(sha.ComputeHash(BigInteger.genRandom(6).getBytes()));
@@ -1123,6 +1166,13 @@ namespace BnS_TwLauncher
                     Settings.IniWriteValue("Account", "Mail", Enc(txb_Mail.Text));
                 if (cbox_Spass.Checked == true)
                     Settings.IniWriteValue("Account", "Password", Enc(txb_Pass.Text));
+            }
+            else if (sSettings.sRegion == "KR")
+            {
+                if (cbox_Smail.Checked == true)
+                    Settings.IniWriteValue("KrAccount", "Mail", Enc(txb_Mail.Text));
+                if (cbox_Spass.Checked == true)
+                    Settings.IniWriteValue("KrAccount", "Password", Enc(txb_Pass.Text));
             }
         }
         // NC Login

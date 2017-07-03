@@ -1,4 +1,4 @@
-﻿namespace BnS_TwLauncher
+﻿namespace BnS_Launcher
 {
     partial class Settings
     {

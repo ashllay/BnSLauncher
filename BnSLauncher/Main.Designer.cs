@@ -1,4 +1,4 @@
-﻿namespace BnS_TwLauncher
+﻿namespace BnS_Launcher
 {
     partial class Main
     {
@@ -33,17 +33,17 @@
             this.btn_settings = new System.Windows.Forms.Button();
             this.btn_Slider = new System.Windows.Forms.Button();
             this.btn_patcher = new System.Windows.Forms.Button();
-            this.box_WestLogin = new System.Windows.Forms.GroupBox();
+            this.box_Login = new System.Windows.Forms.GroupBox();
             this.cbox_Spass = new System.Windows.Forms.CheckBox();
             this.cbox_Smail = new System.Windows.Forms.CheckBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lbRegion = new System.Windows.Forms.Label();
             this.RegionCB = new System.Windows.Forms.ComboBox();
             this.btn_Login = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txb_Pass = new System.Windows.Forms.TextBox();
             this.txb_Mail = new System.Windows.Forms.TextBox();
-            this.box_WestLogin.SuspendLayout();
+            this.box_Login.SuspendLayout();
             this.SuspendLayout();
             // 
             // Btn_play
@@ -99,26 +99,26 @@
             this.btn_patcher.UseVisualStyleBackColor = false;
             this.btn_patcher.Click += new System.EventHandler(this.btn_patcher_Click);
             // 
-            // box_WestLogin
+            // box_Login
             // 
-            this.box_WestLogin.BackColor = System.Drawing.Color.Transparent;
-            this.box_WestLogin.BackgroundImage = global::BnS_Launcher.Properties.Resources._2x2;
-            this.box_WestLogin.Controls.Add(this.cbox_Spass);
-            this.box_WestLogin.Controls.Add(this.cbox_Smail);
-            this.box_WestLogin.Controls.Add(this.label3);
-            this.box_WestLogin.Controls.Add(this.RegionCB);
-            this.box_WestLogin.Controls.Add(this.btn_Login);
-            this.box_WestLogin.Controls.Add(this.label2);
-            this.box_WestLogin.Controls.Add(this.label1);
-            this.box_WestLogin.Controls.Add(this.txb_Pass);
-            this.box_WestLogin.Controls.Add(this.txb_Mail);
-            this.box_WestLogin.ForeColor = System.Drawing.Color.White;
-            this.box_WestLogin.Location = new System.Drawing.Point(12, 303);
-            this.box_WestLogin.Name = "box_WestLogin";
-            this.box_WestLogin.Size = new System.Drawing.Size(345, 104);
-            this.box_WestLogin.TabIndex = 6;
-            this.box_WestLogin.TabStop = false;
-            this.box_WestLogin.Text = "West login form";
+            this.box_Login.BackColor = System.Drawing.Color.Transparent;
+            this.box_Login.BackgroundImage = global::BnS_Launcher.Properties.Resources._2x2;
+            this.box_Login.Controls.Add(this.cbox_Spass);
+            this.box_Login.Controls.Add(this.cbox_Smail);
+            this.box_Login.Controls.Add(this.lbRegion);
+            this.box_Login.Controls.Add(this.RegionCB);
+            this.box_Login.Controls.Add(this.btn_Login);
+            this.box_Login.Controls.Add(this.label2);
+            this.box_Login.Controls.Add(this.label1);
+            this.box_Login.Controls.Add(this.txb_Pass);
+            this.box_Login.Controls.Add(this.txb_Mail);
+            this.box_Login.ForeColor = System.Drawing.Color.White;
+            this.box_Login.Location = new System.Drawing.Point(12, 303);
+            this.box_Login.Name = "box_Login";
+            this.box_Login.Size = new System.Drawing.Size(345, 104);
+            this.box_Login.TabIndex = 6;
+            this.box_Login.TabStop = false;
+            this.box_Login.Text = "Login form";
             // 
             // cbox_Spass
             // 
@@ -142,14 +142,14 @@
             this.cbox_Smail.UseVisualStyleBackColor = true;
             this.cbox_Smail.CheckedChanged += new System.EventHandler(this.cbox_Smail_CheckedChanged);
             // 
-            // label3
+            // lbRegion
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 74);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(44, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Region:";
+            this.lbRegion.AutoSize = true;
+            this.lbRegion.Location = new System.Drawing.Point(6, 74);
+            this.lbRegion.Name = "lbRegion";
+            this.lbRegion.Size = new System.Drawing.Size(44, 13);
+            this.lbRegion.TabIndex = 9;
+            this.lbRegion.Text = "Region:";
             // 
             // RegionCB
             // 
@@ -213,7 +213,7 @@
             this.BackgroundImage = global::BnS_Launcher.Properties.Resources._5334298_1girl_animal_ears_blade__amp__soul_blush_bodysuit_boots_brown_eyes_brown_hair;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(617, 417);
-            this.Controls.Add(this.box_WestLogin);
+            this.Controls.Add(this.box_Login);
             this.Controls.Add(this.btn_patcher);
             this.Controls.Add(this.btn_Slider);
             this.Controls.Add(this.btn_settings);
@@ -226,8 +226,8 @@
             this.TransparencyKey = System.Drawing.Color.Fuchsia;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
-            this.box_WestLogin.ResumeLayout(false);
-            this.box_WestLogin.PerformLayout();
+            this.box_Login.ResumeLayout(false);
+            this.box_Login.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -238,13 +238,13 @@
         private System.Windows.Forms.Button btn_settings;
         private System.Windows.Forms.Button btn_Slider;
         private System.Windows.Forms.Button btn_patcher;
-        private System.Windows.Forms.GroupBox box_WestLogin;
+        private System.Windows.Forms.GroupBox box_Login;
         private System.Windows.Forms.Button btn_Login;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txb_Pass;
         private System.Windows.Forms.TextBox txb_Mail;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lbRegion;
         private System.Windows.Forms.ComboBox RegionCB;
         private System.Windows.Forms.CheckBox cbox_Smail;
         private System.Windows.Forms.CheckBox cbox_Spass;

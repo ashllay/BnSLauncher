@@ -149,7 +149,7 @@
     <Compile Include="Slider\SliderCategory.cs" />
     <Compile Include="Slider\Slider.cs" />
     <Compile Include="Slider\Win32.cs" />
-    <Compile Include="StreamWriter.cs" />
+    <Compile Include="StrWriter.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>

@@ -5,7 +5,7 @@ using Ini;
 using System.Xml;
 using System.Text;
 
-namespace BnS_TwLauncher
+namespace BnS_Launcher
 {
     public partial class Settings : Form
     {
@@ -53,20 +53,28 @@ namespace BnS_TwLauncher
         {
             // Find Client.exe and set file paths
             // Check the registry
-            if (sSettings.sRegion == "JP")
-                rB_JP.Checked = true;
-            else if (sSettings.sRegion == "TW")
-                rB_TW.Checked = true;
-            else if (sSettings.sRegion == "EN")
-                rB_EN.Checked = true;
-            else if (sSettings.sRegion == "KR")
+            switch (sSettings.sRegion)
             {
-                rB_KR.Checked = true;
-                if (sSettings.sServerType == "Live")
-                    rB_KRLive.Checked = true;
-                else if (sSettings.sServerType == "Test")
-                    rB_KRTest.Checked = true;
+                case "JP":
+                    rB_JP.Checked = true;
+                    break;
+                case "TW":
+                    rB_TW.Checked = true;
+                    break;
+                case "EN":
+                    rB_EN.Checked = true;
+                    break;
+                case "KR":
+                    rB_KR.Checked = true;
+                    if (sSettings.sServerType == "Live")
+                        rB_KRLive.Checked = true;
+                    else if (sSettings.sServerType == "Test")
+                        rB_KRTest.Checked = true;
+                    break;
+                default:
+                    break;
             }
+
 
             if (sSettings.sInstallPath != null)
                 PathsFound = true;
