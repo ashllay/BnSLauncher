@@ -4,6 +4,7 @@ using System.IO;
 using Ini;
 using System.Xml;
 using System.Text;
+using Microsoft.Win32;
 
 namespace BnS_Launcher
 {
@@ -25,6 +26,17 @@ namespace BnS_Launcher
         IniFile fSettings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
         SettingsClass sSettings = new SettingsClass();
 
+        //string KorPath = "";
+        //string KorTestPath = "";
+        //string WstPath = "";
+        //string JpnPath = "";
+        //string TwnPath = "";
+
+        string sRegion = "";
+        string sServerType = "";
+        string sArchteture = "";
+        string sLanguage = "";
+
         public Settings()
         {
             InitializeComponent();
@@ -40,44 +52,34 @@ namespace BnS_Launcher
             if (string.IsNullOrEmpty(sSettings.sArchitecture))
             {
                 fSettings.IniWriteValue("Settings", "Architecture", "0");
-                x86_rB.Checked = true;
             }
             if (string.IsNullOrEmpty(sSettings.sArchitecture))
             {
                 fSettings.IniWriteValue("Settings", "ServerType", "Live");
-                rB_KRLive.Checked = true;
             }
         }
 
         private void FomrSettings_Load(object sender, EventArgs e)
         {
+
+            //populate region combox
+            if (sSettings.gKorPath == true || sSettings.gKorTestPath == true)
+                cbox_Region.Items.AddRange(new object[] { "Korean" });
+            if (sSettings.gWstPath == true)
+                cbox_Region.Items.AddRange(new object[] { "West (NA-EU)" });
+            if (sSettings.gTwnPath == true)
+                cbox_Region.Items.AddRange(new object[] { "Taiwan" });
+            if (sSettings.gJpnPath == true)
+                cbox_Region.Items.AddRange(new object[] { "Japan" });
+           
             // Find Client.exe and set file paths
             // Check the registry
-            switch (sSettings.sRegion)
-            {
-                case "JP":
-                    rB_JP.Checked = true;
-                    break;
-                case "TW":
-                    rB_TW.Checked = true;
-                    break;
-                case "EN":
-                    rB_EN.Checked = true;
-                    break;
-                case "KR":
-                    rB_KR.Checked = true;
-                    if (sSettings.sServerType == "Live")
-                        rB_KRLive.Checked = true;
-                    else if (sSettings.sServerType == "Test")
-                        rB_KRTest.Checked = true;
-                    break;
-                default:
-                    break;
-            }
-
 
             if (sSettings.sInstallPath != null)
                 PathsFound = true;
+            //--
+            gbox_krserver.Hide();
+            groupBox_west_lang.Hide();
 
             if (PathsFound == true)
             {
@@ -100,37 +102,53 @@ namespace BnS_Launcher
 
                 if (sSettings.sUseAllCores == "true")
                     cBallCores.Checked = true;
-
                 //--
-                if (sSettings.sLanguageID == "English")
-                    radioButton_Eng.Checked = true;
-
-                if (sSettings.sLanguageID == "German")
-                    radioButton_Ger.Checked = true;
-
-                if (sSettings.sLanguageID == "French")
-                    radioButton_Fre.Checked = true;
-
-                //--
-                if (rB_EN.Checked)
-                    groupBox_west_lang.Show();
-                else
-                    groupBox_west_lang.Hide();
-
-                if (rB_KR.Checked)
-                    gbox_krserver.Show();
-                else
-                    gbox_krserver.Hide();
-                //--
-                if (sSettings.sArchitecture == "0")
+                switch (sSettings.sRegion)
                 {
-                    x86_rB.Checked = true;
-                    x64_Rb.Checked = false;
+                    //
+                    case "KR":
+                        cbox_Region.SelectedItem = "Korean";
+                        if (sSettings.gKorTestPath == true)
+                            gbox_krserver.Show();
+                        break;
+                    case "EN":
+                        cbox_Region.SelectedItem = "West (NA-EU)";
+                        groupBox_west_lang.Show();
+                        break;
+                    case "TW":
+                        cbox_Region.SelectedItem = "Taiwan";
+                        break;
+                    case "JP":
+                        cbox_Region.SelectedItem = "Japan";
+                        break;
+                    default:
+                        break;
                 }
+
+                if (sSettings.sArchitecture == "0")
+                    cbox_Arch.SelectedItem = "x86";
                 else
+                    cbox_Arch.SelectedItem = "x64";
+
+                if (sSettings.sServerType == "Live")
+                    cbox_KorServer.SelectedItem = "Live";
+                else if (sSettings.sServerType == "Test")
+                    cbox_KorServer.SelectedItem = "Test";
+
+                switch (sSettings.sLanguageID)
                 {
-                    x86_rB.Checked = false;
-                    x64_Rb.Checked = true;
+                    //
+                    case "English":
+                        cbox_west_lang.SelectedItem = "English";
+                        break;
+                    case "German":
+                        cbox_west_lang.SelectedItem = "German";
+                        break;
+                    case "French":
+                        cbox_west_lang.SelectedItem = "French";
+                        break;
+                    default:
+                        break;
                 }
                 Sts_Label.Text = "";
             }
@@ -151,9 +169,9 @@ namespace BnS_Launcher
                     }
                 }
             }
-            catch (Exception exception)
+            catch// (Exception exception)
             {
-                MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -204,108 +222,7 @@ namespace BnS_Launcher
                 Sts_Label.Text = "Use all cores disabled.";
             }
         }
-        private void rB_JP_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rB_JP.Checked == true)
-            {
-                sSettings.sRegion = "JP";
-                fSettings.IniWriteValue("Settings", "Region", "JP");
-                groupBox_west_lang.Hide();
-                gbox_krserver.Hide();
-            }
-        }
-
-        private void rB_TW_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rB_TW.Checked == true)
-            {
-                sSettings.sRegion = "TW";
-                fSettings.IniWriteValue("Settings", "Region", "TW");
-                groupBox_west_lang.Hide();
-                gbox_krserver.Hide();
-            }
-        }
-
-        private void rB_KR_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rB_KR.Checked == true)
-            {
-                if (sSettings.sServerType == "Live")
-                    rB_KRLive.Checked = true;
-                if (sSettings.sServerType == "Test")
-                    rB_KRTest.Checked = true;
-
-                sSettings.sRegion = "KR";
-
-                gbox_krserver.Show();
-                groupBox_west_lang.Hide();
-
-                fSettings.IniWriteValue("Settings", "Region", "KR");
-            }
-        }
-
-        private void rB_KRLive_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rB_KRLive.Checked == true)
-            {
-                sSettings.sServerType = "Live";
-                rB_KRTest.Checked = false;
-                fSettings.IniWriteValue("Settings", "ServerType", "Live");
-            }
-        }
-        private void rB_KRTest_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rB_KRTest.Checked == true)
-            {
-                sSettings.sServerType = "Test";
-                rB_KRLive.Checked = false;
-                fSettings.IniWriteValue("Settings", "ServerType", "Test");
-            }
-        }
-
-        private void rB_EN_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rB_EN.Checked == true)
-            {
-
-                sSettings.sRegion = "EN";
-                fSettings.IniWriteValue("Settings", "Region", "EN");
-                fSettings.IniWriteValue("Settings", "language", "English");
-                groupBox_west_lang.Show();
-                gbox_krserver.Hide();
-            }
-        }
-
-        private void radioButton_Eng_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioButton_Eng.Checked == true)
-                fSettings.IniWriteValue("Settings", "language", "English");
-        }
-
-        private void radioButton_Ger_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioButton_Ger.Checked == true)
-                fSettings.IniWriteValue("Settings", "language", "German");
-        }
-
-        private void radioButton_Fre_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioButton_Fre.Checked == true)
-                fSettings.IniWriteValue("Settings", "language", "French");
-        }
-
-        private void x86_rB_CheckedChanged(object sender, EventArgs e)
-        {
-            if (x86_rB.Checked == true)
-                fSettings.IniWriteValue("Settings", "Architecture", "0");
-        }
-
-        private void x64_Rb_CheckedChanged(object sender, EventArgs e)
-        {
-            if (x64_Rb.Checked == true)
-                fSettings.IniWriteValue("Settings", "Architecture", "1");
-        }
-
+        
         private void cbx_disableImg_CheckedChanged(object sender, EventArgs e)
         {
             if (LoadingDisabled == false)
@@ -369,10 +286,99 @@ namespace BnS_Launcher
                 writer.Close();
                 stream2.Close();
             }
-            catch (Exception exception)
+            catch// (Exception exception)
             {
-                MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void cbox_Region_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cbox_Region.SelectedItem.ToString())
+            {
+                //
+                case "Korean":
+                    sRegion = "KR";
+                    break;
+                case "West (NA-EU)":
+                    sRegion = "EN";
+                    break;
+                case "Taiwan":
+                    sRegion = "TW";
+                    break;
+                case "Japan":
+                    sRegion = "JP";
+                    break;
+                default:
+                    break;
+            }
+
+            if (cbox_Region.SelectedItem.ToString() == "West (NA-EU)")
+                groupBox_west_lang.Show();
+            else
+                groupBox_west_lang.Hide();
+
+            if (cbox_Region.SelectedItem.ToString() == "Korean" && sSettings.gKorTestPath == true)
+                gbox_krserver.Show();
+            else
+                gbox_krserver.Hide();
+
+            fSettings.IniWriteValue("Settings", "Region", sRegion);
+        }
+
+        private void cbox_Arch_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cbox_Arch.SelectedItem.ToString())
+            {
+                //
+                case "x86":
+                    sArchteture = "0";
+                    break;
+                case "x64":
+                    sArchteture = "1";
+                    break;
+                default:
+                    break;
+            }
+            fSettings.IniWriteValue("Settings", "Architecture", sArchteture);
+        }
+
+        private void cbox_KorServer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cbox_KorServer.SelectedItem.ToString())
+            {
+                //
+                case "Live":
+                    sServerType = "Live";
+                    break;
+                case "Test":
+                    sServerType = "Test";
+                    break;
+                default:
+                    break;
+            }
+            fSettings.IniWriteValue("Settings", "ServerType", sServerType);
+        }
+
+        private void cbox_west_lang_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cbox_west_lang.SelectedItem.ToString())
+            {
+                //
+                case "English":
+                    sLanguage = "English";
+                    break;
+                case "German":
+                    sLanguage = "German";
+                    break;
+                case "French":
+                    sLanguage = "French";
+                    break;
+                default:
+                    break;
+            }
+            fSettings.IniWriteValue("Settings", "language", sLanguage);
+            
         }
     }
 }

@@ -20,11 +20,82 @@ class SettingsClass
     string xmlsettings = "";
 
     IniFile fSettings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
-   
-    // Declare a Name property of type string:
+
+    //Declare a Name property of type string:
+    public bool KorPath = false;
+    public bool KorTestPath = false;
+    public bool WstPath = false;
+    public bool JpnPath = false;
+    public bool TwnPath = false;
+
+    string sKorPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
+    string sKorTestPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
+    string sWstPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
+    string sTwnPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
+    string sJpnPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_JPN", "BaseDir", null);
+
+    public bool gKorPath
+    {
+        get
+        {
+            if (sKorPath != null)
+                KorPath = true;
+            return KorPath;
+        }
+        set { KorPath = value; }
+    }
+
+    public bool gKorTestPath
+    {
+        get
+        {
+            if (sKorTestPath != null)
+                KorTestPath = true;
+            return KorTestPath;
+        }
+        set
+        { KorTestPath = value; }
+    }
+
+    public bool gWstPath
+    {
+        get
+        {
+            if (sWstPath != null)
+                WstPath = true;
+            return WstPath;
+        }
+        set
+        { WstPath = value; }
+    }
+
+    public bool gTwnPath
+    {
+        get
+        {
+            if (sTwnPath != null)
+                TwnPath = true;
+            return TwnPath;
+        }
+        set
+        { TwnPath = value; }
+    }
+
+    public bool gJpnPath
+    {
+        get
+        {
+            if (sJpnPath != null)
+                JpnPath = true;
+
+            return JpnPath;
+        }
+        set
+        { JpnPath = value; }
+    }
     public string sInstallPath
     {
-        get{return installpath;}
+        get { return installpath; }
         set { installpath = value; }
     }
 
@@ -116,12 +187,14 @@ class SettingsClass
             }
             catch// (Exception ex)
             {
-                MessageBox.Show("Client not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // MessageBox.Show("Client not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            //if(installpath != null)
+            //    MessageBox.Show("Client not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return region;
         }
         set { region = value; }
-        
+
     }
     public string sLanguageID
     {

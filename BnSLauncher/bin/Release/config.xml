@@ -22,7 +22,9 @@
     </Record>
     <Record>
       <Race>Lyn</Race>-
-      <Gender>Female</Gender><Offset>0x11CC</Offset></Record>
+      <Gender>Female</Gender>
+	  <Offset>0x11CC</Offset>
+	  </Record>
     <Record>
       <Race>Jin</Race>
       <Gender>Female</Gender>

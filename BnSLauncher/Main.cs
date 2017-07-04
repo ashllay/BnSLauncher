@@ -27,8 +27,6 @@ namespace BnS_Launcher
         IniFile Settings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
         public Main()
         {
-            InitializeComponent();
-
             sSettings.sNoTextureStreaming = Settings.IniReadValue("Settings", "NoTextureStreaming");
             sSettings.sUnattended = Settings.IniReadValue("Settings", "Unattended");
             sSettings.sRegion = Settings.IniReadValue("Settings", "Region");
@@ -39,8 +37,9 @@ namespace BnS_Launcher
 
             var settingsFile = Environment.CurrentDirectory + "\\Settings.ini";
             if (!File.Exists(settingsFile))
+            {
                 File.Create(settingsFile).Dispose();
-
+            }
             if (string.IsNullOrEmpty(sSettings.sUseAllCores))
                 Settings.IniWriteValue("Settings", "UseAllCores", "false");
             if (string.IsNullOrEmpty(sSettings.sNoTextureStreaming))
@@ -49,19 +48,15 @@ namespace BnS_Launcher
                 Settings.IniWriteValue("Settings", "Architecture", "0");
             if (string.IsNullOrEmpty(sSettings.sUnattended))
                 Settings.IniWriteValue("Settings", "Unattended", "false");
-            if (string.IsNullOrEmpty(sSettings.sUnattended))
-                Settings.IniWriteValue("Settings", "ServerType", "Live");
 
+            
             if (string.IsNullOrEmpty(sSettings.sRegion))
             {
-                Settings.IniWriteValue("Settings", "Region", "KR");
-                Settings.IniWriteValue("Settings", "language", "English");
+                Settings settings = new Settings();
+                settings.FormClosing += new FormClosingEventHandler(Settings_FormClosing);
+                settings.Show();
             }
-            if (string.IsNullOrEmpty(sSettings.sArchitecture))
-            {
-                MessageBox.Show("Error: Game Architecture not set defalt is x86!!");
-                Settings.IniWriteValue("Settings", "Architecture", "0");
-            }
+            InitializeComponent();
         }
 
 
