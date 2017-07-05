@@ -22,6 +22,8 @@ namespace BnS_Launcher
         private string NoTextureStreaming = "";
         private string Unattended = "";
         private string UseAllCores = "";
+        private bool ClientFound;
+        private string ClientReg = "";
 
         SettingsClass sSettings = new SettingsClass();
         IniFile Settings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
@@ -49,12 +51,65 @@ namespace BnS_Launcher
             if (string.IsNullOrEmpty(sSettings.sUnattended))
                 Settings.IniWriteValue("Settings", "Unattended", "false");
 
-            
-            if (string.IsNullOrEmpty(sSettings.sRegion))
+            switch (sSettings.sRegion)
             {
-                Settings settings = new Settings();
-                settings.FormClosing += new FormClosingEventHandler(Settings_FormClosing);
-                settings.Show();
+                case "KR":
+                    if (sSettings.gKorPath == false)
+                    {
+                        ClientFound = false;
+                        ClientReg = "BnS Korea";
+                    }
+                    if (sSettings.gKorTestPath == false)
+                    {
+                        ClientFound = false;
+                        ClientReg = "BnS Korea(test)";
+                    }
+                    break;
+                case "EN":
+                    if (sSettings.gWstPath == false)
+                    {
+                        ClientFound = false;
+                        ClientReg = "BnS West";
+                    }
+                    break;
+                case "TW":
+                    if (sSettings.gTwnPath == false)
+                    {
+                        ClientFound = false;
+                        ClientReg = "BnS Taiwan";
+                    }
+                    break;
+                case "JP":
+                    if (sSettings.gJpnPath == false)
+                    {
+                        ClientFound = false;
+                        ClientReg = "BnS Japan";
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if(string.IsNullOrEmpty(sSettings.sRegion))
+            {
+                ClientFound = true;
+                DialogResult dr = MessageBox.Show("Client not chosen!\nPlease select your on Settings.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (dr == DialogResult.OK)
+                {
+                    Settings settings = new Settings();
+                    settings.FormClosing += new FormClosingEventHandler(Settings_FormClosing);
+                    settings.Show();
+                }
+            }
+            if (ClientFound == false)
+            {
+                DialogResult dr = MessageBox.Show(ClientReg + " Client not found!\nPlease select your on Settings.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (dr == DialogResult.OK)
+                {
+                    Settings settings = new Settings();
+                    settings.FormClosing += new FormClosingEventHandler(Settings_FormClosing);
+                    settings.Show();
+                }
             }
             InitializeComponent();
         }
@@ -1143,11 +1198,9 @@ namespace BnS_Launcher
             worker.WorkerSupportsCancellation = true;
             worker.DoWork += Try_Connection;
             worker.RunWorkerAsync();
-
         }
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //string mcRegion = Settings.IniReadValue("Settings", "language");
             //kill login thread(west)
             if (worker != null && worker.IsBusy)
             {
