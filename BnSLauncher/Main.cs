@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Web.Security;
 using Ini;
+using BnS_Launcher.lib;
 
 namespace BnS_Launcher
 {
@@ -22,11 +23,14 @@ namespace BnS_Launcher
         private string NoTextureStreaming = "";
         private string Unattended = "";
         private string UseAllCores = "";
-        private bool ClientFound;
+        private bool ClientFound = true;
         private string ClientReg = "";
 
         SettingsClass sSettings = new SettingsClass();
         IniFile Settings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
+
+        private BslI18NLoader _i18N;
+
         public Main()
         {
             sSettings.sNoTextureStreaming = Settings.IniReadValue("Settings", "NoTextureStreaming");
@@ -90,7 +94,7 @@ namespace BnS_Launcher
                     break;
             }
 
-            if(string.IsNullOrEmpty(sSettings.sRegion))
+            if (string.IsNullOrEmpty(sSettings.sRegion))
             {
                 ClientFound = true;
                 DialogResult dr = MessageBox.Show("Client not chosen!\nPlease select your on Settings.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -112,9 +116,15 @@ namespace BnS_Launcher
                 }
             }
             InitializeComponent();
+            InitI18N();
         }
 
-
+        private void InitI18N()
+        {
+            this._i18N = BslI18NLoader.Instance;
+            this.Btn_play.Text = this._i18N.LoadI18NValue("Main", "Btn_play");
+            this.Text = this._i18N.LoadI18NValue("Main", "title");
+        }
         private void FormMain_Load(object sender, EventArgs e)
         {
             //NC West login
