@@ -15,30 +15,32 @@ namespace BnS_Launcher
         XmlDocument document;
         XmlNode node;
         XmlElement element;
-        string str2;
+        string str2, str3;
         FileStream stream;
         StreamReader reader;
-        string str3;
         FileStream stream2;
         StreamWriter writer;
 
         IniFile fSettings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
         SettingsClass sSettings = new SettingsClass();
 
-        //string KorPath = "";
-        //string KorTestPath = "";
-        //string WstPath = "";
-        //string JpnPath = "";
-        //string TwnPath = "";
-
         string sRegion = "";
         string sServerType = "";
         string sArchteture = "";
         string sLanguage = "";
 
+        private BslI18NLoader _i18N;
+        string mbox_llangchange, lb_texturestron, lb_texturestroff, lb_noattendoff, lb_noattendon, lb_allcoreson, lb_allcoresoff, lb_loadimgoff, lb_loadimgon, mbox_disableimg, mbox_enableimg;
+
         public Settings()
         {
             InitializeComponent();
+            InitI18N();
+
+            cbox_llang.Items.AddRange(BslManager.Instance.LanguageNames.ToArray());
+            var lang = (string)BslManager.Instance.SystemSettings["lang"];
+            cbox_llang.SelectedIndex = BslManager.Instance.LanguageTypes.IndexOf(lang);
+            cbox_llang.SelectedIndexChanged += new EventHandler(cbox_llang_SelectedIndexChanged);
 
             sSettings.sNoTextureStreaming = fSettings.IniReadValue("Settings", "NoTextureStreaming");
             sSettings.sUnattended = fSettings.IniReadValue("Settings", "Unattended");
@@ -46,7 +48,39 @@ namespace BnS_Launcher
             sSettings.sLanguageID = fSettings.IniReadValue("Settings", "language");
             sSettings.sUseAllCores = fSettings.IniReadValue("Settings", "UseAllCores");
             sSettings.sArchitecture = fSettings.IniReadValue("Settings", "Architecture");
-            sSettings.sServerType = fSettings.IniReadValue("Settings", "ServerType");
+            sSettings.sServerType = fSettings.IniReadValue("Settings", "ServerType");            
+        }
+
+        private void InitI18N()
+        {
+            _i18N = BslI18NLoader.Instance;
+            //groupboxes
+            gbox_llang.Text = _i18N.LoadI18NValue("Settings", "gbox_llang");
+            gbox_region.Text = _i18N.LoadI18NValue("Settings", "gbox_region");
+            gbox_arc.Text = _i18N.LoadI18NValue("Settings", "gbox_arc");
+            gbox_krserver.Text = _i18N.LoadI18NValue("Settings", "gbox_krserver");
+            gbox_westlang.Text = _i18N.LoadI18NValue("Settings", "gbox_westlang");
+            //tabpages
+            tpage_client.Text = _i18N.LoadI18NValue("Settings", "tpage_client");
+            tpage_lsettings.Text = _i18N.LoadI18NValue("Settings", "tpage_lsettings");
+            tpage_others.Text = _i18N.LoadI18NValue("Settings", "tpage_others");
+            //checkboxes
+            cbox_texstr.Text = _i18N.LoadI18NValue("Settings", "cbox_texstr");
+            cbox_mboxes.Text = _i18N.LoadI18NValue("Settings", "cbox_mboxes");
+            cbox_disableimg.Text = _i18N.LoadI18NValue("Settings", "cbox_disableimg");
+            cbox_allcores.Text = _i18N.LoadI18NValue("Settings", "cbox_allcores");
+            //labels
+            lb_zoom.Text = _i18N.LoadI18NValue("Settings", "lb_zoom");
+            lb_texturestron = _i18N.LoadI18NValue("Settings", "lb_texturestron");
+            lb_texturestroff = _i18N.LoadI18NValue("Settings", "lb_texturestroff");
+            lb_noattendon = _i18N.LoadI18NValue("Settings", "lb_noattendon");
+            lb_noattendoff = _i18N.LoadI18NValue("Settings", "lb_noattendoff");
+            lb_allcoreson = _i18N.LoadI18NValue("Settings", "lb_allcoreson");
+            lb_allcoresoff = _i18N.LoadI18NValue("Settings", "lb_allcoresoff");
+            //messageboxes
+            mbox_llangchange = _i18N.LoadI18NValue("Settings", "mbox_llangchange");
+            mbox_disableimg = _i18N.LoadI18NValue("Settings", "mbox_disableimg");
+            mbox_enableimg = _i18N.LoadI18NValue("Settings", "mbox_enableimg");
 
         }
 
@@ -70,7 +104,7 @@ namespace BnS_Launcher
                 PathsFound = true;
             //--
             gbox_krserver.Hide();
-            groupBox_west_lang.Hide();
+            gbox_westlang.Hide();
 
             if (PathsFound == true)
             {
@@ -81,18 +115,18 @@ namespace BnS_Launcher
                 if (File.Exists(sSettings.sModPath + "\\..\\loading\\00009368.bak"))
                 {
                     LoadingDisabled = true;
-                    cbx_disableImg.Checked = true;
+                    cbox_disableimg.Checked = true;
                 }
 
                 //--
                 if (sSettings.sNoTextureStreaming == "true")
-                    cBtextureStr.Checked = true;
+                    cbox_texstr.Checked = true;
 
                 if (sSettings.sUnattended == "true")
-                    cBmsBox.Checked = true;
+                    cbox_mboxes.Checked = true;
 
                 if (sSettings.sUseAllCores == "true")
-                    cBallCores.Checked = true;
+                    cbox_allcores.Checked = true;
                 //--
                 switch (sSettings.sRegion)
                 {
@@ -104,7 +138,7 @@ namespace BnS_Launcher
                         break;
                     case "EN":
                         cbox_Region.SelectedItem = "West (NA-EU)";
-                        groupBox_west_lang.Show();
+                        gbox_westlang.Show();
                         break;
                     case "TW":
                         cbox_Region.SelectedItem = "Taiwan";
@@ -168,49 +202,49 @@ namespace BnS_Launcher
 
         private void cBtextureStr_CheckedChanged(object sender, EventArgs e)
         {
-            if (cBtextureStr.Checked == true)
+            if (cbox_texstr.Checked == true)
             {
                 sSettings.sNoTextureStreaming = "true";
                 fSettings.IniWriteValue("Settings", "NoTextureStreaming", "true");
-                Sts_Label.Text = "Texture streaming disabled.";
+                Sts_Label.Text = lb_texturestron;
             }
             else
             {
                 sSettings.sNoTextureStreaming = "false";
                 fSettings.IniWriteValue("Settings", "NoTextureStreaming", "false");
-                Sts_Label.Text = "Texture streaming enabled.";
+                Sts_Label.Text = lb_texturestroff;
             }
         }
 
         private void cBmsBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (cBmsBox.Checked == true)
+            if (cbox_mboxes.Checked == true)
             {
                 sSettings.sUnattended = "true";
                 fSettings.IniWriteValue("Settings", "Unattended", "true");
-                Sts_Label.Text = "Message boxes disabled.";
+                Sts_Label.Text = lb_noattendon;
             }
             else
             {
                 sSettings.sUnattended = "false";
                 fSettings.IniWriteValue("Settings", "Unattended", "false");
-                Sts_Label.Text = "Message boxes enabled.";
+                Sts_Label.Text =lb_noattendoff;
             }
         }
 
         private void checkBox_AllCores_CheckedChanged(object sender, EventArgs e)
         {
-            if (cBallCores.Checked == true)
+            if (cbox_allcores.Checked == true)
             {
                 sSettings.sUseAllCores = "true";
                 fSettings.IniWriteValue("Settings", "UseAllCores", "true");
-                Sts_Label.Text = "Use all cores enabled.";
+                Sts_Label.Text = lb_allcoreson;
             }
             else
             {
                 sSettings.sUseAllCores = "false";
                 fSettings.IniWriteValue("Settings", "UseAllCores", "false");
-                Sts_Label.Text = "Use all cores disabled.";
+                Sts_Label.Text = lb_allcoresoff;
             }
         }
 
@@ -223,11 +257,11 @@ namespace BnS_Launcher
                 {
                     File.Move(sSettings.sLocalCookedPCPath + "Loading.pkg", sSettings.sModPath + "\\..\\loading\\loading.bak");
                     File.Move(sSettings.sLocalCookedPCPath + "00009368.upk", sSettings.sModPath + "\\..\\loading\\00009368.bak");
-                    Sts_Label.Text = "Loading screens disabled.";
+                    Sts_Label.Text = lb_loadimgoff;
                 }
                 catch
                 {
-                    MessageBox.Show("Error: Could not disable loading screens!");
+                    MessageBox.Show(mbox_disableimg);
                 }
             }
             else if (LoadingDisabled == true)
@@ -237,11 +271,11 @@ namespace BnS_Launcher
                 {
                     File.Move(sSettings.sModPath + "\\..\\loading\\loading.bak", sSettings.sLocalCookedPCPath + "Loading.pkg");
                     File.Move(sSettings.sModPath + "\\..\\loading\\00009368.bak", sSettings.sLocalCookedPCPath + "00009368.upk");
-                    Sts_Label.Text = "Loading screens enabled.";
+                    Sts_Label.Text = lb_loadimgon;
                 }
                 catch
                 {
-                    MessageBox.Show("Error: Could not enable loading screens!");
+                    MessageBox.Show(mbox_enableimg);
                 }
             }
         }
@@ -315,9 +349,9 @@ namespace BnS_Launcher
             }
 
             if (cbox_Region.SelectedItem.ToString() == "West (NA-EU)")
-                groupBox_west_lang.Show();
+                gbox_westlang.Show();
             else
-                groupBox_west_lang.Hide();
+                gbox_westlang.Hide();
 
             if (cbox_Region.SelectedItem.ToString() == "Korean" && sSettings.gKorTestPath == true)
                 gbox_krserver.Show();
@@ -384,17 +418,13 @@ namespace BnS_Launcher
         private void cbox_llang_SelectedIndexChanged(object sender, EventArgs e)
         {
             // 重新记录语言信息，并写入配置文件
-            var lang = BslManager.Instance.LanguageTypes[this.cbox_llang.SelectedIndex];
+            var lang = BslManager.Instance.LanguageTypes[cbox_llang.SelectedIndex];
             BslManager.Instance.SystemSettings["lang"] = lang;
             BslManager.WriteJsonFile(BslManager.PathJsonSettings, BslManager.Instance.SystemSettings);
 
             // 显示重启程序提示信息
             // 这一段因为关系到语言的设定，使用双语显示，不作为配置设定
-            //BslManager.DisplayInfoMessageBox(
-            //    "重启以生效改动 / Restart to activate the setting change",
-            //    "你需要手动重启应用程序，来应用当前改动的语言配置！\r\n" +
-            //    "You have to restart the application manually, to activate the language setting change!"
-            //);
+            MessageBox.Show(mbox_llangchange,"Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
@@ -45,20 +42,22 @@ namespace BnS_Launcher
         {
             SystemSettings = ReadJsonFile(PathJsonSettings);
 
-
             var lang = (string)SystemSettings["lang"];
             DataI18N = ReadJsonFile(PathI18N + lang + ".json");
 
-            LanguageNames = new List<string>();
-            LanguageNames.AddRange(new []
-            {
-                "简体中文", "English"
-            });
-            LanguageTypes = new List<string>();
-            LanguageTypes.AddRange(new []
-            {
-                "zh_CN", "en_US"
-            });
+
+            var LanguageNamesConfig = (JArray)SystemSettings["Launcher"]["languagenames"];
+            this.LanguageNames = new List<string>();
+            this.LanguageNames.AddRange(
+                LanguageNamesConfig.ToObject<List<string>>()
+            );
+
+            var LanguageTypesConfig = (JArray)SystemSettings["Launcher"]["languagetypes"];
+            this.LanguageTypes = new List<string>();
+            this.LanguageTypes.AddRange(
+                LanguageTypesConfig.ToObject<List<string>>()
+            );
+
         }
 
         public static JObject ReadJsonFile(string path)
@@ -87,6 +86,18 @@ namespace BnS_Launcher
         public static void CreateFile(string path)
         {
             File.Create(path).Dispose();
+        }
+
+        public static DialogResult DisplayInfoMessageBox(string boxTitle, string boxMsg)
+        {
+            try
+            {
+                return MessageBox.Show(boxMsg, boxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return DialogResult.Cancel;
+            }
         }
     }
 }
