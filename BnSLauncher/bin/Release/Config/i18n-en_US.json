@@ -1,6 +1,18 @@
 {
 	"Main": {
-        "Btn_play": "Jogar",
-        "title": "BnsModTool By Jonathan - 17173 Bns Mod Group Provide",
+		"title": "BnsLauncher",
+		"btn_patcher": "Patcher",
+		"btn_settings": "Settings",
+		"bnt_slider": "Slider",
+		"Btn_login": "Login",
+		"Btn_play": "Play",
+		"lb_mail": "Email:",
+		"lb_pass": "Password:",
+        "lb_region": "Region",
+		"msb_clinotset": "Client not chosen!\nPlease select your on Settings.",
+		"msb_clinotfound": " Client not found!\nPlease select your on Settings.",
+		"msb_slidererror": "Slider works only on x86 Client!",
+		"msb_emptypass": "Password field is empty!!",
+		"msb_emptymail": "Email field is empty!!",
     }
 }

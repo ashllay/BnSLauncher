@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
 using Microsoft.Win32;
-using Ini;
-using System.Windows.Forms;
+using BnS_Launcher.lib;
 
 class SettingsClass
 {
@@ -18,16 +17,15 @@ class SettingsClass
     string architeture = "";
     string servertype = "";
     string xmlsettings = "";
-
-    IniFile fSettings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
-
-    //Declare a Name property of type string:
+    //
     public bool KorPath = false;
     public bool KorTestPath = false;
     public bool WstPath = false;
     public bool JpnPath = false;
     public bool TwnPath = false;
-
+    //
+    IniFile fSettings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
+    
     string sKorPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
     string sKorTestPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
     string sWstPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
@@ -142,21 +140,21 @@ class SettingsClass
                 switch (region)
                 {
                     case "JP":
-                        installpath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_JPN", "BaseDir", null);
+                        installpath = sJpnPath;
                         installpathregion = @"contents\Local\NCJAPAN\";
                         localcoockedpcpath = Path.Combine(sInstallPath, sInstallPathRegion, @"JAPANESE\CookedPC\");
                         modpath = Path.Combine(sLocalCookedPCPath + @"mod\");
                         xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCJAPAN\ClientConfiguration.xml";
                         break;
                     case "TW":
-                        installpath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
+                        installpath = sTwnPath;
                         installpathregion = @"contents\Local\NCTAIWAN\";
                         localcoockedpcpath = Path.Combine(sInstallPath, sInstallPathRegion, @"CHINESET\CookedPC\");
                         modpath = Path.Combine(sLocalCookedPCPath, @"mod\");
                         xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCTAIWAN\ClientConfiguration.xml";
                         break;
                     case "EN":
-                        installpath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
+                        installpath = sWstPath;
                         installpathregion = @"contents\Local\NCWEST\";
                         localcoockedpcpath = Path.Combine(sInstallPath, sInstallPathRegion, @"ENGLISH\CookedPC\");
                         modpath = Path.Combine(localcoockedpcpath, @"mod\");
@@ -166,7 +164,7 @@ class SettingsClass
                         servertype = fSettings.IniReadValue("Settings", "ServerType");
                         if (servertype == "Live")
                         {
-                            installpath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
+                            installpath = sKorPath;
                             installpathregion = @"contents\local\NCSoft\";
                             modpath = Path.Combine(sInstallPath, sInstallPathRegion, @"korean\CookedPC\mod\");
                             localcoockedpcpath = Path.Combine(sInstallPath, @"contents\bns\CookedPC\");
@@ -174,7 +172,7 @@ class SettingsClass
                         }
                         else if (servertype == "Test")
                         {
-                            installpath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
+                            installpath = sKorTestPath;
                             installpathregion = @"contents\local\NCSoft\";
                             modpath = Path.Combine(sInstallPath, sInstallPathRegion, @"korean\CookedPC\mod\");
                             localcoockedpcpath = Path.Combine(sInstallPath, @"contents\bns\CookedPC\");
@@ -185,12 +183,7 @@ class SettingsClass
                         break;
                 }
             }
-            catch// (Exception ex)
-            {
-                // MessageBox.Show("Client not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            //if(installpath != null)
-            //    MessageBox.Show("Client not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            catch { }
             return region;
         }
         set { region = value; }

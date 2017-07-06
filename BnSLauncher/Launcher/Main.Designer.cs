@@ -29,36 +29,36 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            this.Btn_play = new System.Windows.Forms.Button();
+            this.btn_play = new System.Windows.Forms.Button();
             this.btn_settings = new System.Windows.Forms.Button();
-            this.btn_Slider = new System.Windows.Forms.Button();
+            this.btn_slider = new System.Windows.Forms.Button();
             this.btn_patcher = new System.Windows.Forms.Button();
             this.box_Login = new System.Windows.Forms.GroupBox();
             this.cbox_Spass = new System.Windows.Forms.CheckBox();
             this.cbox_Smail = new System.Windows.Forms.CheckBox();
-            this.lbRegion = new System.Windows.Forms.Label();
+            this.lb_region = new System.Windows.Forms.Label();
             this.RegionCB = new System.Windows.Forms.ComboBox();
             this.btn_Login = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lb_pass = new System.Windows.Forms.Label();
+            this.lb_mail = new System.Windows.Forms.Label();
             this.txb_Pass = new System.Windows.Forms.TextBox();
             this.txb_Mail = new System.Windows.Forms.TextBox();
             this.box_Login.SuspendLayout();
             this.SuspendLayout();
             // 
-            // Btn_play
+            // btn_play
             // 
-            this.Btn_play.BackColor = System.Drawing.Color.Transparent;
-            this.Btn_play.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.Btn_play.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_play.ForeColor = System.Drawing.Color.White;
-            this.Btn_play.Location = new System.Drawing.Point(517, 350);
-            this.Btn_play.Name = "Btn_play";
-            this.Btn_play.Size = new System.Drawing.Size(91, 57);
-            this.Btn_play.TabIndex = 0;
-            this.Btn_play.Text = "Play";
-            this.Btn_play.UseVisualStyleBackColor = false;
-            this.Btn_play.Click += new System.EventHandler(this.Btn_play_Click);
+            this.btn_play.BackColor = System.Drawing.Color.Transparent;
+            this.btn_play.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btn_play.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_play.ForeColor = System.Drawing.Color.White;
+            this.btn_play.Location = new System.Drawing.Point(517, 350);
+            this.btn_play.Name = "btn_play";
+            this.btn_play.Size = new System.Drawing.Size(91, 57);
+            this.btn_play.TabIndex = 0;
+            this.btn_play.Text = "Play";
+            this.btn_play.UseVisualStyleBackColor = false;
+            this.btn_play.Click += new System.EventHandler(this.Btn_play_Click);
             // 
             // btn_settings
             // 
@@ -73,18 +73,18 @@
             this.btn_settings.UseVisualStyleBackColor = false;
             this.btn_settings.Click += new System.EventHandler(this.btn_settings_Click);
             // 
-            // btn_Slider
+            // btn_slider
             // 
-            this.btn_Slider.BackColor = System.Drawing.Color.Transparent;
-            this.btn_Slider.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Slider.ForeColor = System.Drawing.Color.White;
-            this.btn_Slider.Location = new System.Drawing.Point(93, 3);
-            this.btn_Slider.Name = "btn_Slider";
-            this.btn_Slider.Size = new System.Drawing.Size(75, 23);
-            this.btn_Slider.TabIndex = 3;
-            this.btn_Slider.Text = "Slider";
-            this.btn_Slider.UseVisualStyleBackColor = false;
-            this.btn_Slider.Click += new System.EventHandler(this.btn_Slider_Click);
+            this.btn_slider.BackColor = System.Drawing.Color.Transparent;
+            this.btn_slider.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_slider.ForeColor = System.Drawing.Color.White;
+            this.btn_slider.Location = new System.Drawing.Point(93, 3);
+            this.btn_slider.Name = "btn_slider";
+            this.btn_slider.Size = new System.Drawing.Size(75, 23);
+            this.btn_slider.TabIndex = 3;
+            this.btn_slider.Text = "Slider";
+            this.btn_slider.UseVisualStyleBackColor = false;
+            this.btn_slider.Click += new System.EventHandler(this.btn_Slider_Click);
             // 
             // btn_patcher
             // 
@@ -105,11 +105,11 @@
             this.box_Login.BackgroundImage = global::BnS_Launcher.Properties.Resources._2x2;
             this.box_Login.Controls.Add(this.cbox_Spass);
             this.box_Login.Controls.Add(this.cbox_Smail);
-            this.box_Login.Controls.Add(this.lbRegion);
+            this.box_Login.Controls.Add(this.lb_region);
             this.box_Login.Controls.Add(this.RegionCB);
             this.box_Login.Controls.Add(this.btn_Login);
-            this.box_Login.Controls.Add(this.label2);
-            this.box_Login.Controls.Add(this.label1);
+            this.box_Login.Controls.Add(this.lb_pass);
+            this.box_Login.Controls.Add(this.lb_mail);
             this.box_Login.Controls.Add(this.txb_Pass);
             this.box_Login.Controls.Add(this.txb_Mail);
             this.box_Login.ForeColor = System.Drawing.Color.White;
@@ -142,14 +142,14 @@
             this.cbox_Smail.UseVisualStyleBackColor = true;
             this.cbox_Smail.CheckedChanged += new System.EventHandler(this.cbox_Smail_CheckedChanged);
             // 
-            // lbRegion
+            // lb_region
             // 
-            this.lbRegion.AutoSize = true;
-            this.lbRegion.Location = new System.Drawing.Point(6, 74);
-            this.lbRegion.Name = "lbRegion";
-            this.lbRegion.Size = new System.Drawing.Size(44, 13);
-            this.lbRegion.TabIndex = 9;
-            this.lbRegion.Text = "Region:";
+            this.lb_region.AutoSize = true;
+            this.lb_region.Location = new System.Drawing.Point(6, 74);
+            this.lb_region.Name = "lb_region";
+            this.lb_region.Size = new System.Drawing.Size(44, 13);
+            this.lb_region.TabIndex = 9;
+            this.lb_region.Text = "Region:";
             // 
             // RegionCB
             // 
@@ -172,23 +172,23 @@
             this.btn_Login.UseVisualStyleBackColor = true;
             this.btn_Login.Click += new System.EventHandler(this.btn_Login_Click);
             // 
-            // label2
+            // lb_pass
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 48);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Password:";
+            this.lb_pass.AutoSize = true;
+            this.lb_pass.Location = new System.Drawing.Point(6, 48);
+            this.lb_pass.Name = "lb_pass";
+            this.lb_pass.Size = new System.Drawing.Size(56, 13);
+            this.lb_pass.TabIndex = 3;
+            this.lb_pass.Text = "Password:";
             // 
-            // label1
+            // lb_mail
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Email:";
+            this.lb_mail.AutoSize = true;
+            this.lb_mail.Location = new System.Drawing.Point(6, 22);
+            this.lb_mail.Name = "lb_mail";
+            this.lb_mail.Size = new System.Drawing.Size(35, 13);
+            this.lb_mail.TabIndex = 2;
+            this.lb_mail.Text = "Email:";
             // 
             // txb_Pass
             // 
@@ -215,9 +215,9 @@
             this.ClientSize = new System.Drawing.Size(617, 417);
             this.Controls.Add(this.box_Login);
             this.Controls.Add(this.btn_patcher);
-            this.Controls.Add(this.btn_Slider);
+            this.Controls.Add(this.btn_slider);
             this.Controls.Add(this.btn_settings);
-            this.Controls.Add(this.Btn_play);
+            this.Controls.Add(this.btn_play);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -234,17 +234,17 @@
 
         #endregion
 
-        private System.Windows.Forms.Button Btn_play;
+        private System.Windows.Forms.Button btn_play;
         private System.Windows.Forms.Button btn_settings;
-        private System.Windows.Forms.Button btn_Slider;
+        private System.Windows.Forms.Button btn_slider;
         private System.Windows.Forms.Button btn_patcher;
         private System.Windows.Forms.GroupBox box_Login;
         private System.Windows.Forms.Button btn_Login;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lb_pass;
+        private System.Windows.Forms.Label lb_mail;
         private System.Windows.Forms.TextBox txb_Pass;
         private System.Windows.Forms.TextBox txb_Mail;
-        private System.Windows.Forms.Label lbRegion;
+        private System.Windows.Forms.Label lb_region;
         private System.Windows.Forms.ComboBox RegionCB;
         private System.Windows.Forms.CheckBox cbox_Smail;
         private System.Windows.Forms.CheckBox cbox_Spass;

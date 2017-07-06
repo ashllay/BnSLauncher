@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.IO;
-using Ini;
+using BnS_Launcher.lib;
 
 namespace BnS_Launcher
 {

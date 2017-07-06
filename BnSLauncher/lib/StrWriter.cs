@@ -4,7 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 
 
-namespace BnS_Launcher
+namespace BnS_Launcher.lib
 {
     public class StrWriter : TextWriter
     {

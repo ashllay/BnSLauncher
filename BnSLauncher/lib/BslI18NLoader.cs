@@ -24,14 +24,14 @@ namespace BnS_Launcher.lib
 
         private BslI18NLoader()
         {
-            this._i18n = BslManager.Instance.DataI18N;
+            _i18n = BslManager.Instance.DataI18N;
         }
 
         public string LoadI18NValue(string uiClassName, string key)
         {
             try
             {
-                return (string)this._i18n[uiClassName][key];
+                return (string)_i18n[uiClassName][key];
             }
             catch (Exception ex)
             {

@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Ini
+namespace BnS_Launcher.lib
 {
     /// <summary>
     /// Create a New INI file to store or load data

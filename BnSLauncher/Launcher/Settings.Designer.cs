@@ -45,6 +45,9 @@
             this.cBallCores = new System.Windows.Forms.CheckBox();
             this.cBmsBox = new System.Windows.Forms.CheckBox();
             this.cBtextureStr = new System.Windows.Forms.CheckBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.cbox_llang = new System.Windows.Forms.ComboBox();
+            this.lb_llang = new System.Windows.Forms.Label();
             this.sts_ = new System.Windows.Forms.StatusStrip();
             this.Sts_Label = new System.Windows.Forms.ToolStripStatusLabel();
             this.SettingsTab.SuspendLayout();
@@ -54,6 +57,7 @@
             this.gBox_Arc.SuspendLayout();
             this.groupBox_west_lang.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.sts_.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,10 +66,11 @@
             this.SettingsTab.AccessibleName = "SettingsTab";
             this.SettingsTab.Controls.Add(this.tabPage1);
             this.SettingsTab.Controls.Add(this.tabPage2);
+            this.SettingsTab.Controls.Add(this.tabPage3);
             this.SettingsTab.Location = new System.Drawing.Point(7, 7);
             this.SettingsTab.Name = "SettingsTab";
             this.SettingsTab.SelectedIndex = 0;
-            this.SettingsTab.Size = new System.Drawing.Size(197, 175);
+            this.SettingsTab.Size = new System.Drawing.Size(197, 178);
             this.SettingsTab.TabIndex = 0;
             // 
             // tabPage1
@@ -78,7 +83,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(189, 149);
+            this.tabPage1.Size = new System.Drawing.Size(189, 152);
             this.tabPage1.TabIndex = 1;
             this.tabPage1.Text = "Region";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -88,7 +93,7 @@
             this.groupBox1.Controls.Add(this.cbox_Region);
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(176, 40);
+            this.groupBox1.Size = new System.Drawing.Size(176, 43);
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Region";
@@ -107,7 +112,7 @@
             // gbox_krserver
             // 
             this.gbox_krserver.Controls.Add(this.cbox_KorServer);
-            this.gbox_krserver.Location = new System.Drawing.Point(97, 52);
+            this.gbox_krserver.Location = new System.Drawing.Point(97, 54);
             this.gbox_krserver.Name = "gbox_krserver";
             this.gbox_krserver.Size = new System.Drawing.Size(85, 43);
             this.gbox_krserver.TabIndex = 17;
@@ -124,7 +129,7 @@
             this.cbox_KorServer.Items.AddRange(new object[] {
             "Live",
             "Test"});
-            this.cbox_KorServer.Location = new System.Drawing.Point(7, 14);
+            this.cbox_KorServer.Location = new System.Drawing.Point(7, 15);
             this.cbox_KorServer.Name = "cbox_KorServer";
             this.cbox_KorServer.Size = new System.Drawing.Size(70, 21);
             this.cbox_KorServer.TabIndex = 19;
@@ -133,7 +138,7 @@
             // gBox_Arc
             // 
             this.gBox_Arc.Controls.Add(this.cbox_Arch);
-            this.gBox_Arc.Location = new System.Drawing.Point(6, 52);
+            this.gBox_Arc.Location = new System.Drawing.Point(6, 54);
             this.gBox_Arc.Name = "gBox_Arc";
             this.gBox_Arc.Size = new System.Drawing.Size(85, 43);
             this.gBox_Arc.TabIndex = 15;
@@ -147,7 +152,7 @@
             this.cbox_Arch.Items.AddRange(new object[] {
             "x86",
             "x64"});
-            this.cbox_Arch.Location = new System.Drawing.Point(6, 14);
+            this.cbox_Arch.Location = new System.Drawing.Point(6, 15);
             this.cbox_Arch.Name = "cbox_Arch";
             this.cbox_Arch.Size = new System.Drawing.Size(70, 21);
             this.cbox_Arch.TabIndex = 21;
@@ -156,9 +161,9 @@
             // groupBox_west_lang
             // 
             this.groupBox_west_lang.Controls.Add(this.cbox_west_lang);
-            this.groupBox_west_lang.Location = new System.Drawing.Point(6, 101);
+            this.groupBox_west_lang.Location = new System.Drawing.Point(6, 103);
             this.groupBox_west_lang.Name = "groupBox_west_lang";
-            this.groupBox_west_lang.Size = new System.Drawing.Size(176, 41);
+            this.groupBox_west_lang.Size = new System.Drawing.Size(176, 43);
             this.groupBox_west_lang.TabIndex = 14;
             this.groupBox_west_lang.TabStop = false;
             this.groupBox_west_lang.Text = "West Language";
@@ -171,7 +176,7 @@
             "English",
             "German",
             "French"});
-            this.cbox_west_lang.Location = new System.Drawing.Point(7, 14);
+            this.cbox_west_lang.Location = new System.Drawing.Point(7, 16);
             this.cbox_west_lang.Name = "cbox_west_lang";
             this.cbox_west_lang.Size = new System.Drawing.Size(162, 21);
             this.cbox_west_lang.TabIndex = 20;
@@ -188,7 +193,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(189, 149);
+            this.tabPage2.Size = new System.Drawing.Size(189, 152);
             this.tabPage2.TabIndex = 0;
             this.tabPage2.Text = "Others";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -253,6 +258,36 @@
             this.cBtextureStr.UseVisualStyleBackColor = true;
             this.cBtextureStr.CheckedChanged += new System.EventHandler(this.cBtextureStr_CheckedChanged);
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.cbox_llang);
+            this.tabPage3.Controls.Add(this.lb_llang);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(189, 152);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Launcher settings";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // cbox_llang
+            // 
+            this.cbox_llang.FormattingEnabled = true;
+            this.cbox_llang.Location = new System.Drawing.Point(62, 6);
+            this.cbox_llang.Name = "cbox_llang";
+            this.cbox_llang.Size = new System.Drawing.Size(121, 21);
+            this.cbox_llang.TabIndex = 1;
+            this.cbox_llang.SelectedIndexChanged += new System.EventHandler(this.cbox_llang_SelectedIndexChanged);
+            // 
+            // lb_llang
+            // 
+            this.lb_llang.AutoSize = true;
+            this.lb_llang.Location = new System.Drawing.Point(6, 9);
+            this.lb_llang.Name = "lb_llang";
+            this.lb_llang.Size = new System.Drawing.Size(35, 13);
+            this.lb_llang.TabIndex = 0;
+            this.lb_llang.Text = "label2";
+            // 
             // sts_
             // 
             this.sts_.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -290,6 +325,8 @@
             this.groupBox_west_lang.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.sts_.ResumeLayout(false);
             this.sts_.PerformLayout();
             this.ResumeLayout(false);
@@ -317,5 +354,8 @@
         private System.Windows.Forms.ComboBox cbox_KorServer;
         private System.Windows.Forms.ComboBox cbox_Arch;
         private System.Windows.Forms.ComboBox cbox_west_lang;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.ComboBox cbox_llang;
+        private System.Windows.Forms.Label lb_llang;
     }
 }

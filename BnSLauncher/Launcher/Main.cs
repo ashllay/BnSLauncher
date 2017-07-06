@@ -12,7 +12,6 @@ using System.Xml;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Web.Security;
-using Ini;
 using BnS_Launcher.lib;
 
 namespace BnS_Launcher
@@ -23,8 +22,10 @@ namespace BnS_Launcher
         private string NoTextureStreaming = "";
         private string Unattended = "";
         private string UseAllCores = "";
-        private bool ClientFound = true;
         private string ClientReg = "";
+        private string msb_clinotset, msb_clinotfound, msb_slidererror, msb_emptypass, msb_emptymail, msb_mainterror;
+
+        private bool ClientFound = true;
 
         SettingsClass sSettings = new SettingsClass();
         IniFile Settings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
@@ -33,6 +34,9 @@ namespace BnS_Launcher
 
         public Main()
         {
+            InitializeComponent();
+            InitI18N();
+
             sSettings.sNoTextureStreaming = Settings.IniReadValue("Settings", "NoTextureStreaming");
             sSettings.sUnattended = Settings.IniReadValue("Settings", "Unattended");
             sSettings.sRegion = Settings.IniReadValue("Settings", "Region");
@@ -96,8 +100,9 @@ namespace BnS_Launcher
 
             if (string.IsNullOrEmpty(sSettings.sRegion))
             {
+               
                 ClientFound = true;
-                DialogResult dr = MessageBox.Show("Client not chosen!\nPlease select your on Settings.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DialogResult dr = MessageBox.Show(msb_clinotset.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 if (dr == DialogResult.OK)
                 {
                     Settings settings = new Settings();
@@ -107,7 +112,7 @@ namespace BnS_Launcher
             }
             if (ClientFound == false)
             {
-                DialogResult dr = MessageBox.Show(ClientReg + " Client not found!\nPlease select your on Settings.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DialogResult dr = MessageBox.Show(ClientReg + msb_clinotfound, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 if (dr == DialogResult.OK)
                 {
                     Settings settings = new Settings();
@@ -115,15 +120,31 @@ namespace BnS_Launcher
                     settings.Show();
                 }
             }
-            InitializeComponent();
-            InitI18N();
+            
         }
 
         private void InitI18N()
         {
-            this._i18N = BslI18NLoader.Instance;
-            this.Btn_play.Text = this._i18N.LoadI18NValue("Main", "Btn_play");
-            this.Text = this._i18N.LoadI18NValue("Main", "title");
+            _i18N = BslI18NLoader.Instance;
+            //MainFormTitle
+            Text = _i18N.LoadI18NValue("Main", "title");
+            //messagebox
+            msb_clinotset = _i18N.LoadI18NValue("Main", "msb_clinotset");
+            msb_clinotfound = _i18N.LoadI18NValue("Main", "msb_clinotfound");
+            msb_slidererror = _i18N.LoadI18NValue("Main", "msb_slidererror");
+            msb_emptypass = _i18N.LoadI18NValue("Main", "msb_emptypass");
+            msb_emptymail = _i18N.LoadI18NValue("Main", "msb_emptymail");
+            msb_mainterror = _i18N.LoadI18NValue("Main", "msb_mainterror");
+            //buttons
+            btn_patcher.Text = _i18N.LoadI18NValue("Main", "btn_patcher");
+            btn_settings.Text = _i18N.LoadI18NValue("Main", "btn_settings");
+            btn_slider.Text = _i18N.LoadI18NValue("Main", "bnt_slider");
+            btn_play.Text = _i18N.LoadI18NValue("Main", "Btn_play");
+            btn_Login.Text = _i18N.LoadI18NValue("Main", "Btn_login");
+            //labels
+            lb_mail.Text = _i18N.LoadI18NValue("Main", "lb_mail");
+            lb_pass.Text = _i18N.LoadI18NValue("Main", "lb_pass");
+            lb_region.Text = _i18N.LoadI18NValue("Main", "lb_region");
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -131,9 +152,6 @@ namespace BnS_Launcher
             string SavedMail = "";
             string SavedPass = "";
 
-            //if (!LauncherInfo())
-            //    Close();
-            //RegionCB.DataSource = regions;
             switch (sSettings.sRegion)
             {
                 case "EN":
@@ -144,8 +162,8 @@ namespace BnS_Launcher
                         Close();
                     RegionCB.DataSource = regions;
                     box_Login.Visible = true;
-                    Btn_play.Enabled = false;
-                    lbRegion.Visible = true;
+                    btn_play.Enabled = false;
+                    lb_region.Visible = true;
                     RegionCB.Visible = true;
                     break;
                 case "KR":
@@ -155,13 +173,13 @@ namespace BnS_Launcher
                     if (!LauncherInfo())//
                         Close();
                     box_Login.Visible = true;
-                    Btn_play.Enabled = false;
-                    lbRegion.Visible = false;
+                    btn_play.Enabled = false;
+                    lb_region.Visible = false;
                     RegionCB.Visible = false;
                     break;
                 default:
                     box_Login.Visible = false;
-                    Btn_play.Enabled = true;
+                    btn_play.Enabled = true;
                     break;
             }
 
@@ -280,7 +298,7 @@ namespace BnS_Launcher
                 {
                     LoginServer.Close();
                     worker.CancelAsync();
-                    Btn_play.Enabled = false;
+                    btn_play.Enabled = false;
                     btn_Login.Enabled = true;
                     btn_Login.Text = "Login";
                 }
@@ -316,18 +334,18 @@ namespace BnS_Launcher
                         Close();
                     RegionCB.DataSource = regions;
                     box_Login.Visible = true;
-                    lbRegion.Visible = true;
+                    lb_region.Visible = true;
                     RegionCB.Visible = true;
                     //if open settings with logged account play button stay enabled
                     if (worker != null && worker.IsBusy)
                     {
-                        Btn_play.Enabled = true;
+                        btn_play.Enabled = true;
                     }
                     else
                     {
                         btn_Login.Text = "Login";
                         btn_Login.Enabled = true;//if change to other region and change back to NA enable login btn
-                        Btn_play.Enabled = false;
+                        btn_play.Enabled = false;
                     }
                 }
                 else if (sSettings.sRegion == "KR")
@@ -338,19 +356,19 @@ namespace BnS_Launcher
                         Close();
                     //RegionCB.DataSource = regions;
                     box_Login.Visible = true;
-                    lbRegion.Visible = false;
+                    lb_region.Visible = false;
                     RegionCB.Visible = false;
 
                     //if open settings with logged account play button stay enabled
                     if (worker != null && worker.IsBusy)
                     {
-                        Btn_play.Enabled = true;
+                        btn_play.Enabled = true;
                     }
                     else
                     {
                         btn_Login.Text = "Login";
                         btn_Login.Enabled = true;//if change to other region and change back to NA enable login btn
-                        Btn_play.Enabled = false;
+                        btn_play.Enabled = false;
                     }
                 }
                 else
@@ -362,7 +380,7 @@ namespace BnS_Launcher
                         worker.CancelAsync();
                     }
                     box_Login.Visible = false;
-                    Btn_play.Enabled = true;
+                    btn_play.Enabled = true;
                 }
                 if (string.IsNullOrWhiteSpace(SavedPass))
                 {
@@ -395,7 +413,7 @@ namespace BnS_Launcher
             if (sSettings.sArchitecture == "0")
                 new Slider.Slider_Form().Show();
             else
-                MessageBox.Show("Error: Slider works only on x86 Client!");
+                MessageBox.Show(msb_slidererror, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void btn_patcher_Click(object sender, EventArgs e)
@@ -421,7 +439,8 @@ namespace BnS_Launcher
             {
                 if (string.IsNullOrWhiteSpace(txb_Mail.Text))
                 {
-                    MessageBox.Show("Error: Email field is empty!!");
+                    
+                         MessageBox.Show(msb_emptymail, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -438,7 +457,7 @@ namespace BnS_Launcher
             {
                 if (string.IsNullOrWhiteSpace(txb_Pass.Text))
                 {
-                    MessageBox.Show("Error: Password field is empty!!");
+                    MessageBox.Show(msb_emptypass, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -767,7 +786,7 @@ namespace BnS_Launcher
             }
             catch (Exception ex)
             {
-                MessageBox.Show("There was an error connecting to the Login Server, please make sure there isn't a maintenance.");
+                MessageBox.Show(msb_mainterror);
                 if (Debugging)
                     MessageBox.Show(ex.ToString());
                 return false;
@@ -1111,7 +1130,7 @@ namespace BnS_Launcher
 
         void login_enable(bool yes)
         {
-            Btn_play.Enabled = yes;
+            btn_play.Enabled = yes;
             btn_Login.Text = "Logged!";
             btn_Login.Enabled = false;
         }
@@ -1179,7 +1198,7 @@ namespace BnS_Launcher
         {
 
             btn_Login.Text = "Logging in...";
-            Btn_play.Enabled = false;
+            btn_play.Enabled = false;
 
             if (worker != null && worker.IsBusy)
             {

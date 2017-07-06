@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO;
-using Ini;
 using System.Xml;
 using System.Text;
-using Microsoft.Win32;
+using BnS_Launcher.lib;
 
 namespace BnS_Launcher
 {
@@ -49,14 +48,6 @@ namespace BnS_Launcher
             sSettings.sArchitecture = fSettings.IniReadValue("Settings", "Architecture");
             sSettings.sServerType = fSettings.IniReadValue("Settings", "ServerType");
 
-            if (string.IsNullOrEmpty(sSettings.sArchitecture))
-            {
-                fSettings.IniWriteValue("Settings", "Architecture", "0");
-            }
-            if (string.IsNullOrEmpty(sSettings.sArchitecture))
-            {
-                fSettings.IniWriteValue("Settings", "ServerType", "Live");
-            }
         }
 
         private void FomrSettings_Load(object sender, EventArgs e)
@@ -71,7 +62,7 @@ namespace BnS_Launcher
                 cbox_Region.Items.AddRange(new object[] { "Taiwan" });
             if (sSettings.gJpnPath == true)
                 cbox_Region.Items.AddRange(new object[] { "Japan" });
-           
+
             // Find Client.exe and set file paths
             // Check the registry
 
@@ -222,7 +213,7 @@ namespace BnS_Launcher
                 Sts_Label.Text = "Use all cores disabled.";
             }
         }
-        
+
         private void cbx_disableImg_CheckedChanged(object sender, EventArgs e)
         {
             if (LoadingDisabled == false)
@@ -299,9 +290,19 @@ namespace BnS_Launcher
                 //
                 case "Korean":
                     sRegion = "KR";
+                    if (string.IsNullOrEmpty(sSettings.sServerType))
+                    {
+                        fSettings.IniWriteValue("Settings", "ServerType", "Live");
+                        cbox_KorServer.SelectedItem = "Live";
+                    }
                     break;
                 case "West (NA-EU)":
                     sRegion = "EN";
+                    if (string.IsNullOrEmpty(sSettings.sLanguageID))
+                    {
+                        fSettings.IniWriteValue("Settings", "language", "English");
+                        cbox_west_lang.SelectedItem = "English";
+                    }
                     break;
                 case "Taiwan":
                     sRegion = "TW";
@@ -378,7 +379,22 @@ namespace BnS_Launcher
                     break;
             }
             fSettings.IniWriteValue("Settings", "language", sLanguage);
-            
+        }
+
+        private void cbox_llang_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // 重新记录语言信息，并写入配置文件
+            var lang = BslManager.Instance.LanguageTypes[this.cbox_llang.SelectedIndex];
+            BslManager.Instance.SystemSettings["lang"] = lang;
+            BslManager.WriteJsonFile(BslManager.PathJsonSettings, BslManager.Instance.SystemSettings);
+
+            // 显示重启程序提示信息
+            // 这一段因为关系到语言的设定，使用双语显示，不作为配置设定
+            //BslManager.DisplayInfoMessageBox(
+            //    "重启以生效改动 / Restart to activate the setting change",
+            //    "你需要手动重启应用程序，来应用当前改动的语言配置！\r\n" +
+            //    "You have to restart the application manually, to activate the language setting change!"
+            //);
         }
     }
 }

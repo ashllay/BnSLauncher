@@ -86,27 +86,27 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BNSDat\BNSDat.cs" />
-    <Compile Include="BslManager.cs" />
+    <Compile Include="lib\BNSDat\BNSDat.cs" />
+    <Compile Include="Launcher\BslManager.cs" />
     <Compile Include="lib\Ini.cs" />
-    <Compile Include="IonicZlib\CRC32.cs" />
-    <Compile Include="IonicZlib\Deflate.cs" />
-    <Compile Include="IonicZlib\DeflateStream.cs" />
-    <Compile Include="IonicZlib\GZipStream.cs" />
-    <Compile Include="IonicZlib\Inflate.cs" />
-    <Compile Include="IonicZlib\InfTree.cs" />
-    <Compile Include="IonicZlib\ParallelDeflateOutputStream.cs" />
-    <Compile Include="IonicZlib\Tree.cs" />
-    <Compile Include="IonicZlib\Zlib.cs" />
-    <Compile Include="IonicZlib\ZlibBaseStream.cs" />
-    <Compile Include="IonicZlib\ZlibCodec.cs" />
-    <Compile Include="IonicZlib\ZlibConstants.cs" />
-    <Compile Include="IonicZlib\ZlibStream.cs" />
+    <Compile Include="lib\IonicZlib\CRC32.cs" />
+    <Compile Include="lib\IonicZlib\Deflate.cs" />
+    <Compile Include="lib\IonicZlib\DeflateStream.cs" />
+    <Compile Include="lib\IonicZlib\GZipStream.cs" />
+    <Compile Include="lib\IonicZlib\Inflate.cs" />
+    <Compile Include="lib\IonicZlib\InfTree.cs" />
+    <Compile Include="lib\IonicZlib\ParallelDeflateOutputStream.cs" />
+    <Compile Include="lib\IonicZlib\Tree.cs" />
+    <Compile Include="lib\IonicZlib\Zlib.cs" />
+    <Compile Include="lib\IonicZlib\ZlibBaseStream.cs" />
+    <Compile Include="lib\IonicZlib\ZlibCodec.cs" />
+    <Compile Include="lib\IonicZlib\ZlibConstants.cs" />
+    <Compile Include="lib\IonicZlib\ZlibStream.cs" />
     <Compile Include="lib\BslI18NLoader.cs" />
-    <Compile Include="Main.cs">
+    <Compile Include="Launcher\Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main.Designer.cs">
+    <Compile Include="Launcher\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -116,19 +116,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Settings.cs">
+    <Compile Include="Launcher\Settings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Settings.Designer.cs">
+    <Compile Include="Launcher\Settings.Designer.cs">
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Patcher.cs">
+    <Compile Include="Launcher\Patcher.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Patcher.Designer.cs">
+    <Compile Include="Launcher\Patcher.Designer.cs">
       <DependentUpon>Patcher.cs</DependentUpon>
     </Compile>
-    <Compile Include="SettingsClass.cs" />
+    <Compile Include="Launcher\SettingsClass.cs" />
     <Compile Include="Slider\Configuration.cs" />
     <Compile Include="Slider\Memory.cs" />
     <Compile Include="Slider\MemoryScanner.cs" />
@@ -156,7 +156,7 @@
     <Compile Include="Slider\Slider.cs" />
     <Compile Include="Slider\Win32.cs" />
     <Compile Include="lib\StrWriter.cs" />
-    <EmbeddedResource Include="Main.resx">
+    <EmbeddedResource Include="Launcher\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -164,10 +164,10 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Settings.resx">
+    <EmbeddedResource Include="Launcher\Settings.resx">
       <DependentUpon>Settings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Patcher.resx">
+    <EmbeddedResource Include="Launcher\Patcher.resx">
       <DependentUpon>Patcher.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Slider\ProgressBarForm.resx">
