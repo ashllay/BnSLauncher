@@ -154,6 +154,7 @@
             this.cbox_KorServer.Name = "cbox_KorServer";
             this.cbox_KorServer.Size = new System.Drawing.Size(102, 21);
             this.cbox_KorServer.TabIndex = 19;
+            this.cbox_KorServer.SelectedIndexChanged += new System.EventHandler(cbox_KorServer_SelectedIndexChanged);
             // 
             // gbox_region
             // 
@@ -302,7 +303,7 @@
             this.tpage_lsettings.Location = new System.Drawing.Point(4, 22);
             this.tpage_lsettings.Name = "tpage_lsettings";
             this.tpage_lsettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpage_lsettings.Size = new System.Drawing.Size(360, 108);
+            this.tpage_lsettings.Size = new System.Drawing.Size(360, 103);
             this.tpage_lsettings.TabIndex = 2;
             this.tpage_lsettings.Text = "_";
             this.tpage_lsettings.UseVisualStyleBackColor = true;

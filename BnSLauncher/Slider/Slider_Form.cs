@@ -12,7 +12,7 @@ namespace BnS_Launcher.Slider
 {
     public partial class Slider_Form : Form
     {
-        private string configFile = "config.xml";
+        private string configFile = @"config/slider.xml";
         private Configuration config;
         private Memory memory;
         private IntPtr firstRecordAddress;

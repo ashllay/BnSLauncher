@@ -42,10 +42,8 @@ namespace BnS_Launcher
             cbox_llang.Items.AddRange(BslManager.Instance.LanguageNames.ToArray());
             var lang = (string)BslManager.Instance.SystemSettings["lang"];
             cbox_llang.SelectedIndex = BslManager.Instance.LanguageTypes.IndexOf(lang);
-            //moved from Settings.Designer to avoid bugs
+            //moved from Settings.Designer
             cbox_llang.SelectedIndexChanged += new EventHandler(cbox_llang_SelectedIndexChanged);
-            //moved from Settings.Designer to avoid bugs
-            cbox_KorServer.SelectedIndexChanged += new EventHandler(cbox_KorServer_SelectedIndexChanged);
         }
 
         private void InitI18N()
@@ -144,27 +142,17 @@ namespace BnS_Launcher
                         }
                         if (sSettings.sServerType == "Live")
                         {
-                            txb_cpath.Text = sSettings.csKorLivePath;
                             if (sSettings.useKrCustomPathLive == "true")
-                            {
                                 lb_cpath.Text = lb_cpathon;
-                            }
                             else
-                            {
                                 lb_cpath.Text = lb_cpathoff;
-                            }
                         }
                         else if (sSettings.sServerType == "Test")
                         {
-                            txb_cpath.Text = sSettings.csKorTestPath;
                             if (sSettings.useKrCustomPathTest == "true")
-                            {
                                 lb_cpath.Text = lb_cpathon;
-                            }
                             else
-                            {
                                 lb_cpath.Text = lb_cpathoff;
-                            }
                         }
                         break;
                     case "EN":
@@ -175,50 +163,29 @@ namespace BnS_Launcher
                             fSettings.IniWriteValue("Settings", "language", "English");
                             cbox_west_lang.SelectedItem = "English";
                         }
-                        txb_cpath.Text = sSettings.csWstPath;
                         if (sSettings.useWstCustomPath == "true")
-                        {
-                            
                             lb_cpath.Text = lb_cpathon;
-                        }
                         else
-                        {
-                            
                             lb_cpath.Text = lb_cpathoff;
-                        }
                         break;
                     case "TW":
                         cbox_Region.SelectedItem = "Taiwan";
-                        txb_cpath.Text = sSettings.csTwnPath;
                         if (sSettings.useTwnCustomPath == "true")
-                        {
-                            
                             lb_cpath.Text = lb_cpathon;
-                        }
                         else
-                        {
-                            
                             lb_cpath.Text = lb_cpathoff;
-                        }
                         break;
                     case "JP":
                         cbox_Region.SelectedItem = "Japan";
-                        txb_cpath.Text = sSettings.csJpnPath;
                         if (sSettings.useJpnCustomPath == "true")
-                        {
-                            
                             lb_cpath.Text = lb_cpathon;  
-                        }
                         else
-                        {
                             lb_cpath.Text = lb_cpathoff;
-                        }
                         break;
                     default:
                         break;
-
-                        //
                 }
+                txb_cpath.Text = sSettings.sInstallPath;
 
                 if (sSettings.sArchitecture == "0")
                     cbox_Arch.SelectedItem = "x86";
@@ -419,31 +386,17 @@ namespace BnS_Launcher
                     {
                         txb_cpath.Text = sSettings.csKorLivePath;
                         if (sSettings.useKrCustomPathLive == "true")
-                        {
-                            
                             lb_cpath.Text = lb_cpathon;
-                            
-                        }
                         else
-                        {
-                            
                             lb_cpath.Text = lb_cpathoff;
-                        }
                     }
                     else if (sSettings.sServerType == "Test")
                     {
                         txb_cpath.Text = sSettings.csKorTestPath;
                         if (sSettings.useKrCustomPathTest == "true")
-                        {
-                            
                             lb_cpath.Text = lb_cpathon;
-                            
-                        }
                         else
-                        {
-                            
                             lb_cpath.Text = lb_cpathoff;
-                        }
                     }
                     break;
                 case "West(NA-EU)":
@@ -453,48 +406,27 @@ namespace BnS_Launcher
                         fSettings.IniWriteValue("Settings", "language", "English");
                         cbox_west_lang.SelectedItem = "English";
                     }
-
                     txb_cpath.Text = sSettings.csWstPath;
                     if (sSettings.useTwnCustomPath == "true")
-                    {
-                        
                         lb_cpath.Text = lb_cpathon;
-                        
-                    }
                     else
-                    {
-                        
                         lb_cpath.Text = lb_cpathoff;
-                    }
                     break;
                 case "Taiwan":
                     sRegion = "TW";
                     txb_cpath.Text = sSettings.csTwnPath;
                     if (sSettings.useTwnCustomPath == "true")
-                    {
-                        
                         lb_cpath.Text = lb_cpathon;
-                        
-                    }
                     else
-                    {
-                        
                         lb_cpath.Text = lb_cpathoff;
-                    }
                     break;
                 case "Japan":
                     sRegion = "JP";
                     txb_cpath.Text = sSettings.csJpnPath;
                     if (sSettings.useJpnCustomPath == "true")
-                    {
-                        
                         lb_cpath.Text = lb_cpathon;
-                    }
                     else
-                    {
-                        
                         lb_cpath.Text = lb_cpathoff;
-                    }
                     break;
                 default:
                     break;
@@ -538,27 +470,24 @@ namespace BnS_Launcher
                 //
                 case "Live":
                     sServerType = "Live";
-                    txb_cpath.Text = sSettings.csKorLivePath;
-                    if (sSettings.useKrCustomPathLive == "true")
+                    if (sSettings.sRegion == "KR")
                     {
-                        lb_cpath.Text = lb_cpathon; 
-                    }
-                    else
-                    {
-                        lb_cpath.Text = lb_cpathoff;
+                        txb_cpath.Text = sSettings.csKorLivePath;
+                        if (sSettings.useKrCustomPathLive == "true")
+                            lb_cpath.Text = lb_cpathon;
+                        else
+                            lb_cpath.Text = lb_cpathoff;
                     }
                     break;
                 case "Test":
                     sServerType = "Test";
-                    txb_cpath.Text = sSettings.csKorTestPath;
-                    if (sSettings.useKrCustomPathTest == "true")
+                    if (sSettings.sRegion == "KR")
                     {
-                        lb_cpath.Text = lb_cpathon;
-                    }
-                    else
-                    {
-                        
-                        lb_cpath.Text = lb_cpathoff;
+                        txb_cpath.Text = sSettings.csKorTestPath;
+                        if (sSettings.useKrCustomPathTest == "true")
+                            lb_cpath.Text = lb_cpathon;
+                        else
+                            lb_cpath.Text = lb_cpathoff;
                     }
                     break;
                 default:

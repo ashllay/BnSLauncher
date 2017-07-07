@@ -27,7 +27,7 @@ namespace BnS_Launcher
 
         SettingsClass sSettings = new SettingsClass();
 
-        IniFile pSettings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
+        //IniFile pSettings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
 
         
         public Patcher()
@@ -74,9 +74,7 @@ namespace BnS_Launcher
             }
 
             if (sSettings.sInstallPath != null)
-            {
                 DatPath = Path.Combine(sSettings.sInstallPath, sSettings.sInstallPathRegion,@"data\");
-            }
 
             if (sSettings.sArchitecture == "0")
             {
@@ -100,7 +98,7 @@ namespace BnS_Launcher
 
             ConfigOutPath = ConfigFilePath + ".files"; //get full file path and add .files
             XmlOutPath = XmlFilePath + ".files";
-            //Console.Write("{0}", DatPath);
+            Console.Write("{0}", DatPath);
         }
 
         public void Extractor(string datFile)
