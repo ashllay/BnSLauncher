@@ -32,6 +32,8 @@ namespace BnS_Launcher
         private BslI18NLoader _i18N;
         string mbox_llangchange, lb_texturestron, lb_texturestroff, lb_noattendoff, lb_noattendon, lb_allcoreson, lb_allcoresoff, lb_loadimgoff, lb_loadimgon, mbox_disableimg, mbox_enableimg;
 
+        FolderBrowserDialog OfolderDat = new FolderBrowserDialog();
+
         public Settings()
         {
             InitializeComponent();
@@ -40,7 +42,10 @@ namespace BnS_Launcher
             cbox_llang.Items.AddRange(BslManager.Instance.LanguageNames.ToArray());
             var lang = (string)BslManager.Instance.SystemSettings["lang"];
             cbox_llang.SelectedIndex = BslManager.Instance.LanguageTypes.IndexOf(lang);
+            //moved from Settings.Designer to avoid bugs
             cbox_llang.SelectedIndexChanged += new EventHandler(cbox_llang_SelectedIndexChanged);
+            //moved from Settings.Designer to avoid bugs
+            cbox_KorServer.SelectedIndexChanged += new EventHandler(cbox_KorServer_SelectedIndexChanged);
 
             sSettings.sNoTextureStreaming = fSettings.IniReadValue("Settings", "NoTextureStreaming");
             sSettings.sUnattended = fSettings.IniReadValue("Settings", "Unattended");
@@ -84,9 +89,10 @@ namespace BnS_Launcher
 
         }
 
+
         private void FomrSettings_Load(object sender, EventArgs e)
         {
-
+            
             //populate region combox
             if (sSettings.gKorPath == true || sSettings.gKorTestPath == true)
                 cbox_Region.Items.AddRange(new object[] { "Korean" });
@@ -128,26 +134,94 @@ namespace BnS_Launcher
                 if (sSettings.sUseAllCores == "true")
                     cbox_allcores.Checked = true;
                 //--
+                
+
                 switch (sSettings.sRegion)
                 {
-                    //
                     case "KR":
+                        gbox_krserver.Show();
                         cbox_Region.SelectedItem = "Korean";
-                        if (sSettings.gKorTestPath == true)
-                            gbox_krserver.Show();
+                        if (string.IsNullOrEmpty(sSettings.sServerType))
+                        {
+                            fSettings.IniWriteValue("Settings", "ServerType", "Live");
+                            cbox_KorServer.SelectedItem = "Live";
+                        }
+                        if (sSettings.sServerType == "Live")
+                        {
+                            if (sSettings.useKrCustomPathLive == "true")
+                            {
+                                cbox_cpath.Checked = true;
+                                txb_cpath.Text = sSettings.csKorLivePath;
+                            }
+                            else
+                            {
+                                txb_cpath.Text = "";
+                                cbox_cpath.Checked = false;
+                            }
+                        }
+                        else if (sSettings.sServerType == "Test")
+                        {
+                            if (sSettings.useKrCustomPathTest == "true")
+                            {
+                                cbox_cpath.Checked = true;
+                                txb_cpath.Text = sSettings.csKorTestPath;
+                            }
+                            else
+                            {
+                                txb_cpath.Text = "";
+                                cbox_cpath.Checked = false;
+                            }
+                        }
                         break;
                     case "EN":
-                        cbox_Region.SelectedItem = "West (NA-EU)";
                         gbox_westlang.Show();
+                        cbox_Region.SelectedItem = "West (NA-EU)";
+                        if (string.IsNullOrEmpty(sSettings.sLanguageID))
+                        {
+                            fSettings.IniWriteValue("Settings", "language", "English");
+                            cbox_west_lang.SelectedItem = "English";
+                        }
+                        if (sSettings.useWstCustomPath == "true")
+                        {
+                            cbox_cpath.Checked = true;
+                            txb_cpath.Text = sSettings.csWstPath;
+                        }
+                        else
+                        {
+                            txb_cpath.Text = "";
+                            cbox_cpath.Checked = false;
+                        }
                         break;
                     case "TW":
                         cbox_Region.SelectedItem = "Taiwan";
+                        if (sSettings.useTwnCustomPath == "true")
+                        {
+                            cbox_cpath.Checked = true;
+                            txb_cpath.Text = sSettings.csTwnPath;
+                        }
+                        else
+                        {
+                            txb_cpath.Text = "";
+                            cbox_cpath.Checked = false;
+                        }
                         break;
                     case "JP":
                         cbox_Region.SelectedItem = "Japan";
+                        if (sSettings.useJpnCustomPath == "true")
+                        {
+                            cbox_cpath.Checked = true;
+                            txb_cpath.Text = sSettings.csJpnPath;
+                        }
+                        else
+                        {
+                            txb_cpath.Text = "";
+                            cbox_cpath.Checked = false;
+                        }
                         break;
                     default:
                         break;
+
+                    //
                 }
 
                 if (sSettings.sArchitecture == "0")
@@ -200,6 +274,72 @@ namespace BnS_Launcher
             }
         }
 
+        private void btn_scpath_Click(object sender, EventArgs e)
+        {
+            if (OfolderDat.ShowDialog() != DialogResult.OK)
+                return;
+            txb_cpath.Text = OfolderDat.SelectedPath;
+
+            if (sSettings.sServerType == "Live")
+                fSettings.IniWriteValue("Path", "KR_Live", txb_cpath.Text);
+            else if (sSettings.sServerType == "Test")
+                fSettings.IniWriteValue("Path", "KR_Test", txb_cpath.Text);
+            else
+                fSettings.IniWriteValue("Path", sSettings.sRegion, txb_cpath.Text);
+        }
+
+        private void cbox_cpath_CheckedChanged(object sender, EventArgs e)
+        {
+            //if (cbox_cpath.Checked == true)
+            //{
+            //    switch (sSettings.sRegion)
+            //    {
+            //        //
+            //        case "KR":
+            //            if (sSettings.sServerType == "Live")
+            //                fSettings.IniWriteValue("Path", "KR_Live_UseCustomPath", "true");
+            //            else if (sSettings.sServerType == "Test")
+            //                fSettings.IniWriteValue("Path", "KR_Test_UseCustomPath", "true");
+            //            break;
+            //        case "EN":
+            //            fSettings.IniWriteValue("Path", sSettings.sRegion + "_UseCustomPath", "true");
+            //            break;
+            //        case "TW":
+            //            fSettings.IniWriteValue("Path", sSettings.sRegion + "_UseCustomPath", "true");
+            //            break;
+            //        case "JP":
+            //            fSettings.IniWriteValue("Path", sSettings.sRegion + "_UseCustomPath", "true");
+            //            break;
+            //        default:
+            //            break;
+            //    }
+             
+            //}
+            //else
+            //{
+            //    switch (sSettings.sRegion)
+            //    {
+            //        //
+            //        case "KR":
+            //            if (sSettings.sServerType == "Live")
+            //                fSettings.IniWriteValue("Path", "KR_Live_UseCustomPath", "false");
+            //            else if (sSettings.sServerType == "Test")
+            //                fSettings.IniWriteValue("Path", "KR_Test_UseCustomPath", "false");
+            //            break;
+            //        case "EN":
+            //            fSettings.IniWriteValue("Path", sSettings.sRegion + "_UseCustomPath", "false");
+            //            break;
+            //        case "TW":
+            //            fSettings.IniWriteValue("Path", sSettings.sRegion + "_UseCustomPath", "false");
+            //            break;
+            //        case "JP":
+            //            fSettings.IniWriteValue("Path", sSettings.sRegion + "_UseCustomPath", "false");
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
+        }
         private void cBtextureStr_CheckedChanged(object sender, EventArgs e)
         {
             if (cbox_texstr.Checked == true)
@@ -329,6 +469,32 @@ namespace BnS_Launcher
                         fSettings.IniWriteValue("Settings", "ServerType", "Live");
                         cbox_KorServer.SelectedItem = "Live";
                     }
+                    if (sSettings.sServerType == "Live")
+                    {
+                        if (sSettings.useKrCustomPathLive == "true")
+                        {
+                            cbox_cpath.Checked = true;
+                            txb_cpath.Text = sSettings.csKorLivePath;
+                        }
+                        else
+                        {
+                            txb_cpath.Text = "";
+                            cbox_cpath.Checked = false;
+                        }
+                    }
+                    else if(sSettings.sServerType == "Test")
+                    {
+                        if (sSettings.useKrCustomPathTest == "true")
+                        {
+                            cbox_cpath.Checked = true;
+                            txb_cpath.Text = sSettings.csKorTestPath;
+                        }
+                        else
+                        {
+                            txb_cpath.Text = "";
+                            cbox_cpath.Checked = false;
+                        }
+                    }
                     break;
                 case "West (NA-EU)":
                     sRegion = "EN";
@@ -337,12 +503,42 @@ namespace BnS_Launcher
                         fSettings.IniWriteValue("Settings", "language", "English");
                         cbox_west_lang.SelectedItem = "English";
                     }
+                    if (sSettings.useTwnCustomPath == "true")
+                    {
+                        cbox_cpath.Checked = true;
+                        txb_cpath.Text = sSettings.csWstPath;
+                    }
+                    else
+                    {
+                        txb_cpath.Text = "";
+                        cbox_cpath.Checked = false;
+                    }
                     break;
                 case "Taiwan":
                     sRegion = "TW";
+                    if (sSettings.useTwnCustomPath == "true")
+                    {
+                        cbox_cpath.Checked = true;
+                        txb_cpath.Text = sSettings.csTwnPath;
+                    }
+                    else
+                    {
+                        txb_cpath.Text = "";
+                        cbox_cpath.Checked = false;
+                    }
                     break;
                 case "Japan":
                     sRegion = "JP";
+                    if (sSettings.useJpnCustomPath == "true")
+                    {
+                        cbox_cpath.Checked = true;
+                        txb_cpath.Text = sSettings.csJpnPath;
+                    }
+                    else
+                    {
+                        txb_cpath.Text = "";
+                        cbox_cpath.Checked = false;
+                    }
                     break;
                 default:
                     break;
@@ -380,14 +576,35 @@ namespace BnS_Launcher
 
         private void cbox_KorServer_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             switch (cbox_KorServer.SelectedItem.ToString())
             {
                 //
                 case "Live":
                     sServerType = "Live";
+                    //if (!string.IsNullOrEmpty(sSettings.csKorPath))
+                    //{
+                    //    cbox_cpath.Checked = true;
+                    //    txb_cpath.Text = sSettings.csKorPath;
+                    //}
+                    //else
+                    //{
+                    //    txb_cpath.Text = "";
+                    //    cbox_cpath.Checked = false;
+                    //}
                     break;
                 case "Test":
                     sServerType = "Test";
+                    //if (!string.IsNullOrEmpty(sSettings.csKorTestPath))
+                    //{
+                    //    cbox_cpath.Checked = true;
+                    //    txb_cpath.Text = sSettings.csKorTestPath;
+                    //}
+                    //else
+                    //{
+                    //    txb_cpath.Text = "";
+                    //    cbox_cpath.Checked = false;
+                    //}
                     break;
                 default:
                     break;

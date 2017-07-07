@@ -87,17 +87,5 @@ namespace BnS_Launcher
         {
             File.Create(path).Dispose();
         }
-
-        public static DialogResult DisplayInfoMessageBox(string boxTitle, string boxMsg)
-        {
-            try
-            {
-                return MessageBox.Show(boxMsg, boxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return DialogResult.Cancel;
-            }
-        }
     }
 }

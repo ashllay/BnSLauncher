@@ -9,11 +9,15 @@
 		"lb_mail": "Email:",
 		"lb_pass": "Password:",
         "lb_region": "Region",
+		"lb_loginstswait": "Logging in...",
+		"lb_loginstsdone": "Logged!",
 		"msb_clinotset": "Client not chosen!\nPlease select your on Settings.",
 		"msb_clinotfound": " Client not found!\nPlease select your on Settings.",
 		"msb_slidererror": "Slider works only on x86 Client!",
 		"msb_emptypass": "Password field is empty!!",
 		"msb_emptymail": "Email field is empty!!",
+		"cbox_Smail": "Save email",
+		"cbox_Spass": "Save password"
     },
 	"Settings":{
 		"title": "Settings",

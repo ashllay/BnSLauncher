@@ -23,7 +23,7 @@ namespace BnS_Launcher
         private string Unattended = "";
         private string UseAllCores = "";
         private string ClientReg = "";
-        private string msb_clinotset, msb_clinotfound, msb_slidererror, msb_emptypass, msb_emptymail, msb_mainterror;
+        private string msb_clinotset, msb_clinotfound, msb_slidererror, msb_emptypass, msb_emptymail, msb_mainterror, lb_loginstsdone;
 
         private bool ClientFound = true;
 
@@ -100,7 +100,7 @@ namespace BnS_Launcher
 
             if (string.IsNullOrEmpty(sSettings.sRegion))
             {
-               
+
                 ClientFound = true;
                 DialogResult dr = MessageBox.Show(msb_clinotset.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 if (dr == DialogResult.OK)
@@ -120,7 +120,7 @@ namespace BnS_Launcher
                     settings.Show();
                 }
             }
-            
+
         }
 
         private void InitI18N()
@@ -145,6 +145,11 @@ namespace BnS_Launcher
             lb_mail.Text = _i18N.LoadI18NValue("Main", "lb_mail");
             lb_pass.Text = _i18N.LoadI18NValue("Main", "lb_pass");
             lb_region.Text = _i18N.LoadI18NValue("Main", "lb_region");
+            lb_loginstsdone = _i18N.LoadI18NValue("Main", "lb_loginstsdone");
+
+            //checkboxes
+            cbox_Smail.Text = _i18N.LoadI18NValue("Main", "cbox_Smail");
+            cbox_Spass.Text = _i18N.LoadI18NValue("Main", "cbox_Spass");
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -300,7 +305,7 @@ namespace BnS_Launcher
                     worker.CancelAsync();
                     btn_play.Enabled = false;
                     btn_Login.Enabled = true;
-                    btn_Login.Text = "Login";
+                    lb_loginsts.Text = "";
                 }
             }
             catch (Exception ex)
@@ -343,7 +348,7 @@ namespace BnS_Launcher
                     }
                     else
                     {
-                        btn_Login.Text = "Login";
+                        lb_loginsts.Text = "";
                         btn_Login.Enabled = true;//if change to other region and change back to NA enable login btn
                         btn_play.Enabled = false;
                     }
@@ -366,7 +371,7 @@ namespace BnS_Launcher
                     }
                     else
                     {
-                        btn_Login.Text = "Login";
+                        lb_loginsts.Text = "";
                         btn_Login.Enabled = true;//if change to other region and change back to NA enable login btn
                         btn_play.Enabled = false;
                     }
@@ -439,8 +444,8 @@ namespace BnS_Launcher
             {
                 if (string.IsNullOrWhiteSpace(txb_Mail.Text))
                 {
-                    
-                         MessageBox.Show(msb_emptymail, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    MessageBox.Show(msb_emptymail, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -1131,7 +1136,7 @@ namespace BnS_Launcher
         void login_enable(bool yes)
         {
             btn_play.Enabled = yes;
-            btn_Login.Text = "Logged!";
+            lb_loginsts.Text = lb_loginstsdone;
             btn_Login.Enabled = false;
         }
 
@@ -1196,8 +1201,6 @@ namespace BnS_Launcher
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
-
-            btn_Login.Text = "Logging in...";
             btn_play.Enabled = false;
 
             if (worker != null && worker.IsBusy)

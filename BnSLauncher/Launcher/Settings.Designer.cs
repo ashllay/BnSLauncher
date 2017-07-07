@@ -30,6 +30,9 @@
         {
             this.SettingsTab = new System.Windows.Forms.TabControl();
             this.tpage_client = new System.Windows.Forms.TabPage();
+            this.btn_scpath = new System.Windows.Forms.Button();
+            this.txb_cpath = new System.Windows.Forms.TextBox();
+            this.cbox_cpath = new System.Windows.Forms.CheckBox();
             this.gbox_region = new System.Windows.Forms.GroupBox();
             this.cbox_Region = new System.Windows.Forms.ComboBox();
             this.gbox_krserver = new System.Windows.Forms.GroupBox();
@@ -46,10 +49,10 @@
             this.cbox_mboxes = new System.Windows.Forms.CheckBox();
             this.cbox_texstr = new System.Windows.Forms.CheckBox();
             this.tpage_lsettings = new System.Windows.Forms.TabPage();
+            this.gbox_llang = new System.Windows.Forms.GroupBox();
             this.cbox_llang = new System.Windows.Forms.ComboBox();
             this.sts_ = new System.Windows.Forms.StatusStrip();
             this.Sts_Label = new System.Windows.Forms.ToolStripStatusLabel();
-            this.gbox_llang = new System.Windows.Forms.GroupBox();
             this.SettingsTab.SuspendLayout();
             this.tpage_client.SuspendLayout();
             this.gbox_region.SuspendLayout();
@@ -58,8 +61,8 @@
             this.gbox_westlang.SuspendLayout();
             this.tpage_others.SuspendLayout();
             this.tpage_lsettings.SuspendLayout();
-            this.sts_.SuspendLayout();
             this.gbox_llang.SuspendLayout();
+            this.sts_.SuspendLayout();
             this.SuspendLayout();
             // 
             // SettingsTab
@@ -71,12 +74,15 @@
             this.SettingsTab.Location = new System.Drawing.Point(7, 7);
             this.SettingsTab.Name = "SettingsTab";
             this.SettingsTab.SelectedIndex = 0;
-            this.SettingsTab.Size = new System.Drawing.Size(197, 178);
+            this.SettingsTab.Size = new System.Drawing.Size(378, 134);
             this.SettingsTab.TabIndex = 0;
             // 
             // tpage_client
             // 
             this.tpage_client.BackColor = System.Drawing.Color.Transparent;
+            this.tpage_client.Controls.Add(this.btn_scpath);
+            this.tpage_client.Controls.Add(this.txb_cpath);
+            this.tpage_client.Controls.Add(this.cbox_cpath);
             this.tpage_client.Controls.Add(this.gbox_region);
             this.tpage_client.Controls.Add(this.gbox_krserver);
             this.tpage_client.Controls.Add(this.gbox_arc);
@@ -84,17 +90,45 @@
             this.tpage_client.Location = new System.Drawing.Point(4, 22);
             this.tpage_client.Name = "tpage_client";
             this.tpage_client.Padding = new System.Windows.Forms.Padding(3);
-            this.tpage_client.Size = new System.Drawing.Size(189, 152);
+            this.tpage_client.Size = new System.Drawing.Size(370, 108);
             this.tpage_client.TabIndex = 1;
             this.tpage_client.Text = "_";
             this.tpage_client.UseVisualStyleBackColor = true;
+            // 
+            // btn_scpath
+            // 
+            this.btn_scpath.Location = new System.Drawing.Point(307, 17);
+            this.btn_scpath.Name = "btn_scpath";
+            this.btn_scpath.Size = new System.Drawing.Size(57, 23);
+            this.btn_scpath.TabIndex = 25;
+            this.btn_scpath.Text = "Search";
+            this.btn_scpath.UseVisualStyleBackColor = true;
+            this.btn_scpath.Click += new System.EventHandler(this.btn_scpath_Click);
+            // 
+            // txb_cpath
+            // 
+            this.txb_cpath.Location = new System.Drawing.Point(195, 19);
+            this.txb_cpath.Name = "txb_cpath";
+            this.txb_cpath.Size = new System.Drawing.Size(106, 20);
+            this.txb_cpath.TabIndex = 24;
+            // 
+            // cbox_cpath
+            // 
+            this.cbox_cpath.AutoSize = true;
+            this.cbox_cpath.Location = new System.Drawing.Point(97, 21);
+            this.cbox_cpath.Name = "cbox_cpath";
+            this.cbox_cpath.Size = new System.Drawing.Size(85, 17);
+            this.cbox_cpath.TabIndex = 23;
+            this.cbox_cpath.Text = "Custom path";
+            this.cbox_cpath.UseVisualStyleBackColor = true;
+            this.cbox_cpath.CheckedChanged += new System.EventHandler(this.cbox_cpath_CheckedChanged);
             // 
             // gbox_region
             // 
             this.gbox_region.Controls.Add(this.cbox_Region);
             this.gbox_region.Location = new System.Drawing.Point(6, 6);
             this.gbox_region.Name = "gbox_region";
-            this.gbox_region.Size = new System.Drawing.Size(176, 43);
+            this.gbox_region.Size = new System.Drawing.Size(85, 43);
             this.gbox_region.TabIndex = 22;
             this.gbox_region.TabStop = false;
             // 
@@ -105,7 +139,7 @@
             this.cbox_Region.FormattingEnabled = true;
             this.cbox_Region.Location = new System.Drawing.Point(7, 13);
             this.cbox_Region.Name = "cbox_Region";
-            this.cbox_Region.Size = new System.Drawing.Size(161, 21);
+            this.cbox_Region.Size = new System.Drawing.Size(69, 21);
             this.cbox_Region.TabIndex = 18;
             this.cbox_Region.SelectedIndexChanged += new System.EventHandler(this.cbox_Region_SelectedIndexChanged);
             // 
@@ -132,7 +166,7 @@
             this.cbox_KorServer.Name = "cbox_KorServer";
             this.cbox_KorServer.Size = new System.Drawing.Size(70, 21);
             this.cbox_KorServer.TabIndex = 19;
-            this.cbox_KorServer.SelectedIndexChanged += new System.EventHandler(this.cbox_KorServer_SelectedIndexChanged);
+            
             // 
             // gbox_arc
             // 
@@ -159,7 +193,7 @@
             // gbox_westlang
             // 
             this.gbox_westlang.Controls.Add(this.cbox_west_lang);
-            this.gbox_westlang.Location = new System.Drawing.Point(6, 103);
+            this.gbox_westlang.Location = new System.Drawing.Point(188, 54);
             this.gbox_westlang.Name = "gbox_westlang";
             this.gbox_westlang.Size = new System.Drawing.Size(176, 43);
             this.gbox_westlang.TabIndex = 14;
@@ -190,7 +224,7 @@
             this.tpage_others.Location = new System.Drawing.Point(4, 22);
             this.tpage_others.Name = "tpage_others";
             this.tpage_others.Padding = new System.Windows.Forms.Padding(3);
-            this.tpage_others.Size = new System.Drawing.Size(189, 152);
+            this.tpage_others.Size = new System.Drawing.Size(370, 108);
             this.tpage_others.TabIndex = 0;
             this.tpage_others.Text = "_";
             this.tpage_others.UseVisualStyleBackColor = true;
@@ -198,7 +232,7 @@
             // lb_zoom
             // 
             this.lb_zoom.AutoSize = true;
-            this.lb_zoom.Location = new System.Drawing.Point(8, 113);
+            this.lb_zoom.Location = new System.Drawing.Point(8, 71);
             this.lb_zoom.Name = "lb_zoom";
             this.lb_zoom.Size = new System.Drawing.Size(13, 13);
             this.lb_zoom.TabIndex = 9;
@@ -206,7 +240,7 @@
             // 
             // txb_zoom
             // 
-            this.txb_zoom.Location = new System.Drawing.Point(66, 110);
+            this.txb_zoom.Location = new System.Drawing.Point(66, 68);
             this.txb_zoom.Name = "txb_zoom";
             this.txb_zoom.Size = new System.Drawing.Size(100, 20);
             this.txb_zoom.TabIndex = 8;
@@ -214,7 +248,7 @@
             // cbox_disableimg
             // 
             this.cbox_disableimg.AutoSize = true;
-            this.cbox_disableimg.Location = new System.Drawing.Point(11, 60);
+            this.cbox_disableimg.Location = new System.Drawing.Point(220, 14);
             this.cbox_disableimg.Name = "cbox_disableimg";
             this.cbox_disableimg.Size = new System.Drawing.Size(32, 17);
             this.cbox_disableimg.TabIndex = 7;
@@ -225,7 +259,7 @@
             // cbox_allcores
             // 
             this.cbox_allcores.AutoSize = true;
-            this.cbox_allcores.Location = new System.Drawing.Point(11, 83);
+            this.cbox_allcores.Location = new System.Drawing.Point(220, 37);
             this.cbox_allcores.Name = "cbox_allcores";
             this.cbox_allcores.Size = new System.Drawing.Size(32, 17);
             this.cbox_allcores.TabIndex = 4;
@@ -261,10 +295,19 @@
             this.tpage_lsettings.Location = new System.Drawing.Point(4, 22);
             this.tpage_lsettings.Name = "tpage_lsettings";
             this.tpage_lsettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpage_lsettings.Size = new System.Drawing.Size(189, 152);
+            this.tpage_lsettings.Size = new System.Drawing.Size(370, 108);
             this.tpage_lsettings.TabIndex = 2;
             this.tpage_lsettings.Text = "_";
             this.tpage_lsettings.UseVisualStyleBackColor = true;
+            // 
+            // gbox_llang
+            // 
+            this.gbox_llang.Controls.Add(this.cbox_llang);
+            this.gbox_llang.Location = new System.Drawing.Point(88, 29);
+            this.gbox_llang.Name = "gbox_llang";
+            this.gbox_llang.Size = new System.Drawing.Size(177, 49);
+            this.gbox_llang.TabIndex = 2;
+            this.gbox_llang.TabStop = false;
             // 
             // cbox_llang
             // 
@@ -278,9 +321,9 @@
             // 
             this.sts_.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Sts_Label});
-            this.sts_.Location = new System.Drawing.Point(0, 188);
+            this.sts_.Location = new System.Drawing.Point(0, 145);
             this.sts_.Name = "sts_";
-            this.sts_.Size = new System.Drawing.Size(213, 22);
+            this.sts_.Size = new System.Drawing.Size(387, 22);
             this.sts_.TabIndex = 1;
             this.sts_.Text = "statusStrip1";
             // 
@@ -289,20 +332,11 @@
             this.Sts_Label.Name = "Sts_Label";
             this.Sts_Label.Size = new System.Drawing.Size(0, 17);
             // 
-            // gbox_llang
-            // 
-            this.gbox_llang.Controls.Add(this.cbox_llang);
-            this.gbox_llang.Location = new System.Drawing.Point(6, 6);
-            this.gbox_llang.Name = "gbox_llang";
-            this.gbox_llang.Size = new System.Drawing.Size(177, 49);
-            this.gbox_llang.TabIndex = 2;
-            this.gbox_llang.TabStop = false;
-            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(213, 210);
+            this.ClientSize = new System.Drawing.Size(387, 167);
             this.Controls.Add(this.sts_);
             this.Controls.Add(this.SettingsTab);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -314,6 +348,7 @@
             this.Load += new System.EventHandler(this.FomrSettings_Load);
             this.SettingsTab.ResumeLayout(false);
             this.tpage_client.ResumeLayout(false);
+            this.tpage_client.PerformLayout();
             this.gbox_region.ResumeLayout(false);
             this.gbox_krserver.ResumeLayout(false);
             this.gbox_arc.ResumeLayout(false);
@@ -321,9 +356,9 @@
             this.tpage_others.ResumeLayout(false);
             this.tpage_others.PerformLayout();
             this.tpage_lsettings.ResumeLayout(false);
+            this.gbox_llang.ResumeLayout(false);
             this.sts_.ResumeLayout(false);
             this.sts_.PerformLayout();
-            this.gbox_llang.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -352,5 +387,8 @@
         private System.Windows.Forms.TabPage tpage_lsettings;
         private System.Windows.Forms.ComboBox cbox_llang;
         private System.Windows.Forms.GroupBox gbox_llang;
+        private System.Windows.Forms.Button btn_scpath;
+        private System.Windows.Forms.TextBox txb_cpath;
+        private System.Windows.Forms.CheckBox cbox_cpath;
     }
 }

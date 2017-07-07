@@ -43,6 +43,7 @@
             this.lb_mail = new System.Windows.Forms.Label();
             this.txb_Pass = new System.Windows.Forms.TextBox();
             this.txb_Mail = new System.Windows.Forms.TextBox();
+            this.lb_loginsts = new System.Windows.Forms.Label();
             this.box_Login.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,7 +57,6 @@
             this.btn_play.Name = "btn_play";
             this.btn_play.Size = new System.Drawing.Size(91, 57);
             this.btn_play.TabIndex = 0;
-            this.btn_play.Text = "Play";
             this.btn_play.UseVisualStyleBackColor = false;
             this.btn_play.Click += new System.EventHandler(this.Btn_play_Click);
             // 
@@ -69,7 +69,6 @@
             this.btn_settings.Name = "btn_settings";
             this.btn_settings.Size = new System.Drawing.Size(75, 23);
             this.btn_settings.TabIndex = 1;
-            this.btn_settings.Text = "Settings";
             this.btn_settings.UseVisualStyleBackColor = false;
             this.btn_settings.Click += new System.EventHandler(this.btn_settings_Click);
             // 
@@ -82,7 +81,6 @@
             this.btn_slider.Name = "btn_slider";
             this.btn_slider.Size = new System.Drawing.Size(75, 23);
             this.btn_slider.TabIndex = 3;
-            this.btn_slider.Text = "Slider";
             this.btn_slider.UseVisualStyleBackColor = false;
             this.btn_slider.Click += new System.EventHandler(this.btn_Slider_Click);
             // 
@@ -95,7 +93,6 @@
             this.btn_patcher.Name = "btn_patcher";
             this.btn_patcher.Size = new System.Drawing.Size(75, 23);
             this.btn_patcher.TabIndex = 4;
-            this.btn_patcher.Text = "Patcher";
             this.btn_patcher.UseVisualStyleBackColor = false;
             this.btn_patcher.Click += new System.EventHandler(this.btn_patcher_Click);
             // 
@@ -103,6 +100,7 @@
             // 
             this.box_Login.BackColor = System.Drawing.Color.Transparent;
             this.box_Login.BackgroundImage = global::BnS_Launcher.Properties.Resources._2x2;
+            this.box_Login.Controls.Add(this.lb_loginsts);
             this.box_Login.Controls.Add(this.cbox_Spass);
             this.box_Login.Controls.Add(this.cbox_Smail);
             this.box_Login.Controls.Add(this.lb_region);
@@ -115,19 +113,18 @@
             this.box_Login.ForeColor = System.Drawing.Color.White;
             this.box_Login.Location = new System.Drawing.Point(12, 303);
             this.box_Login.Name = "box_Login";
-            this.box_Login.Size = new System.Drawing.Size(345, 104);
+            this.box_Login.Size = new System.Drawing.Size(364, 104);
             this.box_Login.TabIndex = 6;
             this.box_Login.TabStop = false;
-            this.box_Login.Text = "Login form";
             // 
             // cbox_Spass
             // 
             this.cbox_Spass.AutoSize = true;
             this.cbox_Spass.Location = new System.Drawing.Point(259, 74);
             this.cbox_Spass.Name = "cbox_Spass";
-            this.cbox_Spass.Size = new System.Drawing.Size(77, 17);
+            this.cbox_Spass.Size = new System.Drawing.Size(32, 17);
             this.cbox_Spass.TabIndex = 11;
-            this.cbox_Spass.Text = "Save Pass";
+            this.cbox_Spass.Text = "_";
             this.cbox_Spass.UseVisualStyleBackColor = true;
             this.cbox_Spass.CheckedChanged += new System.EventHandler(this.cbox_Spass_CheckedChanged);
             // 
@@ -136,9 +133,9 @@
             this.cbox_Smail.AutoSize = true;
             this.cbox_Smail.Location = new System.Drawing.Point(180, 74);
             this.cbox_Smail.Name = "cbox_Smail";
-            this.cbox_Smail.Size = new System.Drawing.Size(79, 17);
+            this.cbox_Smail.Size = new System.Drawing.Size(32, 17);
             this.cbox_Smail.TabIndex = 10;
-            this.cbox_Smail.Text = "Save Email";
+            this.cbox_Smail.Text = "_";
             this.cbox_Smail.UseVisualStyleBackColor = true;
             this.cbox_Smail.CheckedChanged += new System.EventHandler(this.cbox_Smail_CheckedChanged);
             // 
@@ -147,9 +144,9 @@
             this.lb_region.AutoSize = true;
             this.lb_region.Location = new System.Drawing.Point(6, 74);
             this.lb_region.Name = "lb_region";
-            this.lb_region.Size = new System.Drawing.Size(44, 13);
+            this.lb_region.Size = new System.Drawing.Size(13, 13);
             this.lb_region.TabIndex = 9;
-            this.lb_region.Text = "Region:";
+            this.lb_region.Text = "_";
             // 
             // RegionCB
             // 
@@ -166,9 +163,8 @@
             this.btn_Login.ForeColor = System.Drawing.Color.White;
             this.btn_Login.Location = new System.Drawing.Point(261, 19);
             this.btn_Login.Name = "btn_Login";
-            this.btn_Login.Size = new System.Drawing.Size(75, 46);
+            this.btn_Login.Size = new System.Drawing.Size(97, 23);
             this.btn_Login.TabIndex = 4;
-            this.btn_Login.Text = "Login";
             this.btn_Login.UseVisualStyleBackColor = true;
             this.btn_Login.Click += new System.EventHandler(this.btn_Login_Click);
             // 
@@ -177,18 +173,18 @@
             this.lb_pass.AutoSize = true;
             this.lb_pass.Location = new System.Drawing.Point(6, 48);
             this.lb_pass.Name = "lb_pass";
-            this.lb_pass.Size = new System.Drawing.Size(56, 13);
+            this.lb_pass.Size = new System.Drawing.Size(13, 13);
             this.lb_pass.TabIndex = 3;
-            this.lb_pass.Text = "Password:";
+            this.lb_pass.Text = "_";
             // 
             // lb_mail
             // 
             this.lb_mail.AutoSize = true;
             this.lb_mail.Location = new System.Drawing.Point(6, 22);
             this.lb_mail.Name = "lb_mail";
-            this.lb_mail.Size = new System.Drawing.Size(35, 13);
+            this.lb_mail.Size = new System.Drawing.Size(13, 13);
             this.lb_mail.TabIndex = 2;
-            this.lb_mail.Text = "Email:";
+            this.lb_mail.Text = "_";
             // 
             // txb_Pass
             // 
@@ -206,6 +202,14 @@
             this.txb_Mail.Size = new System.Drawing.Size(187, 20);
             this.txb_Mail.TabIndex = 0;
             this.txb_Mail.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txb_Mail_KeyDown);
+            // 
+            // lb_loginsts
+            // 
+            this.lb_loginsts.AutoSize = true;
+            this.lb_loginsts.Location = new System.Drawing.Point(261, 48);
+            this.lb_loginsts.Name = "lb_loginsts";
+            this.lb_loginsts.Size = new System.Drawing.Size(0, 13);
+            this.lb_loginsts.TabIndex = 12;
             // 
             // Main
             // 
@@ -248,6 +252,7 @@
         private System.Windows.Forms.ComboBox RegionCB;
         private System.Windows.Forms.CheckBox cbox_Smail;
         private System.Windows.Forms.CheckBox cbox_Spass;
+        private System.Windows.Forms.Label lb_loginsts;
     }
 }
 

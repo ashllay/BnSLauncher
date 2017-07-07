@@ -25,12 +25,24 @@ class SettingsClass
     public bool TwnPath = false;
     //
     IniFile fSettings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
-    
+
     string sKorPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
     string sKorTestPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
     string sWstPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
     string sTwnPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
     string sJpnPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_JPN", "BaseDir", null);
+
+    string usekrcustompathlive = "";
+    string usekrcustompathtest = "";
+    string usewstcustompath = "";
+    string usetwncustompath = "";
+    string usejpncustompath = "";
+
+    string cskorlivepath = "";
+    string cskortestpath = "";
+    string cswstpath = "";
+    string cstwnpath = "";
+    string csjpnpath = "";
 
     public bool gKorPath
     {
@@ -130,6 +142,110 @@ class SettingsClass
         }
         set { unnatended = value; }
     }
+
+    public string csKorLivePath
+    {
+        get
+        {
+            cskorlivepath = fSettings.IniReadValue("Path", "KR_Live");
+            return cskorlivepath;
+        }
+        set { cskorlivepath = value; }
+    }
+
+    public string csKorTestPath
+    {
+        get
+        {
+            cskortestpath = fSettings.IniReadValue("Path", "KR_Test");
+            return cskortestpath;
+        }
+        set { cskortestpath = value; }
+    }
+
+    public string csWstPath
+    {
+        get
+        {
+            cswstpath = fSettings.IniReadValue("Path", "WEST");
+            return cswstpath;
+        }
+        set { cswstpath = value; }
+    }
+
+    public string csTwnPath
+    {
+        get
+        {
+            cstwnpath = fSettings.IniReadValue("Path", "TW");
+            return cstwnpath;
+        }
+        set { cstwnpath = value; }
+    }
+
+    public string csJpnPath
+    {
+        get
+        {
+            csjpnpath = fSettings.IniReadValue("Path", "JP");
+            return csjpnpath;
+        }
+        set { csjpnpath = value; }
+    }
+    public string useKrCustomPathLive
+    {
+        get
+        {
+            usekrcustompathlive = fSettings.IniReadValue("Path", "KR_Live_UseCustomPath");
+            return usekrcustompathlive;
+        }
+        set
+        { usekrcustompathlive = value; }
+    }
+    public string useKrCustomPathTest
+    {
+        get
+        {
+            usekrcustompathtest = fSettings.IniReadValue("Path", "KR_Test_UseCustomPath");
+            return usekrcustompathtest;
+        }
+        set
+        { usekrcustompathtest = value; }
+    }
+
+    public string useWstCustomPath
+    {
+        get
+        {
+            usewstcustompath = fSettings.IniReadValue("Path", "EN_UseCustomPath");
+            return usewstcustompath;
+        }
+        set
+        { usewstcustompath = value; }
+    }
+
+    public string useTwnCustomPath
+    {
+        get
+        {
+            usetwncustompath = fSettings.IniReadValue("Path", "TW_UseCustomPath");
+            return usetwncustompath;
+        }
+        set
+        { usetwncustompath = value; }
+    }
+
+    public string useJpnCustomPath
+    {
+        get
+        {
+            usejpncustompath = fSettings.IniReadValue("Path", "JP_UseCustomPath");
+            return usejpncustompath;
+        }
+        set
+        { usejpncustompath = value; }
+    }
+
     public string sRegion
     {
         get
@@ -140,21 +256,39 @@ class SettingsClass
                 switch (region)
                 {
                     case "JP":
-                        installpath = sJpnPath;
+                        if (usejpncustompath == "true")
+                        {
+                            if (!string.IsNullOrEmpty(csjpnpath))
+                                installpath = csjpnpath;
+                        }
+                        else
+                            installpath = sJpnPath;
                         installpathregion = @"contents\Local\NCJAPAN\";
                         localcoockedpcpath = Path.Combine(sInstallPath, sInstallPathRegion, @"JAPANESE\CookedPC\");
                         modpath = Path.Combine(sLocalCookedPCPath + @"mod\");
                         xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCJAPAN\ClientConfiguration.xml";
                         break;
                     case "TW":
-                        installpath = sTwnPath;
+                        if (usetwncustompath == "true")
+                        {
+                            if (!string.IsNullOrEmpty(cstwnpath))
+                                installpath = cstwnpath;
+                        }
+                        else
+                            installpath = sTwnPath;
                         installpathregion = @"contents\Local\NCTAIWAN\";
                         localcoockedpcpath = Path.Combine(sInstallPath, sInstallPathRegion, @"CHINESET\CookedPC\");
                         modpath = Path.Combine(sLocalCookedPCPath, @"mod\");
                         xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCTAIWAN\ClientConfiguration.xml";
                         break;
                     case "EN":
-                        installpath = sWstPath;
+                        if (usewstcustompath == "true")
+                        {
+                            if (!string.IsNullOrEmpty(cstwnpath))
+                                installpath = cstwnpath;
+                        }
+                        else
+                            installpath = sWstPath;
                         installpathregion = @"contents\Local\NCWEST\";
                         localcoockedpcpath = Path.Combine(sInstallPath, sInstallPathRegion, @"ENGLISH\CookedPC\");
                         modpath = Path.Combine(localcoockedpcpath, @"mod\");
@@ -164,7 +298,13 @@ class SettingsClass
                         servertype = fSettings.IniReadValue("Settings", "ServerType");
                         if (servertype == "Live")
                         {
-                            installpath = sKorPath;
+                            if (usekrcustompathlive == "true")
+                            {
+                                if (!string.IsNullOrEmpty(cskorlivepath))
+                                    installpath = cskorlivepath;
+                            }
+                            else
+                                installpath = sKorPath;
                             installpathregion = @"contents\local\NCSoft\";
                             modpath = Path.Combine(sInstallPath, sInstallPathRegion, @"korean\CookedPC\mod\");
                             localcoockedpcpath = Path.Combine(sInstallPath, @"contents\bns\CookedPC\");
@@ -172,7 +312,13 @@ class SettingsClass
                         }
                         else if (servertype == "Test")
                         {
-                            installpath = sKorTestPath;
+                            if (usekrcustompathtest == "true")
+                            {
+                                if (!string.IsNullOrEmpty(cskortestpath))
+                                    installpath = cskortestpath;
+                            }
+                            else
+                                installpath = sKorTestPath;
                             installpathregion = @"contents\local\NCSoft\";
                             modpath = Path.Combine(sInstallPath, sInstallPathRegion, @"korean\CookedPC\mod\");
                             localcoockedpcpath = Path.Combine(sInstallPath, @"contents\bns\CookedPC\");
