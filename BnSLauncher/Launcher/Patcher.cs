@@ -40,9 +40,9 @@ namespace BnS_Launcher
             string stRegion = "";
             string stArchitecture = "";
 
-            sSettings.sArchitecture = pSettings.IniReadValue("Settings", "Architecture");
-            sSettings.sRegion = pSettings.IniReadValue("Settings", "Region");
-            sSettings.sServerType = pSettings.IniReadValue("Settings", "ServerType");
+            //sSettings.sArchitecture = pSettings.IniReadValue("Settings", "Architecture");
+            //sSettings.sRegion = pSettings.IniReadValue("Settings", "Region");
+            //sSettings.sServerType = pSettings.IniReadValue("Settings", "ServerType");
 
             _writer = new StrWriter(richOut);
             Console.SetOut(_writer);

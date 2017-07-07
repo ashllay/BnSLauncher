@@ -44,11 +44,11 @@ class SettingsClass
     string cstwnpath = "";
     string csjpnpath = "";
 
-    public bool gKorPath
+    public bool gKorLivePath
     {
         get
         {
-            if (sKorPath != null)
+            if (sKorPath != null || !string.IsNullOrEmpty(csKorLivePath))
                 KorPath = true;
             return KorPath;
         }
@@ -59,7 +59,7 @@ class SettingsClass
     {
         get
         {
-            if (sKorTestPath != null)
+            if (sKorTestPath != null || !string.IsNullOrEmpty(csKorTestPath))
                 KorTestPath = true;
             return KorTestPath;
         }
@@ -71,7 +71,7 @@ class SettingsClass
     {
         get
         {
-            if (sWstPath != null)
+            if (sWstPath != null || !string.IsNullOrEmpty(csWstPath))
                 WstPath = true;
             return WstPath;
         }
@@ -83,7 +83,7 @@ class SettingsClass
     {
         get
         {
-            if (sTwnPath != null)
+            if (sTwnPath != null || !string.IsNullOrEmpty(csTwnPath))
                 TwnPath = true;
             return TwnPath;
         }
@@ -95,7 +95,7 @@ class SettingsClass
     {
         get
         {
-            if (sJpnPath != null)
+            if (sJpnPath != null || !string.IsNullOrEmpty(csJpnPath))
                 JpnPath = true;
 
             return JpnPath;

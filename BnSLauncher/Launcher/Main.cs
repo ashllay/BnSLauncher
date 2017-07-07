@@ -37,19 +37,12 @@ namespace BnS_Launcher
             InitializeComponent();
             InitI18N();
 
-            sSettings.sNoTextureStreaming = Settings.IniReadValue("Settings", "NoTextureStreaming");
-            sSettings.sUnattended = Settings.IniReadValue("Settings", "Unattended");
-            sSettings.sRegion = Settings.IniReadValue("Settings", "Region");
-            sSettings.sLanguageID = Settings.IniReadValue("Settings", "language");
-            sSettings.sUseAllCores = Settings.IniReadValue("Settings", "UseAllCores");
-            sSettings.sArchitecture = Settings.IniReadValue("Settings", "Architecture");
-            sSettings.sServerType = Settings.IniReadValue("Settings", "ServerType");
-
             var settingsFile = Environment.CurrentDirectory + "\\Settings.ini";
             if (!File.Exists(settingsFile))
             {
                 File.Create(settingsFile).Dispose();
             }
+            //Settings
             if (string.IsNullOrEmpty(sSettings.sUseAllCores))
                 Settings.IniWriteValue("Settings", "UseAllCores", "false");
             if (string.IsNullOrEmpty(sSettings.sNoTextureStreaming))
@@ -58,11 +51,38 @@ namespace BnS_Launcher
                 Settings.IniWriteValue("Settings", "Architecture", "0");
             if (string.IsNullOrEmpty(sSettings.sUnattended))
                 Settings.IniWriteValue("Settings", "Unattended", "false");
+            if (string.IsNullOrEmpty(sSettings.sRegion))
+                Settings.IniWriteValue("Settings", "Region", "");
+            if (string.IsNullOrEmpty(sSettings.sServerType))
+                Settings.IniWriteValue("Settings", "ServerType", "");
+            if (string.IsNullOrEmpty(sSettings.sLanguageID))
+                Settings.IniWriteValue("Settings", "language", "");
+            //Path
+            if (string.IsNullOrEmpty(sSettings.useKrCustomPathLive))
+                Settings.IniWriteValue("Path", "KR_Live_UseCustomPath", "false");
+            if (string.IsNullOrEmpty(sSettings.csKorLivePath))
+                Settings.IniWriteValue("Path", "KR_Live", "");
+            if (string.IsNullOrEmpty(sSettings.useKrCustomPathTest))
+                Settings.IniWriteValue("Path", "KR_Test_UseCustomPath", "false");
+            if (string.IsNullOrEmpty(sSettings.csKorTestPath))
+                Settings.IniWriteValue("Path", "KR_Test", "");
+            if (string.IsNullOrEmpty(sSettings.useWstCustomPath))
+                Settings.IniWriteValue("Path", "EN_UseCustomPath", "false");
+            if (string.IsNullOrEmpty(sSettings.csWstPath))
+                Settings.IniWriteValue("Path", "WEST", "");
+            if (string.IsNullOrEmpty(sSettings.useJpnCustomPath))
+                Settings.IniWriteValue("Path", "JP_UseCustomPath", "false");
+            if (string.IsNullOrEmpty(sSettings.csJpnPath))
+                Settings.IniWriteValue("Path", "JP", "");
+            if (string.IsNullOrEmpty(sSettings.useTwnCustomPath))
+                Settings.IniWriteValue("Path", "TW_UseCustomPath", "false");
+            if (string.IsNullOrEmpty(sSettings.csTwnPath))
+                Settings.IniWriteValue("Path", "TW", "");
 
             switch (sSettings.sRegion)
             {
                 case "KR":
-                    if (sSettings.gKorPath == false)
+                    if (sSettings.gKorLivePath == false)
                     {
                         ClientFound = false;
                         ClientReg = "BnS Korea";
@@ -120,7 +140,6 @@ namespace BnS_Launcher
                     settings.Show();
                 }
             }
-
         }
 
         private void InitI18N()

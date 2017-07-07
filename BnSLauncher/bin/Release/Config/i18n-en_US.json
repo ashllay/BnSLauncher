@@ -26,6 +26,7 @@
         "gbox_arc": "Architeture",
         "gbox_krserver": "Server",
         "gbox_westlang": "West Language",
+		"gbox_cpath": "Custom Path",
 		"tpage_client": "Client",
 		"tpage_lsettings": "Launcher Settings",
 		"tpage_others": "Others",
@@ -45,6 +46,8 @@
 		"lb_allcoresoff": "Use all cores disabled.",
 		"lb_loadimgoff": "Loading screens disabled.",
 		"lb_loadimgon": "Loading screens enabled.",
-		
+		"lb_cpathon": "Enabled",
+		"lb_cpathoff": "Disabled",
+		"btn_scpath": "Search"
 	}
 }
