@@ -49,5 +49,28 @@
 		"lb_cpathon": "Enabled",
 		"lb_cpathoff": "Disabled",
 		"btn_scpath": "Search"
+	},
+	"Patcher":{
+	"title": "Patcher",
+	"btn_start": "Start!",
+	"lb_outlog": "Output log",
+	"gbox_repackf": "Repack Files",
+	"cbox_webl": "Disable web launcher",
+	"cbox_clause": "Disable clause",
+	"cbox_minimize": "Disable minimise",
+	"cbox_bakconfig": "Backup original",
+	"cbox_dps": "Enable DPS metter",
+	"cbox_perfmod": "Enable performace mode",
+	"cbox_bakxml": "Backup original",
+	"strlb_info": "Detected Region: {0} and Architecture: {1} in Settings.",
+	"str_extract": "Extracting: {0}\n",
+	"str_repackerror": "Please select a file to repack!",
+	"str_patching": "\r\nPatching ",
+	"str_patcherror": "Error: Failed to patch xml file\r\n",
+	"str_pathdone": "Patch xml file(s) done!\r\n",
+	"str_repack": "Repacking: {0}\n",
+	"str_patchdone": "Patch Finished now you can close the window",
+	"str_compiledat": "Compiling .dat file(s).\n",
+	"str_errordat": "Error: Failed to apply patch!\r\n"
 	}
 }

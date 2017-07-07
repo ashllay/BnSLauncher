@@ -368,7 +368,7 @@ namespace BnS_Launcher.Slider
                 }
             }
         }
-        private void processRefreshButton_Click(object sender, EventArgs e)
+        private void processRefreshbtn_Click(object sender, EventArgs e)
         {
             selectBodyTypeBox.Enabled = false;
             ClearPanel();
@@ -410,7 +410,7 @@ namespace BnS_Launcher.Slider
             }
         }
 
-        private void resetButton_Click(object sender, EventArgs e)
+        private void resetbtn_Click(object sender, EventArgs e)
         {
             int selectedIndex = this.selectBodyTypeBox.SelectedIndex;
             bool enabled = this.selectBodyTypeBox.Enabled;

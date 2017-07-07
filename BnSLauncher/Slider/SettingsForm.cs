@@ -32,12 +32,12 @@ namespace BnS_Launcher.Slider
             }
         }
 
-        private void closeButton_Click(object sender, EventArgs e)
+        private void closebtn_Click(object sender, EventArgs e)
         {
             base.Close();
         }
 
-        private void defaultProfileButton_Click(object sender, EventArgs e)
+        private void defaultProfilebtn_Click(object sender, EventArgs e)
         {
             this.openFileMenu.Title = "Select Default Profile file";
             this.openFileMenu.Filter = "XML|*.xml|All files|*.*";
@@ -49,7 +49,7 @@ namespace BnS_Launcher.Slider
             }
         }
 
-        private void saveButton_Click(object sender, EventArgs e)
+        private void savebtn_Click(object sender, EventArgs e)
         {
             int num;
             if (this.checkedScan != null)

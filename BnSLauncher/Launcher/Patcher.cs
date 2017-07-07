@@ -8,7 +8,6 @@ namespace BnS_Launcher
 {
     public partial class Patcher : Form
     {
-
         private string BackPath = "Backup\\";
         private string ConfigOutPath;
         private string XmlOutPath;
@@ -27,22 +26,20 @@ namespace BnS_Launcher
 
         SettingsClass sSettings = new SettingsClass();
 
-        //IniFile pSettings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
+        string strlb_info, str_extract, str_repackerror, str_patching, str_patcherror, str_pathdone, str_repack, str_patchdone, str_compiledat, str_errordat;
 
-        
+        private BslI18NLoader _i18N;
+
         public Patcher()
         {
             InitializeComponent();
+            InitI18N();
         }
 
         private void Patcher_Load(object sender, EventArgs e)
         {
             string stRegion = "";
             string stArchitecture = "";
-
-            //sSettings.sArchitecture = pSettings.IniReadValue("Settings", "Architecture");
-            //sSettings.sRegion = pSettings.IniReadValue("Settings", "Region");
-            //sSettings.sServerType = pSettings.IniReadValue("Settings", "ServerType");
 
             _writer = new StrWriter(richOut);
             Console.SetOut(_writer);
@@ -59,11 +56,11 @@ namespace BnS_Launcher
                     stRegion = "Taiwan";
                     break;
                 case "EN":
-                    checkBox_Webl.Enabled = false;
+                    cbox_webl.Enabled = false;
                     stRegion = "West";
                     break;
                 case "KR":
-                    checkBox_Webl.Enabled = false;
+                    cbox_webl.Enabled = false;
                     if (sSettings.sServerType == "Live")
                         stRegion = "Korean";
                     else if (sSettings.sServerType == "Test")
@@ -89,8 +86,8 @@ namespace BnS_Launcher
                 stArchitecture = "x64";
             }
 
-            string strLabelID = String.Format("Detected Region: {0} and Architecture: {1} in Settings.", stRegion, stArchitecture);
-            label1.Text = strLabelID;
+            string strLabelID = String.Format(strlb_info, stRegion, stArchitecture);
+            lb_info.Text = strLabelID;
             cbox_cconfig.Text = ConfigFileName;
             cbox_cxml.Text = XmlFileName;
             ConfigFilePath = Path.Combine(DatPath, ConfigFileName);
@@ -99,6 +96,38 @@ namespace BnS_Launcher
             ConfigOutPath = ConfigFilePath + ".files"; //get full file path and add .files
             XmlOutPath = XmlFilePath + ".files";
             Console.Write("{0}", DatPath);
+        }
+        private void InitI18N()
+        {
+            _i18N = BslI18NLoader.Instance;
+            //FormTitle
+            Text = _i18N.LoadI18NValue("Patcher", "title");
+            //buttons
+            btn_start.Text = _i18N.LoadI18NValue("Patcher", "btn_start");
+            //labels
+            lb_outlog.Text = _i18N.LoadI18NValue("Patcher", "lb_outlog");
+            //strings
+            strlb_info = _i18N.LoadI18NValue("Patcher", "strlb_info");
+            str_extract = _i18N.LoadI18NValue("Patcher", "str_extract");
+            str_repackerror = _i18N.LoadI18NValue("Patcher", "str_repackerror");
+            str_patching = _i18N.LoadI18NValue("Patcher", "str_patching");
+            str_patcherror = _i18N.LoadI18NValue("Patcher", "str_patcherror");
+            str_pathdone = _i18N.LoadI18NValue("Patcher", "str_pathdone");
+            str_repack = _i18N.LoadI18NValue("Patcher", "str_repack");
+            str_patchdone = _i18N.LoadI18NValue("Patcher", "str_patchdone");
+            str_compiledat = _i18N.LoadI18NValue("Patcher", "str_compiledat");
+            str_errordat = _i18N.LoadI18NValue("Patcher", "str_errordat");
+            //groupboxes
+            gbox_repackf.Text = _i18N.LoadI18NValue("Patcher", "gbox_repackf");
+            //checkboxes
+            cbox_webl.Text = _i18N.LoadI18NValue("Patcher", "cbox_webl");
+            cbox_clause.Text = _i18N.LoadI18NValue("Patcher", "cbox_clause");
+            cbox_minimize.Text = _i18N.LoadI18NValue("Patcher", "cbox_minimize");
+            cbox_bakconfig.Text = _i18N.LoadI18NValue("Patcher", "cbox_bakconfig");
+
+            cbox_dps.Text = _i18N.LoadI18NValue("Patcher", "cbox_bakconfig");
+            cbox_perfmod.Text = _i18N.LoadI18NValue("Patcher", "cbox_perfmod");
+            cbox_bakxml.Text = _i18N.LoadI18NValue("Patcher", "cbox_bakxml");
         }
 
         public void Extractor(string datFile)
@@ -117,27 +146,26 @@ namespace BnS_Launcher
             CheckForIllegalCrossThreadCalls = false;
             if (PatchConfig == true)
             {
-                Console.Write("Extracting: {0}\n", ConfigFileName);
+                Console.Write(str_extract, ConfigFileName);
                 BNSDat.BNSDat.Extract(ConfigFilePath, ConfigFilePath.EndsWith("64.dat"));
             }
 
             if (PatchXml == true)
             {
-                Console.Write("Extracting: {0}\n", XmlFileName);
+                Console.Write(str_errordat, XmlFileName);
                 BNSDat.BNSDat.Extract(XmlFilePath, XmlFilePath.EndsWith("64.dat"));
             }
             GC.Collect();
             patchConfig();
         }
 
-        private void button_start_Click(object sender, EventArgs e)
+        private void btn_start_Click(object sender, EventArgs e)
         {
-
             gbox_patcher.Enabled = false;
 
             if (!cbox_cconfig.Checked && !cbox_cxml.Checked)
             {
-                MessageBox.Show("Please select a file to repack!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(str_repackerror, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 gbox_patcher.Enabled = true;
             }
 
@@ -169,7 +197,7 @@ namespace BnS_Launcher
             //get current date and time
             string date = DateTime.Now.ToString("dd-MM-yy_"); // includes leading zeros
             string time = DateTime.Now.ToString("hh.mm.ss"); // includes leading zeros
-            if (cbox_BakConfig.Checked == true)
+            if (cbox_bakconfig.Checked == true)
             {
                 var BackDir = Path.Combine(DatPath, BackPath);  // folder location
 
@@ -186,7 +214,7 @@ namespace BnS_Launcher
                 File.Copy(DatPath + ConfigFileName, CurrBackPath + ConfigFileName, true);
             }
 
-            if (cbox_BakXml.Checked == true)
+            if (cbox_bakxml.Checked == true)
             {
                 var BackDir = DatPath + BackPath;  // folder location
 
@@ -217,18 +245,18 @@ namespace BnS_Launcher
                 //patch only what is selected
                 if (PatchConfig == true)
                 {
-                    Console.Write("\r\nPatching system.config2.xml\n");
+                    Console.Write(str_patching + "system.config2.xml\n");
                     string configFile = File.ReadAllText(ConfigOutPath + "\\system.config2.xml");
 
-                    if (checkBox_Webl.Checked == true)
+                    if (cbox_webl.Checked == true)
                         configFile = configFile.Replace("\"use-web-launching\" value=\"true\"", "\"use-web-launching\" value=\"false\"");
                     else
                         configFile = configFile.Replace("\"use-web-launching\" value=\"false\"", "\"use-web-launching\" value=\"true\"");
-                    if (checkBox_minimize.Checked == true)
+                    if (cbox_minimize.Checked == true)
                         configFile = configFile.Replace("\"minimize-window\" value=\"true\"", "\"minimize-window\" value=\"false\"");
                     else
                         configFile = configFile.Replace("\"minimize-window\" value=\"false\"", "\"minimize-window\" value=\"true\"");
-                    if (checkBox_clause.Checked == true)
+                    if (cbox_clause.Checked == true)
                         configFile = configFile.Replace("\"show-clause\" value=\"true\"", "\"show-clause\" value=\"false\"");
                     else
                         configFile = configFile.Replace("\"show-clause\" value=\"false\"", "\"show-clause\" value=\"true\"");
@@ -237,10 +265,10 @@ namespace BnS_Launcher
                 }
                 if (PatchXml == true)
                 {
-                    Console.Write("\r\nPatching client.config2.xml\n");
+                    Console.Write(str_patching + "client.config2.xml\n");
                     string xmlFile = File.ReadAllText(XmlOutPath + "\\client.config2.xml");
 
-                    if (cboxDPS.Checked == true)
+                    if (cbox_dps.Checked == true)
                         xmlFile = xmlFile.Replace("\"show-party-6-dungeon-and-cave\" value=\"n\"", "\"show-party-6-dungeon-and-cave\" value=\"y\"");
                     else
                         xmlFile = xmlFile.Replace("\"show-party-6-dungeon-and-cave\" value=\"y\"", "\"show-party-6-dungeon-and-cave\" value=\"n\"");
@@ -256,10 +284,10 @@ namespace BnS_Launcher
 
             catch
             {
-                Console.Write("Error: Failed to patch xml file\r\n");
+                Console.Write(str_patcherror);
                 return;
             }
-            Console.Write("Patch xml file(s) done!\r\n");
+            Console.Write(str_pathdone);
             compileDat();
 
         }
@@ -280,23 +308,23 @@ namespace BnS_Launcher
 
             if (PatchConfig == true)
             {
-                Console.Write("Repacking: {0}\n", ConfigFileName);
+                Console.Write(str_repack, ConfigFileName);
                 BNSDat.BNSDat.Compress(ConfigOutPath, ConfigOutPath.Contains("64.dat"));
             }
 
             if (PatchXml == true)
             {
-                Console.Write("Repacking: {0}\n", XmlFileName);
+                Console.Write(str_repack, XmlFileName);
                 BNSDat.BNSDat.Compress(XmlOutPath, XmlOutPath.Contains("64.dat"));
             }
-            //Console.Write("Done!!\n");
+
             GC.Collect();
-            MessageBox.Show("Patch Finished now you can close the window", "Patch.");
+            MessageBox.Show(str_patchdone, "Patcher");
             gbox_patcher.Enabled = true;
         }
         private void compileDat()
         {
-            Console.Write("Compiling .dat file(s).\n");
+            Console.Write(str_compiledat);
             try
             {
                 if (PatchConfig == true)
@@ -307,7 +335,7 @@ namespace BnS_Launcher
             }
             catch
             {
-                Console.Write("Error: Failed to apply patch!\r\n");
+                Console.Write(str_errordat);
                 return;
             }
         }

@@ -64,7 +64,7 @@
             this.processRefreshButton.TabIndex = 2;
             this.processRefreshButton.Text = "Refresh Process";
             this.processRefreshButton.UseVisualStyleBackColor = true;
-            this.processRefreshButton.Click += new System.EventHandler(this.processRefreshButton_Click);
+            this.processRefreshButton.Click += new System.EventHandler(this.processRefreshbtn_Click);
             // 
             // processSelectBox
             // 
@@ -112,7 +112,7 @@
             this.resetButton.TabIndex = 2;
             this.resetButton.Text = "Reset All";
             this.resetButton.UseVisualStyleBackColor = true;
-            this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
+            this.resetButton.Click += new System.EventHandler(this.resetbtn_Click);
             // 
             // tabControl
             // 

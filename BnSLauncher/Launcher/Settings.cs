@@ -49,6 +49,8 @@ namespace BnS_Launcher
         private void InitI18N()
         {
             _i18N = BslI18NLoader.Instance;
+            //FormTitle
+            Text = _i18N.LoadI18NValue("Settings", "title");
             //groupboxes
             gbox_llang.Text = _i18N.LoadI18NValue("Settings", "gbox_llang");
             gbox_region.Text = _i18N.LoadI18NValue("Settings", "gbox_region");
@@ -82,8 +84,7 @@ namespace BnS_Launcher
             mbox_disableimg = _i18N.LoadI18NValue("Settings", "mbox_disableimg");
             mbox_enableimg = _i18N.LoadI18NValue("Settings", "mbox_enableimg");
             //buttons
-            btn_scpath.Text = _i18N.LoadI18NValue("Settings", "btn_scpath");
-                
+            btn_scpath.Text = _i18N.LoadI18NValue("Settings", "btn_scpath"); 
         }
 
 
@@ -142,6 +143,8 @@ namespace BnS_Launcher
                         }
                         if (sSettings.sServerType == "Live")
                         {
+                            txb_cpath.Text = sSettings.csKorLivePath;
+
                             if (sSettings.useKrCustomPathLive == "true")
                                 lb_cpath.Text = lb_cpathon;
                             else
@@ -149,6 +152,7 @@ namespace BnS_Launcher
                         }
                         else if (sSettings.sServerType == "Test")
                         {
+                            txb_cpath.Text = sSettings.csKorTestPath;
                             if (sSettings.useKrCustomPathTest == "true")
                                 lb_cpath.Text = lb_cpathon;
                             else
@@ -158,6 +162,7 @@ namespace BnS_Launcher
                     case "EN":
                         gbox_westlang.Show();
                         cbox_Region.SelectedItem = "West(NA-EU)";
+                        txb_cpath.Text = sSettings.csWstPath;
                         if (string.IsNullOrEmpty(sSettings.sLanguageID))
                         {
                             fSettings.IniWriteValue("Settings", "language", "English");
@@ -170,6 +175,7 @@ namespace BnS_Launcher
                         break;
                     case "TW":
                         cbox_Region.SelectedItem = "Taiwan";
+                        txb_cpath.Text = sSettings.csTwnPath;
                         if (sSettings.useTwnCustomPath == "true")
                             lb_cpath.Text = lb_cpathon;
                         else
@@ -177,6 +183,7 @@ namespace BnS_Launcher
                         break;
                     case "JP":
                         cbox_Region.SelectedItem = "Japan";
+                        txb_cpath.Text = sSettings.csJpnPath;
                         if (sSettings.useJpnCustomPath == "true")
                             lb_cpath.Text = lb_cpathon;  
                         else
@@ -185,7 +192,6 @@ namespace BnS_Launcher
                     default:
                         break;
                 }
-                txb_cpath.Text = sSettings.sInstallPath;
 
                 if (sSettings.sArchitecture == "0")
                     cbox_Arch.SelectedItem = "x86";
@@ -464,7 +470,6 @@ namespace BnS_Launcher
 
         private void cbox_KorServer_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             switch (cbox_KorServer.SelectedItem.ToString())
             {
                 //

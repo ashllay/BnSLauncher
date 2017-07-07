@@ -101,7 +101,7 @@
             this.closeButton.TabIndex = 20;
             this.closeButton.Text = "Cancel";
             this.closeButton.UseVisualStyleBackColor = true;
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
+            this.closeButton.Click += new System.EventHandler(this.closebtn_Click);
             // 
             // saveButton
             // 
@@ -111,7 +111,7 @@
             this.saveButton.TabIndex = 19;
             this.saveButton.Text = "Ok";
             this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            this.saveButton.Click += new System.EventHandler(this.savebtn_Click);
             // 
             // groupBox1
             // 

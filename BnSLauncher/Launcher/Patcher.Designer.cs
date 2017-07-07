@@ -31,27 +31,27 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Patcher));
             this.tabPatcher = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.cbox_BakConfig = new System.Windows.Forms.CheckBox();
-            this.checkBox_Webl = new System.Windows.Forms.CheckBox();
-            this.checkBox_clause = new System.Windows.Forms.CheckBox();
-            this.checkBox_minimize = new System.Windows.Forms.CheckBox();
+            this.cbox_bakconfig = new System.Windows.Forms.CheckBox();
+            this.cbox_webl = new System.Windows.Forms.CheckBox();
+            this.cbox_clause = new System.Windows.Forms.CheckBox();
+            this.cbox_minimize = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.cbox_BakXml = new System.Windows.Forms.CheckBox();
-            this.cboxDPS = new System.Windows.Forms.CheckBox();
+            this.cbox_perfmod = new System.Windows.Forms.CheckBox();
+            this.cbox_bakxml = new System.Windows.Forms.CheckBox();
+            this.cbox_dps = new System.Windows.Forms.CheckBox();
             this.gbox_patcher = new System.Windows.Forms.GroupBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbox_repackf = new System.Windows.Forms.GroupBox();
             this.cbox_cxml = new System.Windows.Forms.CheckBox();
             this.cbox_cconfig = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.button_start = new System.Windows.Forms.Button();
+            this.lb_info = new System.Windows.Forms.Label();
+            this.btn_start = new System.Windows.Forms.Button();
             this.richOut = new System.Windows.Forms.RichTextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cbox_perfmod = new System.Windows.Forms.CheckBox();
+            this.lb_outlog = new System.Windows.Forms.Label();
             this.tabPatcher.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.gbox_patcher.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.gbox_repackf.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabPatcher
@@ -67,10 +67,10 @@
             // tabPage1
             // 
             this.tabPage1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tabPage1.Controls.Add(this.cbox_BakConfig);
-            this.tabPage1.Controls.Add(this.checkBox_Webl);
-            this.tabPage1.Controls.Add(this.checkBox_clause);
-            this.tabPage1.Controls.Add(this.checkBox_minimize);
+            this.tabPage1.Controls.Add(this.cbox_bakconfig);
+            this.tabPage1.Controls.Add(this.cbox_webl);
+            this.tabPage1.Controls.Add(this.cbox_clause);
+            this.tabPage1.Controls.Add(this.cbox_minimize);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -78,57 +78,53 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Config.dat";
             // 
-            // cbox_BakConfig
+            // cbox_bakconfig
             // 
-            this.cbox_BakConfig.AutoSize = true;
-            this.cbox_BakConfig.Checked = true;
-            this.cbox_BakConfig.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbox_BakConfig.ForeColor = System.Drawing.Color.Black;
-            this.cbox_BakConfig.Location = new System.Drawing.Point(163, 6);
-            this.cbox_BakConfig.Name = "cbox_BakConfig";
-            this.cbox_BakConfig.Size = new System.Drawing.Size(101, 17);
-            this.cbox_BakConfig.TabIndex = 12;
-            this.cbox_BakConfig.Text = "Backup Original";
-            this.cbox_BakConfig.UseVisualStyleBackColor = true;
+            this.cbox_bakconfig.AutoSize = true;
+            this.cbox_bakconfig.Checked = true;
+            this.cbox_bakconfig.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbox_bakconfig.ForeColor = System.Drawing.Color.Black;
+            this.cbox_bakconfig.Location = new System.Drawing.Point(163, 6);
+            this.cbox_bakconfig.Name = "cbox_bakconfig";
+            this.cbox_bakconfig.Size = new System.Drawing.Size(15, 14);
+            this.cbox_bakconfig.TabIndex = 12;
+            this.cbox_bakconfig.UseVisualStyleBackColor = true;
             // 
-            // checkBox_Webl
+            // cbox_webl
             // 
-            this.checkBox_Webl.AutoSize = true;
-            this.checkBox_Webl.ForeColor = System.Drawing.Color.Black;
-            this.checkBox_Webl.Location = new System.Drawing.Point(6, 6);
-            this.checkBox_Webl.Name = "checkBox_Webl";
-            this.checkBox_Webl.Size = new System.Drawing.Size(135, 17);
-            this.checkBox_Webl.TabIndex = 9;
-            this.checkBox_Webl.Text = "Disable Web Launcher";
-            this.checkBox_Webl.UseVisualStyleBackColor = true;
+            this.cbox_webl.AutoSize = true;
+            this.cbox_webl.ForeColor = System.Drawing.Color.Black;
+            this.cbox_webl.Location = new System.Drawing.Point(6, 6);
+            this.cbox_webl.Name = "cbox_webl";
+            this.cbox_webl.Size = new System.Drawing.Size(15, 14);
+            this.cbox_webl.TabIndex = 9;
+            this.cbox_webl.UseVisualStyleBackColor = true;
             // 
-            // checkBox_clause
+            // cbox_clause
             // 
-            this.checkBox_clause.AutoSize = true;
-            this.checkBox_clause.ForeColor = System.Drawing.Color.Black;
-            this.checkBox_clause.Location = new System.Drawing.Point(6, 29);
-            this.checkBox_clause.Name = "checkBox_clause";
-            this.checkBox_clause.Size = new System.Drawing.Size(96, 17);
-            this.checkBox_clause.TabIndex = 10;
-            this.checkBox_clause.Text = "Disable Clause";
-            this.checkBox_clause.UseVisualStyleBackColor = true;
+            this.cbox_clause.AutoSize = true;
+            this.cbox_clause.ForeColor = System.Drawing.Color.Black;
+            this.cbox_clause.Location = new System.Drawing.Point(6, 29);
+            this.cbox_clause.Name = "cbox_clause";
+            this.cbox_clause.Size = new System.Drawing.Size(15, 14);
+            this.cbox_clause.TabIndex = 10;
+            this.cbox_clause.UseVisualStyleBackColor = true;
             // 
-            // checkBox_minimize
+            // cbox_minimize
             // 
-            this.checkBox_minimize.AutoSize = true;
-            this.checkBox_minimize.ForeColor = System.Drawing.Color.Black;
-            this.checkBox_minimize.Location = new System.Drawing.Point(6, 52);
-            this.checkBox_minimize.Name = "checkBox_minimize";
-            this.checkBox_minimize.Size = new System.Drawing.Size(104, 17);
-            this.checkBox_minimize.TabIndex = 11;
-            this.checkBox_minimize.Text = "Disable Minimise";
-            this.checkBox_minimize.UseVisualStyleBackColor = true;
+            this.cbox_minimize.AutoSize = true;
+            this.cbox_minimize.ForeColor = System.Drawing.Color.Black;
+            this.cbox_minimize.Location = new System.Drawing.Point(6, 52);
+            this.cbox_minimize.Name = "cbox_minimize";
+            this.cbox_minimize.Size = new System.Drawing.Size(15, 14);
+            this.cbox_minimize.TabIndex = 11;
+            this.cbox_minimize.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.cbox_perfmod);
-            this.tabPage2.Controls.Add(this.cbox_BakXml);
-            this.tabPage2.Controls.Add(this.cboxDPS);
+            this.tabPage2.Controls.Add(this.cbox_bakxml);
+            this.tabPage2.Controls.Add(this.cbox_dps);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -136,54 +132,60 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Xml.dat";
             // 
-            // cbox_BakXml
+            // cbox_perfmod
             // 
-            this.cbox_BakXml.AutoSize = true;
-            this.cbox_BakXml.Checked = true;
-            this.cbox_BakXml.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbox_BakXml.Location = new System.Drawing.Point(163, 6);
-            this.cbox_BakXml.Name = "cbox_BakXml";
-            this.cbox_BakXml.Size = new System.Drawing.Size(101, 17);
-            this.cbox_BakXml.TabIndex = 9;
-            this.cbox_BakXml.Text = "Backup Original";
-            this.cbox_BakXml.UseVisualStyleBackColor = true;
+            this.cbox_perfmod.AutoSize = true;
+            this.cbox_perfmod.Location = new System.Drawing.Point(6, 29);
+            this.cbox_perfmod.Name = "cbox_perfmod";
+            this.cbox_perfmod.Size = new System.Drawing.Size(15, 14);
+            this.cbox_perfmod.TabIndex = 10;
+            this.cbox_perfmod.UseVisualStyleBackColor = true;
             // 
-            // cboxDPS
+            // cbox_bakxml
             // 
-            this.cboxDPS.AutoSize = true;
-            this.cboxDPS.Location = new System.Drawing.Point(6, 6);
-            this.cboxDPS.Name = "cboxDPS";
-            this.cboxDPS.Size = new System.Drawing.Size(148, 17);
-            this.cboxDPS.TabIndex = 9;
-            this.cboxDPS.Text = "Enable DPS metter 6 man";
-            this.cboxDPS.UseVisualStyleBackColor = true;
+            this.cbox_bakxml.AutoSize = true;
+            this.cbox_bakxml.Checked = true;
+            this.cbox_bakxml.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbox_bakxml.Location = new System.Drawing.Point(163, 6);
+            this.cbox_bakxml.Name = "cbox_bakxml";
+            this.cbox_bakxml.Size = new System.Drawing.Size(15, 14);
+            this.cbox_bakxml.TabIndex = 9;
+            this.cbox_bakxml.UseVisualStyleBackColor = true;
+            // 
+            // cbox_dps
+            // 
+            this.cbox_dps.AutoSize = true;
+            this.cbox_dps.Location = new System.Drawing.Point(6, 6);
+            this.cbox_dps.Name = "cbox_dps";
+            this.cbox_dps.Size = new System.Drawing.Size(15, 14);
+            this.cbox_dps.TabIndex = 9;
+            this.cbox_dps.UseVisualStyleBackColor = true;
             // 
             // gbox_patcher
             // 
             this.gbox_patcher.BackColor = System.Drawing.Color.Transparent;
             this.gbox_patcher.BackgroundImage = global::BnS_Launcher.Properties.Resources._2x2;
             this.gbox_patcher.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.gbox_patcher.Controls.Add(this.groupBox1);
+            this.gbox_patcher.Controls.Add(this.gbox_repackf);
             this.gbox_patcher.Controls.Add(this.tabPatcher);
-            this.gbox_patcher.Controls.Add(this.label1);
-            this.gbox_patcher.Controls.Add(this.button_start);
+            this.gbox_patcher.Controls.Add(this.lb_info);
+            this.gbox_patcher.Controls.Add(this.btn_start);
             this.gbox_patcher.Location = new System.Drawing.Point(4, 4);
             this.gbox_patcher.Name = "gbox_patcher";
             this.gbox_patcher.Size = new System.Drawing.Size(372, 190);
             this.gbox_patcher.TabIndex = 24;
             this.gbox_patcher.TabStop = false;
             // 
-            // groupBox1
+            // gbox_repackf
             // 
-            this.groupBox1.Controls.Add(this.cbox_cxml);
-            this.groupBox1.Controls.Add(this.cbox_cconfig);
-            this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(9, 142);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(172, 39);
-            this.groupBox1.TabIndex = 25;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Repack files";
+            this.gbox_repackf.Controls.Add(this.cbox_cxml);
+            this.gbox_repackf.Controls.Add(this.cbox_cconfig);
+            this.gbox_repackf.ForeColor = System.Drawing.Color.White;
+            this.gbox_repackf.Location = new System.Drawing.Point(9, 142);
+            this.gbox_repackf.Name = "gbox_repackf";
+            this.gbox_repackf.Size = new System.Drawing.Size(172, 39);
+            this.gbox_repackf.TabIndex = 25;
+            this.gbox_repackf.TabStop = false;
             // 
             // cbox_cxml
             // 
@@ -205,28 +207,27 @@
             this.cbox_cconfig.Text = "_";
             this.cbox_cconfig.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // lb_info
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(15, 14);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(13, 13);
-            this.label1.TabIndex = 23;
-            this.label1.Text = "_";
+            this.lb_info.AutoSize = true;
+            this.lb_info.ForeColor = System.Drawing.Color.White;
+            this.lb_info.Location = new System.Drawing.Point(15, 14);
+            this.lb_info.Name = "lb_info";
+            this.lb_info.Size = new System.Drawing.Size(13, 13);
+            this.lb_info.TabIndex = 23;
+            this.lb_info.Text = "_";
             // 
-            // button_start
+            // btn_start
             // 
-            this.button_start.BackColor = System.Drawing.Color.Transparent;
-            this.button_start.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_start.ForeColor = System.Drawing.Color.White;
-            this.button_start.Location = new System.Drawing.Point(291, 36);
-            this.button_start.Name = "button_start";
-            this.button_start.Size = new System.Drawing.Size(75, 104);
-            this.button_start.TabIndex = 4;
-            this.button_start.Text = "Start!";
-            this.button_start.UseVisualStyleBackColor = false;
-            this.button_start.Click += new System.EventHandler(this.button_start_Click);
+            this.btn_start.BackColor = System.Drawing.Color.Transparent;
+            this.btn_start.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_start.ForeColor = System.Drawing.Color.White;
+            this.btn_start.Location = new System.Drawing.Point(291, 36);
+            this.btn_start.Name = "btn_start";
+            this.btn_start.Size = new System.Drawing.Size(75, 104);
+            this.btn_start.TabIndex = 4;
+            this.btn_start.UseVisualStyleBackColor = false;
+            this.btn_start.Click += new System.EventHandler(this.btn_start_Click);
             // 
             // richOut
             // 
@@ -239,26 +240,16 @@
             this.richOut.TabIndex = 22;
             this.richOut.Text = "";
             // 
-            // label3
+            // lb_outlog
             // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(10, 197);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(63, 13);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Output Log:";
-            // 
-            // cbox_perfmod
-            // 
-            this.cbox_perfmod.AutoSize = true;
-            this.cbox_perfmod.Location = new System.Drawing.Point(5, 29);
-            this.cbox_perfmod.Name = "cbox_perfmod";
-            this.cbox_perfmod.Size = new System.Drawing.Size(144, 17);
-            this.cbox_perfmod.TabIndex = 10;
-            this.cbox_perfmod.Text = "Enable performace mode";
-            this.cbox_perfmod.UseVisualStyleBackColor = true;
+            this.lb_outlog.AutoSize = true;
+            this.lb_outlog.BackColor = System.Drawing.Color.Transparent;
+            this.lb_outlog.ForeColor = System.Drawing.Color.White;
+            this.lb_outlog.Location = new System.Drawing.Point(10, 197);
+            this.lb_outlog.Name = "lb_outlog";
+            this.lb_outlog.Size = new System.Drawing.Size(13, 13);
+            this.lb_outlog.TabIndex = 8;
+            this.lb_outlog.Text = "_";
             // 
             // Patcher
             // 
@@ -267,7 +258,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(379, 310);
             this.Controls.Add(this.gbox_patcher);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lb_outlog);
             this.Controls.Add(this.richOut);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -282,8 +273,8 @@
             this.tabPage2.PerformLayout();
             this.gbox_patcher.ResumeLayout(false);
             this.gbox_patcher.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.gbox_repackf.ResumeLayout(false);
+            this.gbox_repackf.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -293,18 +284,18 @@
         private System.Windows.Forms.TabControl tabPatcher;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.GroupBox gbox_patcher;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button_start;
+        private System.Windows.Forms.Label lb_info;
+        private System.Windows.Forms.Button btn_start;
         private System.Windows.Forms.RichTextBox richOut;
-        private System.Windows.Forms.CheckBox cbox_BakConfig;
-        private System.Windows.Forms.CheckBox checkBox_Webl;
-        private System.Windows.Forms.CheckBox checkBox_minimize;
-        private System.Windows.Forms.CheckBox checkBox_clause;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox cbox_bakconfig;
+        private System.Windows.Forms.CheckBox cbox_webl;
+        private System.Windows.Forms.CheckBox cbox_minimize;
+        private System.Windows.Forms.CheckBox cbox_clause;
+        private System.Windows.Forms.Label lb_outlog;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.CheckBox cboxDPS;
-        private System.Windows.Forms.CheckBox cbox_BakXml;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox cbox_dps;
+        private System.Windows.Forms.CheckBox cbox_bakxml;
+        private System.Windows.Forms.GroupBox gbox_repackf;
         private System.Windows.Forms.CheckBox cbox_cxml;
         private System.Windows.Forms.CheckBox cbox_cconfig;
         private System.Windows.Forms.CheckBox cbox_perfmod;

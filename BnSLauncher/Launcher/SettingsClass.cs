@@ -25,19 +25,19 @@ class SettingsClass
     public bool TwnPath = false;
     //
     IniFile fSettings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
-
+    //
     string sKorPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR", "BaseDir", null);
     string sKorTestPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_KOR_TEST", "BaseDir", null);
     string sWstPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCWest\BnS", "BaseDir", null);
     string sTwnPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\NCTaiwan\TWBNS22", "BaseDir", null);
     string sJpnPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\plaync\BNS_JPN", "BaseDir", null);
-
+    //
     string usekrcustompathlive = "";
     string usekrcustompathtest = "";
     string usewstcustompath = "";
     string usetwncustompath = "";
     string usejpncustompath = "";
-
+    //
     string cskorlivepath = "";
     string cskortestpath = "";
     string cswstpath = "";
@@ -106,60 +106,64 @@ class SettingsClass
     {
         get
         {
-            switch (region)
+            try
             {
-                case "JP":
-                    if (useJpnCustomPath == "true")
-                    {
-                        if (!string.IsNullOrEmpty(csJpnPath))
-                            installpath = csJpnPath;
-                    }
-                    else
-                        installpath = sJpnPath;
-                    break;
-                case "TW":
-                    if (usetwncustompath == "true")
-                    {
-                        if (!string.IsNullOrEmpty(csTwnPath))
-                            installpath = csTwnPath;
-                    }
-                    else
-                        installpath = sTwnPath;
-                    break;
-                case "EN":
-                    if (usewstcustompath == "true")
-                    {
-                        if (!string.IsNullOrEmpty(csWstPath))
-                            installpath = csTwnPath;
-                    }
-                    else
-                        installpath = sWstPath;
-                    break;
-                case "KR":
-                    if (servertype == "Live")
-                    {
-                        if (usekrcustompathlive == "true")
+                switch (region)
+                {
+                    case "JP":
+                        if (useJpnCustomPath == "true")
                         {
-                            if (!string.IsNullOrEmpty(csKorLivePath))
-                                installpath = csKorLivePath;
+                            if (!string.IsNullOrEmpty(csJpnPath))
+                                installpath = csJpnPath;
                         }
                         else
-                            installpath = sKorPath;
-                    }
-                    else if (servertype == "Test")
-                    {
-                        if (usekrcustompathtest == "true")
+                            installpath = sJpnPath;
+                        break;
+                    case "TW":
+                        if (usetwncustompath == "true")
                         {
-                            if (!string.IsNullOrEmpty(csKorTestPath))
-                                installpath = csKorTestPath;
+                            if (!string.IsNullOrEmpty(csTwnPath))
+                                installpath = csTwnPath;
                         }
                         else
-                            installpath = sKorTestPath;
-                    }
-                    break;
-                default:
-                    break;
+                            installpath = sTwnPath;
+                        break;
+                    case "EN":
+                        if (usewstcustompath == "true")
+                        {
+                            if (!string.IsNullOrEmpty(csWstPath))
+                                installpath = csTwnPath;
+                        }
+                        else
+                            installpath = sWstPath;
+                        break;
+                    case "KR":
+                        if (servertype == "Live")
+                        {
+                            if (usekrcustompathlive == "true")
+                            {
+                                if (!string.IsNullOrEmpty(csKorLivePath))
+                                    installpath = csKorLivePath;
+                            }
+                            else
+                                installpath = sKorPath;
+                        }
+                        else if (servertype == "Test")
+                        {
+                            if (usekrcustompathtest == "true")
+                            {
+                                if (!string.IsNullOrEmpty(csKorTestPath))
+                                    installpath = csKorTestPath;
+                            }
+                            else
+                                installpath = sKorTestPath;
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
+            catch { }
             return installpath;
         }
         set { installpath = value; }
@@ -181,10 +185,7 @@ class SettingsClass
                     installpathregion = @"contents\Local\NCWEST\";
                     break;
                 case "KR":
-                    if (servertype == "Live")
-                        installpathregion = @"contents\local\NCSoft\";
-                    else if (servertype == "Test")
-                        installpathregion = @"contents\local\NCSoft\";
+                    installpathregion = @"contents\local\NCSoft\";
                     break;
                 default:
                     break;
@@ -200,7 +201,7 @@ class SettingsClass
             switch (region)
             {
                 case "JP":
-                    modpath = Path.Combine(localcoockedpcpath + @"mod\");
+                    modpath = Path.Combine(localcoockedpcpath, @"mod\");
                     break;
                 case "TW":
                     modpath = Path.Combine(sLocalCookedPCPath, @"mod\");
@@ -209,10 +210,7 @@ class SettingsClass
                     modpath = Path.Combine(localcoockedpcpath, @"mod\");
                     break;
                 case "KR":
-                    if (servertype == "Live")
-                        modpath = Path.Combine(sInstallPath, sInstallPathRegion, @"korean\CookedPC\mod\");
-                    else if (servertype == "Test")
-                        modpath = Path.Combine(sInstallPath, sInstallPathRegion, @"korean\CookedPC\mod\");
+                    modpath = Path.Combine(sInstallPath, sInstallPathRegion, @"korean\CookedPC\mod\");
                     break;
                 default:
                     break;
@@ -230,7 +228,7 @@ class SettingsClass
                 switch (region)
                 {
                     case "JP":
-                        localcoockedpcpath = Path.Combine(installpath, installpathregion, @"JAPANESE\CookedPC\");
+                        localcoockedpcpath = Path.Combine(installpath, sInstallPathRegion, @"JAPANESE\CookedPC\");
                         break;
                     case "TW":
                         localcoockedpcpath = Path.Combine(sInstallPath, sInstallPathRegion, @"CHINESET\CookedPC\");
@@ -239,10 +237,7 @@ class SettingsClass
                         localcoockedpcpath = Path.Combine(sInstallPath, sInstallPathRegion, @"ENGLISH\CookedPC\");
                         break;
                     case "KR":
-                        if (servertype == "Live")
-                            localcoockedpcpath = Path.Combine(sInstallPath, @"contents\bns\CookedPC\");
-                        else if (servertype == "Test")
-                            localcoockedpcpath = Path.Combine(sInstallPath, @"contents\bns\CookedPC\");
+                        localcoockedpcpath = Path.Combine(sInstallPath, @"contents\bns\CookedPC\");
                         break;
                     default:
                         break;

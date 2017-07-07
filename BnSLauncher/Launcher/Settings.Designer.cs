@@ -92,7 +92,6 @@
             this.tpage_client.Padding = new System.Windows.Forms.Padding(3);
             this.tpage_client.Size = new System.Drawing.Size(360, 103);
             this.tpage_client.TabIndex = 1;
-            this.tpage_client.Text = "_";
             this.tpage_client.UseVisualStyleBackColor = true;
             // 
             // gbox_cpath
@@ -154,7 +153,7 @@
             this.cbox_KorServer.Name = "cbox_KorServer";
             this.cbox_KorServer.Size = new System.Drawing.Size(102, 21);
             this.cbox_KorServer.TabIndex = 19;
-            this.cbox_KorServer.SelectedIndexChanged += new System.EventHandler(cbox_KorServer_SelectedIndexChanged);
+            this.cbox_KorServer.SelectedIndexChanged += new System.EventHandler(this.cbox_KorServer_SelectedIndexChanged);
             // 
             // gbox_region
             // 
@@ -234,7 +233,6 @@
             this.tpage_others.Padding = new System.Windows.Forms.Padding(3);
             this.tpage_others.Size = new System.Drawing.Size(360, 103);
             this.tpage_others.TabIndex = 0;
-            this.tpage_others.Text = "_";
             this.tpage_others.UseVisualStyleBackColor = true;
             // 
             // lb_zoom
@@ -258,9 +256,8 @@
             this.cbox_disableimg.AutoSize = true;
             this.cbox_disableimg.Location = new System.Drawing.Point(191, 14);
             this.cbox_disableimg.Name = "cbox_disableimg";
-            this.cbox_disableimg.Size = new System.Drawing.Size(32, 17);
+            this.cbox_disableimg.Size = new System.Drawing.Size(15, 14);
             this.cbox_disableimg.TabIndex = 7;
-            this.cbox_disableimg.Text = "_";
             this.cbox_disableimg.UseVisualStyleBackColor = true;
             this.cbox_disableimg.CheckedChanged += new System.EventHandler(this.cbx_disableImg_CheckedChanged);
             // 
@@ -269,9 +266,8 @@
             this.cbox_allcores.AutoSize = true;
             this.cbox_allcores.Location = new System.Drawing.Point(191, 37);
             this.cbox_allcores.Name = "cbox_allcores";
-            this.cbox_allcores.Size = new System.Drawing.Size(32, 17);
+            this.cbox_allcores.Size = new System.Drawing.Size(15, 14);
             this.cbox_allcores.TabIndex = 4;
-            this.cbox_allcores.Text = "_";
             this.cbox_allcores.UseVisualStyleBackColor = true;
             this.cbox_allcores.CheckedChanged += new System.EventHandler(this.checkBox_AllCores_CheckedChanged);
             // 
@@ -280,9 +276,8 @@
             this.cbox_mboxes.AutoSize = true;
             this.cbox_mboxes.Location = new System.Drawing.Point(11, 37);
             this.cbox_mboxes.Name = "cbox_mboxes";
-            this.cbox_mboxes.Size = new System.Drawing.Size(32, 17);
+            this.cbox_mboxes.Size = new System.Drawing.Size(15, 14);
             this.cbox_mboxes.TabIndex = 3;
-            this.cbox_mboxes.Text = "_";
             this.cbox_mboxes.UseVisualStyleBackColor = true;
             this.cbox_mboxes.CheckedChanged += new System.EventHandler(this.cBmsBox_CheckedChanged);
             // 
@@ -291,9 +286,8 @@
             this.cbox_texstr.AutoSize = true;
             this.cbox_texstr.Location = new System.Drawing.Point(11, 14);
             this.cbox_texstr.Name = "cbox_texstr";
-            this.cbox_texstr.Size = new System.Drawing.Size(32, 17);
+            this.cbox_texstr.Size = new System.Drawing.Size(15, 14);
             this.cbox_texstr.TabIndex = 2;
-            this.cbox_texstr.Text = "_";
             this.cbox_texstr.UseVisualStyleBackColor = true;
             this.cbox_texstr.CheckedChanged += new System.EventHandler(this.cBtextureStr_CheckedChanged);
             // 
@@ -305,7 +299,6 @@
             this.tpage_lsettings.Padding = new System.Windows.Forms.Padding(3);
             this.tpage_lsettings.Size = new System.Drawing.Size(360, 103);
             this.tpage_lsettings.TabIndex = 2;
-            this.tpage_lsettings.Text = "_";
             this.tpage_lsettings.UseVisualStyleBackColor = true;
             // 
             // gbox_llang
