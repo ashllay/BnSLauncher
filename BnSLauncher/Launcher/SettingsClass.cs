@@ -5,6 +5,7 @@ using BnS_Launcher.lib;
 
 class SettingsClass
 {
+    //
     string installpath = "";
     string installpathregion = "";
     string modpath = "";
@@ -18,11 +19,11 @@ class SettingsClass
     string servertype = "";
     string xmlsettings = "";
     //
-    public bool KorPath = false;
-    public bool KorTestPath = false;
-    public bool WstPath = false;
-    public bool JpnPath = false;
-    public bool TwnPath = false;
+    bool KorPath = false;
+    bool KorTestPath = false;
+    bool WstPath = false;
+    bool JpnPath = false;
+    bool TwnPath = false;
     //
     IniFile fSettings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
     //
@@ -108,52 +109,62 @@ class SettingsClass
         {
             try
             {
-                switch (region)
+                switch (sRegion)
                 {
                     case "JP":
                         if (useJpnCustomPath == "true")
                         {
                             if (!string.IsNullOrEmpty(csJpnPath))
                                 installpath = csJpnPath;
+                            else
+                                JpnPath = false;
                         }
                         else
                             installpath = sJpnPath;
                         break;
                     case "TW":
-                        if (usetwncustompath == "true")
+                        if (useTwnCustomPath == "true")
                         {
                             if (!string.IsNullOrEmpty(csTwnPath))
                                 installpath = csTwnPath;
+                            else
+                                TwnPath = false;
                         }
                         else
                             installpath = sTwnPath;
                         break;
                     case "EN":
-                        if (usewstcustompath == "true")
+                        if (useWstCustomPath == "true")
                         {
                             if (!string.IsNullOrEmpty(csWstPath))
                                 installpath = csTwnPath;
+                            else
+                                TwnPath = false;
                         }
                         else
                             installpath = sWstPath;
                         break;
                     case "KR":
-                        if (servertype == "Live")
+                        if (sServerType == "Live")
                         {
-                            if (usekrcustompathlive == "true")
+                            if (useKrCustomPathLive == "true")
                             {
                                 if (!string.IsNullOrEmpty(csKorLivePath))
                                     installpath = csKorLivePath;
+                                else
+                                    KorPath = false;
                             }
                             else
                                 installpath = sKorPath;
                         }
-                        else if (servertype == "Test")
+                        else if (sServerType == "Test")
                         {
-                            if (usekrcustompathtest == "true")
+                            if (useKrCustomPathTest == "true")
                             {
                                 if (!string.IsNullOrEmpty(csKorTestPath))
                                     installpath = csKorTestPath;
+                                else
+                                KorTestPath = false;
                             }
                             else
                                 installpath = sKorTestPath;
@@ -173,7 +184,7 @@ class SettingsClass
     {
         get
         {
-            switch (region)
+            switch (sRegion)
             {
                 case "JP":
                     installpathregion = @"contents\Local\NCJAPAN\";
@@ -198,16 +209,16 @@ class SettingsClass
     {
         get
         {
-            switch (region)
+            switch (sRegion)
             {
                 case "JP":
-                    modpath = Path.Combine(localcoockedpcpath, @"mod\");
+                    modpath = Path.Combine(sLocalCookedPCPath, @"mod\");
                     break;
                 case "TW":
                     modpath = Path.Combine(sLocalCookedPCPath, @"mod\");
                     break;
                 case "EN":
-                    modpath = Path.Combine(localcoockedpcpath, @"mod\");
+                    modpath = Path.Combine(sLocalCookedPCPath, @"mod\");
                     break;
                 case "KR":
                     modpath = Path.Combine(sInstallPath, sInstallPathRegion, @"korean\CookedPC\mod\");
@@ -225,10 +236,10 @@ class SettingsClass
         {
             try
             {
-                switch (region)
+                switch (sRegion)
                 {
                     case "JP":
-                        localcoockedpcpath = Path.Combine(installpath, sInstallPathRegion, @"JAPANESE\CookedPC\");
+                        localcoockedpcpath = Path.Combine(sInstallPath, sInstallPathRegion, @"JAPANESE\CookedPC\");
                         break;
                     case "TW":
                         localcoockedpcpath = Path.Combine(sInstallPath, sInstallPathRegion, @"CHINESET\CookedPC\");
@@ -291,7 +302,7 @@ class SettingsClass
     {
         get
         {
-            cswstpath = fSettings.IniReadValue("Path", "WEST");
+            cswstpath = fSettings.IniReadValue("Path", "EN");
             return cswstpath;
         }
         set { cswstpath = value; }
@@ -421,7 +432,7 @@ class SettingsClass
     {
         get
         {
-            switch (region)
+            switch (sRegion)
             {
                 case "JP":
                     xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCJAPAN\ClientConfiguration.xml";
@@ -433,9 +444,9 @@ class SettingsClass
                     xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCWEST\ClientConfiguration.xml";
                     break;
                 case "KR":
-                    if (servertype == "Live")
+                    if (sServerType == "Live")
                         xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT\ClientConfiguration.xml";
-                    else if (servertype == "Test")
+                    else if (sServerType == "Test")
                         xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT_TEST\ClientConfiguration.xml";
                     break;
                 default:

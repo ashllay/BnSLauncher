@@ -30,9 +30,13 @@ namespace BnS_Launcher
         string sLanguage = "";
 
         private BslI18NLoader _i18N;
-        string mbox_llangchange, lb_texturestron, lb_texturestroff, lb_noattendoff, lb_noattendon, lb_allcoreson, lb_allcoresoff, lb_loadimgoff, lb_loadimgon, mbox_disableimg, mbox_enableimg, lb_cpathon, lb_cpathoff;
+        string mbox_llangchange, lb_texturestron, lb_texturestroff, lb_noattendoff, lb_noattendon, lb_allcoreson, lb_allcoresoff, lb_loadimgoff, lb_loadimgon, mbox_disableimg, mbox_enableimg, mbox_pathclierror, lb_cpathon, lb_cpathoff;
 
         FolderBrowserDialog OfolderDat = new FolderBrowserDialog();
+
+        bool ShowHidebtn;
+        bool bCustomPath;
+        bool ShowHidebtnk;
 
         public Settings()
         {
@@ -83,10 +87,12 @@ namespace BnS_Launcher
             mbox_llangchange = _i18N.LoadI18NValue("Settings", "mbox_llangchange");
             mbox_disableimg = _i18N.LoadI18NValue("Settings", "mbox_disableimg");
             mbox_enableimg = _i18N.LoadI18NValue("Settings", "mbox_enableimg");
+            mbox_pathclierror = _i18N.LoadI18NValue("Settings", "mbox_pathclierror");
             //buttons
-            btn_scpath.Text = _i18N.LoadI18NValue("Settings", "btn_scpath"); 
+            btn_scpath.Text = _i18N.LoadI18NValue("Settings", "btn_scpath");
+            btn_enable.Text = _i18N.LoadI18NValue("Settings", "btn_enable");
+            btn_disable.Text = _i18N.LoadI18NValue("Settings", "btn_disable");
         }
-
 
         private void FomrSettings_Load(object sender, EventArgs e)
         {
@@ -130,7 +136,6 @@ namespace BnS_Launcher
                 if (sSettings.sUseAllCores == "true")
                     cbox_allcores.Checked = true;
                 //--
-
                 switch (sSettings.sRegion)
                 {
                     case "KR":
@@ -146,17 +151,30 @@ namespace BnS_Launcher
                             txb_cpath.Text = sSettings.csKorLivePath;
 
                             if (sSettings.useKrCustomPathLive == "true")
+                            {
+                                ShowHidebtn = false;
                                 lb_cpath.Text = lb_cpathon;
+                            }
                             else
+                            {
+                                ShowHidebtn = true;
                                 lb_cpath.Text = lb_cpathoff;
+                            }
                         }
                         else if (sSettings.sServerType == "Test")
                         {
                             txb_cpath.Text = sSettings.csKorTestPath;
                             if (sSettings.useKrCustomPathTest == "true")
+                            {
+                                ShowHidebtn = false;
                                 lb_cpath.Text = lb_cpathon;
+                            }
+
                             else
+                            {
+                                ShowHidebtn = true;
                                 lb_cpath.Text = lb_cpathoff;
+                            }
                         }
                         break;
                     case "EN":
@@ -169,28 +187,57 @@ namespace BnS_Launcher
                             cbox_west_lang.SelectedItem = "English";
                         }
                         if (sSettings.useWstCustomPath == "true")
+                        {
+                            ShowHidebtn = false;
                             lb_cpath.Text = lb_cpathon;
+                        }
                         else
+                        {
+                            ShowHidebtn = true;
                             lb_cpath.Text = lb_cpathoff;
+                        }
                         break;
                     case "TW":
                         cbox_Region.SelectedItem = "Taiwan";
                         txb_cpath.Text = sSettings.csTwnPath;
                         if (sSettings.useTwnCustomPath == "true")
+                        {
+                            ShowHidebtn = false;
                             lb_cpath.Text = lb_cpathon;
+                        }
                         else
+                        {
+                            ShowHidebtn = true;
                             lb_cpath.Text = lb_cpathoff;
+                        }
                         break;
                     case "JP":
                         cbox_Region.SelectedItem = "Japan";
                         txb_cpath.Text = sSettings.csJpnPath;
                         if (sSettings.useJpnCustomPath == "true")
-                            lb_cpath.Text = lb_cpathon;  
+                        {
+                            ShowHidebtn = false;
+                            lb_cpath.Text = lb_cpathon;
+                        }
                         else
+                        {
+                            ShowHidebtn = true;
                             lb_cpath.Text = lb_cpathoff;
+                        }
                         break;
                     default:
                         break;
+                }
+
+                if (ShowHidebtn == true)
+                {
+                    btn_enable.Show();
+                    btn_disable.Hide();
+                }
+                else
+                {
+                    btn_enable.Hide();
+                    btn_disable.Show();
                 }
 
                 if (sSettings.sArchitecture == "0")
@@ -220,6 +267,11 @@ namespace BnS_Launcher
                 }
                 Sts_Label.Text = "";
             }
+            LoadXml();
+        }
+
+        void LoadXml()
+        {
             try
             {
                 document = new XmlDocument();
@@ -243,6 +295,37 @@ namespace BnS_Launcher
             }
         }
 
+        void SetCustomPath()
+        {
+            if (bCustomPath == true)
+            {
+                btn_enable.Hide();
+                btn_disable.Show();
+                lb_cpath.Text = lb_cpathon;
+                if (sSettings.sRegion == "KR")
+                {
+                    if (sSettings.sServerType == "Live")
+                        fSettings.IniWriteValue("Path", "KR_Live_UseCustomPath", "true");
+                    else if (sSettings.sServerType == "Test")
+                        fSettings.IniWriteValue("Path", "KR_Test_UseCustomPath", "true");
+                }
+                else
+                    fSettings.IniWriteValue("Path", sSettings.sRegion + "_UseCustomPath", "true");
+            }
+            else
+            {
+                if (sSettings.sRegion == "KR")
+                {
+                    if (sSettings.sServerType == "Live")
+                        fSettings.IniWriteValue("Path", "KR_Live_UseCustomPath", "false");
+                    else if (sSettings.sServerType == "Test")
+                        fSettings.IniWriteValue("Path", "KR_Test_UseCustomPath", "false");
+                }
+                else
+                    fSettings.IniWriteValue("Path", sSettings.sRegion + "_UseCustomPath", "false");
+            }
+        }
+
         private void btn_scpath_Click(object sender, EventArgs e)
         {
             if (OfolderDat.ShowDialog() != DialogResult.OK)
@@ -253,13 +336,51 @@ namespace BnS_Launcher
                 if (sSettings.sServerType == "Live")
                     fSettings.IniWriteValue("Path", "KR_Live", txb_cpath.Text);
                 else if (sSettings.sServerType == "Test")
-                    fSettings.IniWriteValue("Path", "KR_Test", txb_cpath.Text); 
+                    fSettings.IniWriteValue("Path", "KR_Test", txb_cpath.Text);
             }
             else
                 fSettings.IniWriteValue("Path", sSettings.sRegion, txb_cpath.Text);
         }
-        
-        private void cBtextureStr_CheckedChanged(object sender, EventArgs e)
+
+        private void btn_enable_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txb_cpath.Text))
+            {
+                bCustomPath = true;
+            }
+            else
+            {
+                var merr = MessageBox.Show(mbox_pathclierror, "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+                if (merr == DialogResult.OK)
+                {
+                    if (OfolderDat.ShowDialog() != DialogResult.OK)
+                        return;
+                    txb_cpath.Text = OfolderDat.SelectedPath;
+                    if (sSettings.sRegion == "KR")
+                    {
+                        if (sSettings.sServerType == "Live")
+                            fSettings.IniWriteValue("Path", "KR_Live", txb_cpath.Text);
+                        else if (sSettings.sServerType == "Test")
+                            fSettings.IniWriteValue("Path", "KR_Test", txb_cpath.Text);
+                    }
+                    else
+                        fSettings.IniWriteValue("Path", sSettings.sRegion, txb_cpath.Text);
+                }
+                else
+                    bCustomPath = false;
+            }
+            SetCustomPath();
+        }
+
+        private void btn_disable_Click(object sender, EventArgs e)
+        {
+            btn_disable.Hide();
+            btn_enable.Show();
+            lb_cpath.Text = lb_cpathoff;
+            bCustomPath = false;
+            SetCustomPath();
+        }
+        private void cbox_textureStrCheckedChanged(object sender, EventArgs e)
         {
             if (cbox_texstr.Checked == true)
             {
@@ -275,7 +396,7 @@ namespace BnS_Launcher
             }
         }
 
-        private void cBmsBox_CheckedChanged(object sender, EventArgs e)
+        private void cbox_CheckedChanged(object sender, EventArgs e)
         {
             if (cbox_mboxes.Checked == true)
             {
@@ -291,7 +412,7 @@ namespace BnS_Launcher
             }
         }
 
-        private void checkBox_AllCores_CheckedChanged(object sender, EventArgs e)
+        private void cbox_AllCores_CheckedChanged(object sender, EventArgs e)
         {
             if (cbox_allcores.Checked == true)
             {
@@ -307,7 +428,7 @@ namespace BnS_Launcher
             }
         }
 
-        private void cbx_disableImg_CheckedChanged(object sender, EventArgs e)
+        private void cbox_disableImg_CheckedChanged(object sender, EventArgs e)
         {
             if (LoadingDisabled == false)
             {
@@ -337,6 +458,227 @@ namespace BnS_Launcher
                     MessageBox.Show(mbox_enableimg);
                 }
             }
+        }
+
+        private void cbox_Region_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cbox_Region.SelectedItem.ToString())
+            {
+                //
+                case "Korean":
+                    sRegion = "KR";
+                    if (string.IsNullOrEmpty(sSettings.sServerType))
+                    {
+                        fSettings.IniWriteValue("Settings", "ServerType", "Live");
+                        cbox_KorServer.SelectedItem = "Live";
+                    }
+                    if (sSettings.sServerType == "Live")
+                    {
+                        txb_cpath.Text = sSettings.csKorLivePath;
+                        if (sSettings.useKrCustomPathLive == "true")
+                        {
+                            ShowHidebtn = false;
+                            lb_cpath.Text = lb_cpathon;
+                        }
+                        else
+                        {
+                            ShowHidebtn = true;
+                            lb_cpath.Text = lb_cpathoff;
+                        }
+                    }
+                    else if (sSettings.sServerType == "Test")
+                    {
+                        txb_cpath.Text = sSettings.csKorTestPath;
+                        if (sSettings.useKrCustomPathTest == "true")
+                        {
+                            ShowHidebtn = false;
+                            lb_cpath.Text = lb_cpathon;
+                        }
+                        else
+                        {
+                            ShowHidebtn = true;
+                            lb_cpath.Text = lb_cpathoff;
+                        }
+                    }
+                    break;
+                case "West(NA-EU)":
+                    sRegion = "EN";
+
+                    if (string.IsNullOrEmpty(sSettings.sLanguageID))
+                    {
+                        fSettings.IniWriteValue("Settings", "language", "English");
+                        cbox_west_lang.SelectedItem = "English";
+                    }
+                    txb_cpath.Text = sSettings.csWstPath;
+                    if (sSettings.useTwnCustomPath == "true")
+                    {
+                        ShowHidebtn = false;
+                        lb_cpath.Text = lb_cpathon;
+                    }
+                    else
+                    {
+                        ShowHidebtn = true;
+                        lb_cpath.Text = lb_cpathoff;
+                    }
+                    break;
+                case "Taiwan":
+                    sRegion = "TW";
+
+                    txb_cpath.Text = sSettings.csTwnPath;
+                    if (sSettings.useTwnCustomPath == "true")
+                    {
+                        ShowHidebtn = false;
+                        lb_cpath.Text = lb_cpathon;
+                    }
+                    else
+                    {
+                        ShowHidebtn = true;
+                        lb_cpath.Text = lb_cpathoff;
+                    }
+                    break;
+                case "Japan":
+                    sRegion = "JP";
+                    txb_cpath.Text = sSettings.csJpnPath;
+                    if (sSettings.useJpnCustomPath == "true")
+                    {
+                        ShowHidebtn = false;
+                        lb_cpath.Text = lb_cpathon;
+                    }
+                    else
+                    {
+                        ShowHidebtn = true;
+                        lb_cpath.Text = lb_cpathoff;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (ShowHidebtn == true)
+            {
+                btn_enable.Show();
+                btn_disable.Hide();
+            }
+            else
+            {
+                btn_enable.Hide();
+                btn_disable.Show();
+            }
+
+            if (cbox_Region.SelectedItem.ToString() == "West(NA-EU)")
+                gbox_westlang.Show();
+            else
+                gbox_westlang.Hide();
+
+            if (cbox_Region.SelectedItem.ToString() == "Korean" && sSettings.gKorTestPath == true)
+                gbox_krserver.Show();
+            else
+                gbox_krserver.Hide();
+
+            fSettings.IniWriteValue("Settings", "Region", sRegion);
+            LoadXml();
+        }
+
+        private void cbox_Arch_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cbox_Arch.SelectedItem.ToString())
+            {
+                //
+                case "x86":
+                    sArchteture = "0";
+                    break;
+                case "x64":
+                    sArchteture = "1";
+                    break;
+                default:
+                    break;
+            }
+            fSettings.IniWriteValue("Settings", "Architecture", sArchteture);
+        }
+
+        private void cbox_KorServer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cbox_KorServer.SelectedItem.ToString())
+            {
+                //
+                case "Live":
+                    sServerType = "Live";
+                    if (sSettings.sRegion == "KR")
+                    {
+                        txb_cpath.Text = sSettings.csKorLivePath;
+                        if (sSettings.useKrCustomPathLive == "true")
+                        {
+                            ShowHidebtnk = false;
+                            lb_cpath.Text = lb_cpathon;
+                        }
+                        else
+                        {
+                            ShowHidebtnk = true;
+                            lb_cpath.Text = lb_cpathoff;
+                        }
+                    }
+                    break;
+                case "Test":
+                    sServerType = "Test";
+                    if (sSettings.sRegion == "KR")
+                    {
+                        txb_cpath.Text = sSettings.csKorTestPath;
+                        if (sSettings.useKrCustomPathTest == "true")
+                        {
+                            ShowHidebtnk = false;
+                            lb_cpath.Text = lb_cpathon;
+                        }
+                        else
+                        {
+                            ShowHidebtnk = true;
+                            lb_cpath.Text = lb_cpathoff;
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+            if (ShowHidebtnk == true)
+            {
+                btn_enable.Show();
+                btn_disable.Hide();
+            }
+            else
+            {
+                btn_enable.Hide();
+                btn_disable.Show();
+            }
+            fSettings.IniWriteValue("Settings", "ServerType", sServerType);
+            LoadXml();
+        }
+
+        private void cbox_west_lang_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cbox_west_lang.SelectedItem.ToString())
+            {
+                //
+                case "English":
+                    sLanguage = "English";
+                    break;
+                case "German":
+                    sLanguage = "German";
+                    break;
+                case "French":
+                    sLanguage = "French";
+                    break;
+                default:
+                    break;
+            }
+            fSettings.IniWriteValue("Settings", "language", sLanguage);
+        }
+
+        private void cbox_llang_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var lang = BslManager.Instance.LanguageTypes[cbox_llang.SelectedIndex];
+            BslManager.Instance.SystemSettings["lang"] = lang;
+            BslManager.WriteJsonFile(BslManager.PathJsonSettings, BslManager.Instance.SystemSettings);
+
+            MessageBox.Show(mbox_llangchange, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void FomrSettings_FormClosing(object sender, FormClosingEventArgs e)
@@ -370,167 +712,7 @@ namespace BnS_Launcher
                 writer.Close();
                 stream2.Close();
             }
-            catch// (Exception exception)
-            {
-                //MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void cbox_Region_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (cbox_Region.SelectedItem.ToString())
-            {
-                //
-                case "Korean":
-                    sRegion = "KR";
-                    if (string.IsNullOrEmpty(sSettings.sServerType))
-                    {
-                        fSettings.IniWriteValue("Settings", "ServerType", "Live");
-                        cbox_KorServer.SelectedItem = "Live";
-                    }
-                    if (sSettings.sServerType == "Live")
-                    {
-                        txb_cpath.Text = sSettings.csKorLivePath;
-                        if (sSettings.useKrCustomPathLive == "true")
-                            lb_cpath.Text = lb_cpathon;
-                        else
-                            lb_cpath.Text = lb_cpathoff;
-                    }
-                    else if (sSettings.sServerType == "Test")
-                    {
-                        txb_cpath.Text = sSettings.csKorTestPath;
-                        if (sSettings.useKrCustomPathTest == "true")
-                            lb_cpath.Text = lb_cpathon;
-                        else
-                            lb_cpath.Text = lb_cpathoff;
-                    }
-                    break;
-                case "West(NA-EU)":
-                    sRegion = "EN";
-                    if (string.IsNullOrEmpty(sSettings.sLanguageID))
-                    {
-                        fSettings.IniWriteValue("Settings", "language", "English");
-                        cbox_west_lang.SelectedItem = "English";
-                    }
-                    txb_cpath.Text = sSettings.csWstPath;
-                    if (sSettings.useTwnCustomPath == "true")
-                        lb_cpath.Text = lb_cpathon;
-                    else
-                        lb_cpath.Text = lb_cpathoff;
-                    break;
-                case "Taiwan":
-                    sRegion = "TW";
-                    txb_cpath.Text = sSettings.csTwnPath;
-                    if (sSettings.useTwnCustomPath == "true")
-                        lb_cpath.Text = lb_cpathon;
-                    else
-                        lb_cpath.Text = lb_cpathoff;
-                    break;
-                case "Japan":
-                    sRegion = "JP";
-                    txb_cpath.Text = sSettings.csJpnPath;
-                    if (sSettings.useJpnCustomPath == "true")
-                        lb_cpath.Text = lb_cpathon;
-                    else
-                        lb_cpath.Text = lb_cpathoff;
-                    break;
-                default:
-                    break;
-            }
-
-            if (cbox_Region.SelectedItem.ToString() == "West(NA-EU)")
-                gbox_westlang.Show();
-            else
-                gbox_westlang.Hide();
-
-            if (cbox_Region.SelectedItem.ToString() == "Korean" && sSettings.gKorTestPath == true)
-                gbox_krserver.Show();
-            else
-                gbox_krserver.Hide();
-
-            fSettings.IniWriteValue("Settings", "Region", sRegion);
-        }
-
-        private void cbox_Arch_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (cbox_Arch.SelectedItem.ToString())
-            {
-                //
-                case "x86":
-                    sArchteture = "0";
-                    break;
-                case "x64":
-                    sArchteture = "1";
-                    break;
-                default:
-                    break;
-            }
-            fSettings.IniWriteValue("Settings", "Architecture", sArchteture);
-        }
-
-        private void cbox_KorServer_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (cbox_KorServer.SelectedItem.ToString())
-            {
-                //
-                case "Live":
-                    sServerType = "Live";
-                    if (sSettings.sRegion == "KR")
-                    {
-                        txb_cpath.Text = sSettings.csKorLivePath;
-                        if (sSettings.useKrCustomPathLive == "true")
-                            lb_cpath.Text = lb_cpathon;
-                        else
-                            lb_cpath.Text = lb_cpathoff;
-                    }
-                    break;
-                case "Test":
-                    sServerType = "Test";
-                    if (sSettings.sRegion == "KR")
-                    {
-                        txb_cpath.Text = sSettings.csKorTestPath;
-                        if (sSettings.useKrCustomPathTest == "true")
-                            lb_cpath.Text = lb_cpathon;
-                        else
-                            lb_cpath.Text = lb_cpathoff;
-                    }
-                    break;
-                default:
-                    break;
-            }
-            fSettings.IniWriteValue("Settings", "ServerType", sServerType);
-        }
-
-        private void cbox_west_lang_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (cbox_west_lang.SelectedItem.ToString())
-            {
-                //
-                case "English":
-                    sLanguage = "English";
-                    break;
-                case "German":
-                    sLanguage = "German";
-                    break;
-                case "French":
-                    sLanguage = "French";
-                    break;
-                default:
-                    break;
-            }
-            fSettings.IniWriteValue("Settings", "language", sLanguage);
-        }
-
-        private void cbox_llang_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // 重新记录语言信息，并写入配置文件
-            var lang = BslManager.Instance.LanguageTypes[cbox_llang.SelectedIndex];
-            BslManager.Instance.SystemSettings["lang"] = lang;
-            BslManager.WriteJsonFile(BslManager.PathJsonSettings, BslManager.Instance.SystemSettings);
-
-            // 显示重启程序提示信息
-            // 这一段因为关系到语言的设定，使用双语显示，不作为配置设定
-            MessageBox.Show(mbox_llangchange, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            catch { }
         }
     }
 }

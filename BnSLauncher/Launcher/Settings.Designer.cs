@@ -31,6 +31,8 @@
             this.SettingsTab = new System.Windows.Forms.TabControl();
             this.tpage_client = new System.Windows.Forms.TabPage();
             this.gbox_cpath = new System.Windows.Forms.GroupBox();
+            this.btn_disable = new System.Windows.Forms.Button();
+            this.btn_enable = new System.Windows.Forms.Button();
             this.lb_cpath = new System.Windows.Forms.Label();
             this.btn_scpath = new System.Windows.Forms.Button();
             this.txb_cpath = new System.Windows.Forms.TextBox();
@@ -96,6 +98,8 @@
             // 
             // gbox_cpath
             // 
+            this.gbox_cpath.Controls.Add(this.btn_disable);
+            this.gbox_cpath.Controls.Add(this.btn_enable);
             this.gbox_cpath.Controls.Add(this.lb_cpath);
             this.gbox_cpath.Controls.Add(this.btn_scpath);
             this.gbox_cpath.Controls.Add(this.txb_cpath);
@@ -104,6 +108,24 @@
             this.gbox_cpath.Size = new System.Drawing.Size(351, 41);
             this.gbox_cpath.TabIndex = 26;
             this.gbox_cpath.TabStop = false;
+            // 
+            // btn_disable
+            // 
+            this.btn_disable.Location = new System.Drawing.Point(295, 11);
+            this.btn_disable.Name = "btn_disable";
+            this.btn_disable.Size = new System.Drawing.Size(50, 23);
+            this.btn_disable.TabIndex = 28;
+            this.btn_disable.UseVisualStyleBackColor = true;
+            this.btn_disable.Click += new System.EventHandler(this.btn_disable_Click);
+            // 
+            // btn_enable
+            // 
+            this.btn_enable.Location = new System.Drawing.Point(295, 11);
+            this.btn_enable.Name = "btn_enable";
+            this.btn_enable.Size = new System.Drawing.Size(50, 23);
+            this.btn_enable.TabIndex = 27;
+            this.btn_enable.UseVisualStyleBackColor = true;
+            this.btn_enable.Click += new System.EventHandler(this.btn_enable_Click);
             // 
             // lb_cpath
             // 
@@ -116,7 +138,7 @@
             // 
             // btn_scpath
             // 
-            this.btn_scpath.Location = new System.Drawing.Point(288, 11);
+            this.btn_scpath.Location = new System.Drawing.Point(236, 11);
             this.btn_scpath.Name = "btn_scpath";
             this.btn_scpath.Size = new System.Drawing.Size(57, 23);
             this.btn_scpath.TabIndex = 25;
@@ -127,7 +149,7 @@
             // 
             this.txb_cpath.Location = new System.Drawing.Point(56, 13);
             this.txb_cpath.Name = "txb_cpath";
-            this.txb_cpath.Size = new System.Drawing.Size(226, 20);
+            this.txb_cpath.Size = new System.Drawing.Size(177, 20);
             this.txb_cpath.TabIndex = 24;
             // 
             // gbox_krserver
@@ -166,7 +188,6 @@
             // 
             // cbox_Region
             // 
-            this.cbox_Region.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.cbox_Region.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbox_Region.FormattingEnabled = true;
             this.cbox_Region.Location = new System.Drawing.Point(7, 13);
@@ -259,7 +280,7 @@
             this.cbox_disableimg.Size = new System.Drawing.Size(15, 14);
             this.cbox_disableimg.TabIndex = 7;
             this.cbox_disableimg.UseVisualStyleBackColor = true;
-            this.cbox_disableimg.CheckedChanged += new System.EventHandler(this.cbx_disableImg_CheckedChanged);
+            this.cbox_disableimg.CheckedChanged += new System.EventHandler(this.cbox_disableImg_CheckedChanged);
             // 
             // cbox_allcores
             // 
@@ -269,7 +290,7 @@
             this.cbox_allcores.Size = new System.Drawing.Size(15, 14);
             this.cbox_allcores.TabIndex = 4;
             this.cbox_allcores.UseVisualStyleBackColor = true;
-            this.cbox_allcores.CheckedChanged += new System.EventHandler(this.checkBox_AllCores_CheckedChanged);
+            this.cbox_allcores.CheckedChanged += new System.EventHandler(this.cbox_AllCores_CheckedChanged);
             // 
             // cbox_mboxes
             // 
@@ -279,7 +300,7 @@
             this.cbox_mboxes.Size = new System.Drawing.Size(15, 14);
             this.cbox_mboxes.TabIndex = 3;
             this.cbox_mboxes.UseVisualStyleBackColor = true;
-            this.cbox_mboxes.CheckedChanged += new System.EventHandler(this.cBmsBox_CheckedChanged);
+            this.cbox_mboxes.CheckedChanged += new System.EventHandler(this.cbox_CheckedChanged);
             // 
             // cbox_texstr
             // 
@@ -289,7 +310,7 @@
             this.cbox_texstr.Size = new System.Drawing.Size(15, 14);
             this.cbox_texstr.TabIndex = 2;
             this.cbox_texstr.UseVisualStyleBackColor = true;
-            this.cbox_texstr.CheckedChanged += new System.EventHandler(this.cBtextureStr_CheckedChanged);
+            this.cbox_texstr.CheckedChanged += new System.EventHandler(this.cbox_textureStrCheckedChanged);
             // 
             // tpage_lsettings
             // 
@@ -304,7 +325,7 @@
             // gbox_llang
             // 
             this.gbox_llang.Controls.Add(this.cbox_llang);
-            this.gbox_llang.Location = new System.Drawing.Point(100, 28);
+            this.gbox_llang.Location = new System.Drawing.Point(94, 28);
             this.gbox_llang.Name = "gbox_llang";
             this.gbox_llang.Size = new System.Drawing.Size(177, 49);
             this.gbox_llang.TabIndex = 2;
@@ -312,6 +333,7 @@
             // 
             // cbox_llang
             // 
+            this.cbox_llang.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbox_llang.FormattingEnabled = true;
             this.cbox_llang.Location = new System.Drawing.Point(6, 19);
             this.cbox_llang.Name = "cbox_llang";
@@ -393,5 +415,7 @@
         private System.Windows.Forms.TextBox txb_cpath;
         private System.Windows.Forms.GroupBox gbox_cpath;
         private System.Windows.Forms.Label lb_cpath;
+        private System.Windows.Forms.Button btn_enable;
+        private System.Windows.Forms.Button btn_disable;
     }
 }

@@ -69,7 +69,7 @@ namespace BnS_Launcher
             if (string.IsNullOrEmpty(sSettings.useWstCustomPath))
                 Settings.IniWriteValue("Path", "EN_UseCustomPath", "false");
             if (string.IsNullOrEmpty(sSettings.csWstPath))
-                Settings.IniWriteValue("Path", "WEST", "");
+                Settings.IniWriteValue("Path", "EN", "");
             if (string.IsNullOrEmpty(sSettings.useJpnCustomPath))
                 Settings.IniWriteValue("Path", "JP_UseCustomPath", "false");
             if (string.IsNullOrEmpty(sSettings.csJpnPath))

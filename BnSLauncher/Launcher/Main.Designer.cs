@@ -34,6 +34,7 @@
             this.btn_slider = new System.Windows.Forms.Button();
             this.btn_patcher = new System.Windows.Forms.Button();
             this.box_Login = new System.Windows.Forms.GroupBox();
+            this.lb_loginsts = new System.Windows.Forms.Label();
             this.cbox_Spass = new System.Windows.Forms.CheckBox();
             this.cbox_Smail = new System.Windows.Forms.CheckBox();
             this.lb_region = new System.Windows.Forms.Label();
@@ -43,7 +44,6 @@
             this.lb_mail = new System.Windows.Forms.Label();
             this.txb_Pass = new System.Windows.Forms.TextBox();
             this.txb_Mail = new System.Windows.Forms.TextBox();
-            this.lb_loginsts = new System.Windows.Forms.Label();
             this.box_Login.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -117,14 +117,21 @@
             this.box_Login.TabIndex = 6;
             this.box_Login.TabStop = false;
             // 
+            // lb_loginsts
+            // 
+            this.lb_loginsts.AutoSize = true;
+            this.lb_loginsts.Location = new System.Drawing.Point(261, 48);
+            this.lb_loginsts.Name = "lb_loginsts";
+            this.lb_loginsts.Size = new System.Drawing.Size(0, 13);
+            this.lb_loginsts.TabIndex = 12;
+            // 
             // cbox_Spass
             // 
             this.cbox_Spass.AutoSize = true;
             this.cbox_Spass.Location = new System.Drawing.Point(259, 74);
             this.cbox_Spass.Name = "cbox_Spass";
-            this.cbox_Spass.Size = new System.Drawing.Size(32, 17);
+            this.cbox_Spass.Size = new System.Drawing.Size(15, 14);
             this.cbox_Spass.TabIndex = 11;
-            this.cbox_Spass.Text = "_";
             this.cbox_Spass.UseVisualStyleBackColor = true;
             this.cbox_Spass.CheckedChanged += new System.EventHandler(this.cbox_Spass_CheckedChanged);
             // 
@@ -133,9 +140,8 @@
             this.cbox_Smail.AutoSize = true;
             this.cbox_Smail.Location = new System.Drawing.Point(180, 74);
             this.cbox_Smail.Name = "cbox_Smail";
-            this.cbox_Smail.Size = new System.Drawing.Size(32, 17);
+            this.cbox_Smail.Size = new System.Drawing.Size(15, 14);
             this.cbox_Smail.TabIndex = 10;
-            this.cbox_Smail.Text = "_";
             this.cbox_Smail.UseVisualStyleBackColor = true;
             this.cbox_Smail.CheckedChanged += new System.EventHandler(this.cbox_Smail_CheckedChanged);
             // 
@@ -202,14 +208,6 @@
             this.txb_Mail.Size = new System.Drawing.Size(187, 20);
             this.txb_Mail.TabIndex = 0;
             this.txb_Mail.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txb_Mail_KeyDown);
-            // 
-            // lb_loginsts
-            // 
-            this.lb_loginsts.AutoSize = true;
-            this.lb_loginsts.Location = new System.Drawing.Point(261, 48);
-            this.lb_loginsts.Name = "lb_loginsts";
-            this.lb_loginsts.Size = new System.Drawing.Size(0, 13);
-            this.lb_loginsts.TabIndex = 12;
             // 
             // Main
             // 

@@ -1,11 +1,11 @@
-{
+﻿{
 	"Main": {
 		"title": "BnsLauncher",
 		"btn_patcher": "Patcher",
 		"btn_settings": "Settings",
 		"bnt_slider": "Slider",
-		"Btn_login": "Login",
-		"Btn_play": "Play",
+		"Btn_login": "로그인",
+		"Btn_play": "게임 시작",
 		"lb_mail": "Email:",
 		"lb_pass": "Password:",
         "lb_region": "Region",
@@ -21,7 +21,7 @@
     },
 	"Settings":{
 		"title": "Settings",
-		"gbox_llang": "Launcher Language",
+		"gbox_llang": "런처 언어",
 	    "gbox_region": "Region",
         "gbox_arc": "Architecture",
         "gbox_krserver": "Server",

@@ -1,13 +1,13 @@
-{
+﻿{
 	"Main": {
 		"title": "BnsLauncher",
 		"btn_patcher": "Patcher",
 		"btn_settings": "Settings",
 		"bnt_slider": "Slider",
-		"Btn_login": "Login",
-		"Btn_play": "Play",
-		"lb_mail": "Email:",
-		"lb_pass": "Password:",
+		"Btn_login": "注册",
+		"Btn_play": "开始游戏",
+		"lb_mail": "电子邮件:",
+		"lb_pass": "密码:",
         "lb_region": "Region",
 		"lb_loginstswait": "Logging in...",
 		"lb_loginstsdone": "Logged!",
@@ -21,7 +21,7 @@
     },
 	"Settings":{
 		"title": "Settings",
-		"gbox_llang": "Launcher Language",
+		"gbox_llang": "启动器语言",
 	    "gbox_region": "Region",
         "gbox_arc": "Architecture",
         "gbox_krserver": "Server",
@@ -51,7 +51,7 @@
 		"lb_cpathoff": "Disabled",
 		"btn_scpath": "Search",
 		"btn_enable": "Enable",
-		"btn_disable": "Disable"
+		"btn_disable": "Disable"		
 	},
 		"Patcher":{
 		"title": "Patcher",
