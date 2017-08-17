@@ -5,7 +5,7 @@
     <Gender>Female</Gender>
     <Value id="1">
       <Min>-1</Min>
-      <Max>4</Max>
+      <Max>1</Max>
     </Value>
     <Value id="2">
       <Min>-1</Min>
@@ -81,7 +81,7 @@
     </Value>
     <Value id="20">
       <Min>-1</Min>
-      <Max>2</Max>
+      <Max>1</Max>
     </Value>
     <Value id="21">
       <Min>-1</Min>
@@ -101,7 +101,7 @@
     </Value>
     <Value id="25">
       <Min>-1</Min>
-      <Max>4</Max>
+      <Max>3</Max>
     </Value>
     <Value id="26">
       <Min>-1</Min>
@@ -221,11 +221,11 @@
     <Gender>Female</Gender>
     <Value id="1">
       <Min>-1</Min>
-      <Max>3</Max>
+      <Max>2</Max>
     </Value>
     <Value id="2">
       <Min>-1</Min>
-      <Max>3</Max>
+      <Max>2</Max>
     </Value>
     <Value id="3">
       <Min>-1</Min>
@@ -329,7 +329,7 @@
     <Gender>Female</Gender>
     <Value id="1">
       <Min>-1</Min>
-      <Max>2</Max>
+      <Max>3</Max>
     </Value>
     <Value id="2">
       <Min>-1</Min>
@@ -337,7 +337,7 @@
     </Value>
     <Value id="3">
       <Min>-1</Min>
-      <Max>1</Max>
+      <Max>3</Max>
     </Value>
     <Value id="4">
       <Min>-1</Min>
@@ -384,7 +384,7 @@
       <Max>1</Max>
     </Value>
     <Value id="15">
-      <Min>-1</Min>
+      <Min>0</Min>
       <Max>1</Max>
     </Value>
     <Value id="16">
@@ -417,7 +417,7 @@
     </Value>
     <Value id="23">
       <Min>-1</Min>
-      <Max>-1</Max>
+      <Max>0</Max>
     </Value>
     <Value id="24">
       <Min>-1</Min>
@@ -425,7 +425,7 @@
     </Value>
     <Value id="25">
       <Min>-1</Min>
-      <Max>3</Max>
+      <Max>2</Max>
     </Value>
     <Value id="26">
       <Min>-1</Min>

@@ -12,9 +12,6 @@ namespace BnS_Launcher
         bool PathsFound = false;
         bool LoadingDisabled = false;
 
-        XmlDocument document;
-        XmlNode node;
-        XmlElement element;
         string str2, str3;
         FileStream stream;
         StreamReader reader;
@@ -272,27 +269,68 @@ namespace BnS_Launcher
 
         void LoadXml()
         {
-            try
+            XmlDocument xmlDoc = new XmlDocument();
+            XmlReader xreader = XmlReader.Create(sSettings.XmlSettings);
+            xmlDoc.Load(xreader);
+
+            XmlNodeList nodeList = xmlDoc.SelectSingleNode("config").ChildNodes;
+
+            foreach (XmlNode xn in nodeList)
             {
-                document = new XmlDocument();
-                document.Load(sSettings.XmlSettings);
-                node = document.SelectSingleNode("config");
-                if (node != null)
+                XmlElement xe = (XmlElement)xn;
+                if (xe.GetAttribute("name") == "maxZoom")
                 {
-                    foreach (XmlNode node2 in node.ChildNodes)
+                    try
                     {
-                        element = (XmlElement)node2;
-                        if ((element.GetAttribute("name") == "maxZoom"))
-                        {
-                            txb_zoom.Text = element.GetAttribute("value");
-                        }
+                        txb_zoom.Text = xe.GetAttribute("value");
+                    }
+                    catch //(Exception e)
+                    {
+                       // MessageBox.Show(e.ToString());
                     }
                 }
             }
-            catch// (Exception exception)
+            xreader.Close();
+        }
+
+        void xmlWrite()
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            XmlReader xreader = XmlReader.Create(sSettings.XmlSettings);
+            xmlDoc.Load(xreader);
+
+            XmlNodeList nodeList = xmlDoc.SelectSingleNode("config").ChildNodes;
+
+            foreach (XmlNode xn in nodeList)
             {
-                //MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                XmlElement xe = (XmlElement)xn;
+                if (xe.GetAttribute("name") == "maxZoom")
+                {
+                    try
+                    {
+                        xe.SetAttribute("value", txb_zoom.Text);
+                    }
+                    catch //(Exception e)
+                    {
+                        //MessageBox.Show(e.ToString());
+                    }
+                }
             }
+            xreader.Close();
+            xmlDoc.Save(sSettings.XmlSettings);
+
+            str2 = sSettings.XmlSettings;
+            stream = new FileStream(str2, FileMode.Open, FileAccess.Read);
+            reader = new StreamReader(stream);
+            str3 = reader.ReadToEnd().Replace("\"", "'");
+            reader.Close();
+            stream.Close();
+
+            stream2 = new FileStream(str2, FileMode.Open, FileAccess.Write);
+            writer = new StreamWriter(stream2, Encoding.Unicode);
+            writer.WriteLine(str3);
+            writer.Close();
+            stream2.Close();
         }
 
         void SetCustomPath()
@@ -683,36 +721,7 @@ namespace BnS_Launcher
 
         private void FomrSettings_FormClosing(object sender, FormClosingEventArgs e)
         {
-            try
-            {
-                document = new XmlDocument();
-                document.Load(sSettings.XmlSettings);
-                node = document.SelectSingleNode("config");
-                if (node != null)
-                {
-                    foreach (XmlNode node2 in node.ChildNodes)
-                    {
-                        element = (XmlElement)node2;
-                        if ((element.GetAttribute("name") == "maxZoom"))
-                        {
-                            element.SetAttribute("value", txb_zoom.Text);
-                        }
-                    }
-                }
-                document.Save(sSettings.XmlSettings);
-                str2 = sSettings.XmlSettings;
-                stream = new FileStream(str2, FileMode.Open, FileAccess.Read);
-                reader = new StreamReader(stream);
-                str3 = reader.ReadToEnd().Replace("\"", "'");
-                reader.Close();
-                stream.Close();
-                stream2 = new FileStream(str2, FileMode.Open, FileAccess.Write);
-                writer = new StreamWriter(stream2, Encoding.Unicode);
-                writer.WriteLine(str3);
-                writer.Close();
-                stream2.Close();
-            }
-            catch { }
+            xmlWrite();
         }
     }
 }

@@ -95,7 +95,7 @@ namespace BnS_Launcher
 
             ConfigOutPath = ConfigFilePath + ".files"; //get full file path and add .files
             XmlOutPath = XmlFilePath + ".files";
-            Console.Write("{0}", DatPath);
+           // Console.Write("{0}", DatPath);
         }
         private void InitI18N()
         {
@@ -125,7 +125,7 @@ namespace BnS_Launcher
             cbox_minimize.Text = _i18N.LoadI18NValue("Patcher", "cbox_minimize");
             cbox_bakconfig.Text = _i18N.LoadI18NValue("Patcher", "cbox_bakconfig");
 
-            cbox_dps.Text = _i18N.LoadI18NValue("Patcher", "cbox_bakconfig");
+            cbox_dps.Text = _i18N.LoadI18NValue("Patcher", "cbox_dps");
             cbox_perfmod.Text = _i18N.LoadI18NValue("Patcher", "cbox_perfmod");
             cbox_bakxml.Text = _i18N.LoadI18NValue("Patcher", "cbox_bakxml");
         }
