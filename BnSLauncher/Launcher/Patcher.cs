@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.IO;
 using BnS_Launcher.lib;
+using System.Xml;
 
 namespace BnS_Launcher
 {
@@ -21,8 +22,7 @@ namespace BnS_Launcher
 
         public BackgroundWorker ebnsdat;
         public BackgroundWorker cbnsdat;
-        public bool PatchConfig;
-        public bool PatchXml;
+        public bool PatchConfig, PatchXml, BackConfig, BackXml;
 
         SettingsClass sSettings = new SettingsClass();
 
@@ -71,7 +71,7 @@ namespace BnS_Launcher
             }
 
             if (sSettings.sInstallPath != null)
-                DatPath = Path.Combine(sSettings.sInstallPath, sSettings.sInstallPathRegion,@"data\");
+                DatPath = Path.Combine(sSettings.sInstallPath, sSettings.sInstallPathRegion, @"data\");
 
             if (sSettings.sArchitecture == "0")
             {
@@ -95,7 +95,7 @@ namespace BnS_Launcher
 
             ConfigOutPath = ConfigFilePath + ".files"; //get full file path and add .files
             XmlOutPath = XmlFilePath + ".files";
-           // Console.Write("{0}", DatPath);
+            // Console.Write("{0}", DatPath);
         }
         private void InitI18N()
         {
@@ -123,11 +123,10 @@ namespace BnS_Launcher
             cbox_webl.Text = _i18N.LoadI18NValue("Patcher", "cbox_webl");
             cbox_clause.Text = _i18N.LoadI18NValue("Patcher", "cbox_clause");
             cbox_minimize.Text = _i18N.LoadI18NValue("Patcher", "cbox_minimize");
-            cbox_bakconfig.Text = _i18N.LoadI18NValue("Patcher", "cbox_bakconfig");
+            cbox_back.Text = _i18N.LoadI18NValue("Patcher", "cbox_back");
 
-            cbox_dps.Text = _i18N.LoadI18NValue("Patcher", "cbox_dps");
+            cbox_dpssix.Text = _i18N.LoadI18NValue("Patcher", "cbox_dps");
             cbox_perfmod.Text = _i18N.LoadI18NValue("Patcher", "cbox_perfmod");
-            cbox_bakxml.Text = _i18N.LoadI18NValue("Patcher", "cbox_bakxml");
         }
 
         public void Extractor(string datFile)
@@ -156,7 +155,7 @@ namespace BnS_Launcher
                 BNSDat.BNSDat.Extract(XmlFilePath, XmlFilePath.EndsWith("64.dat"));
             }
             GC.Collect();
-            patchConfig();
+            XmlWrite();
         }
 
         private void btn_start_Click(object sender, EventArgs e)
@@ -170,15 +169,28 @@ namespace BnS_Launcher
             }
 
             if (cbox_cconfig.Checked == true)
+            {
                 PatchConfig = true;
+                if (cbox_back.Checked ==true)
+                    BackConfig = true;
+            }
             else
+            {
                 PatchConfig = false;
+                BackConfig = false;
+            }
 
             if (cbox_cxml.Checked == true)
+            {
                 PatchXml = true;
+                if (cbox_back.Checked == true)
+                    BackXml = true;
+            }
             else
+            {
                 PatchXml = false;
-
+                BackXml = false;
+            }
             //Console.Write("Patching: Wait until patch finish!\n");
             BakcUpManager();
 
@@ -197,7 +209,7 @@ namespace BnS_Launcher
             //get current date and time
             string date = DateTime.Now.ToString("dd-MM-yy_"); // includes leading zeros
             string time = DateTime.Now.ToString("hh.mm.ss"); // includes leading zeros
-            if (cbox_bakconfig.Checked == true)
+            if (BackConfig == true)
             {
                 var BackDir = Path.Combine(DatPath, BackPath);  // folder location
 
@@ -214,7 +226,7 @@ namespace BnS_Launcher
                 File.Copy(DatPath + ConfigFileName, CurrBackPath + ConfigFileName, true);
             }
 
-            if (cbox_bakxml.Checked == true)
+            if (BackXml == true)
             {
                 var BackDir = DatPath + BackPath;  // folder location
 
@@ -237,51 +249,325 @@ namespace BnS_Launcher
             if (PatchXml == true)
                 Extractor(XmlFilePath);
         }
-        private void patchConfig()
-        {
-            //patch config2
+       
+        void XmlWrite()
+        {            
             try
             {
-                //patch only what is selected
+                XmlDocument xmlDoc = new XmlDocument();
+                XmlReaderSettings settings = new XmlReaderSettings();
+                settings.IgnoreComments = true;//  
                 if (PatchConfig == true)
                 {
                     Console.Write(str_patching + "system.config2.xml\n");
-                    string configFile = File.ReadAllText(ConfigOutPath + "\\system.config2.xml");
+                    XmlReader creader = XmlReader.Create(ConfigOutPath + "\\system.config2.xml", settings);
+                    xmlDoc.Load(creader);
 
-                    if (cbox_webl.Checked == true)
-                        configFile = configFile.Replace("\"use-web-launching\" value=\"true\"", "\"use-web-launching\" value=\"false\"");
-                    else
-                        configFile = configFile.Replace("\"use-web-launching\" value=\"false\"", "\"use-web-launching\" value=\"true\"");
-                    if (cbox_minimize.Checked == true)
-                        configFile = configFile.Replace("\"minimize-window\" value=\"true\"", "\"minimize-window\" value=\"false\"");
-                    else
-                        configFile = configFile.Replace("\"minimize-window\" value=\"false\"", "\"minimize-window\" value=\"true\"");
-                    if (cbox_clause.Checked == true)
-                        configFile = configFile.Replace("\"show-clause\" value=\"true\"", "\"show-clause\" value=\"false\"");
-                    else
-                        configFile = configFile.Replace("\"show-clause\" value=\"false\"", "\"show-clause\" value=\"true\"");
+                    XmlNodeList nodeList = xmlDoc.SelectSingleNode("config").ChildNodes;//
 
-                    File.WriteAllText(ConfigOutPath + "\\system.config2.xml", configFile);
+                    foreach (XmlNode xn in nodeList)// 
+                    {
+                        XmlElement xe = (XmlElement)xn;//
+
+                        if (xe.GetAttribute("name") == "use-web-launching")// 
+                        {
+                            try
+                            {
+                                if (cbox_webl.Checked == true) { xe.SetAttribute("value", "false"); }  //
+                                else { xe.SetAttribute("value", "true"); }
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show(e.ToString());
+                            }
+                        }
+
+                        if (xe.GetAttribute("name") == "minimize-window")// 
+                        {
+                            try
+                            {
+                                if (cbox_minimize.Checked == true) { xe.SetAttribute("value", "false"); }  //
+                                else { xe.SetAttribute("value", "true"); }
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show(e.ToString());
+                            }
+                        }
+
+                        if (xe.GetAttribute("name") == "show-clause")// 
+                        {
+                            try
+                            {
+                                if (cbox_minimize.Checked == true) { xe.SetAttribute("value", "false"); }  //
+                                else { xe.SetAttribute("value", "true"); }
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show(e.ToString());
+                            }
+                        }
+
+                        if (xe.GetAttribute("name") == "use-auto-bias-global-cool-time")// 
+                        {
+                            try
+                            {
+                                if (cbox_webl.Checked == true) { xe.SetAttribute("value", "false"); }  //
+                                else { xe.SetAttribute("value", "true"); }
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show(e.ToString());
+                            }
+                        }
+
+                        if (xe.GetAttribute("name") == "use-nagle")// 
+                        {
+                            try
+                            {
+                                if (cbox_nagle.Checked == true) { xe.SetAttribute("value", "false"); }  //
+                                else { xe.SetAttribute("value", "true"); }
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show(e.ToString());
+                            }
+                        }
+
+                        if (xe.GetAttribute("name") == "use-nagle-arena")// 
+                        {
+                            try
+                            {
+                                if (cbox_naglearena.Checked == true) { xe.SetAttribute("value", "true"); }  //
+                                else { xe.SetAttribute("value", "false"); }
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show(e.ToString());
+                            }
+                        }
+                    }//foreach 
+                    creader.Close();
+                    xmlDoc.Save(ConfigOutPath + "\\system.config2.xml");
                 }
+
+                /*  client.config2.xml */
                 if (PatchXml == true)
                 {
                     Console.Write(str_patching + "client.config2.xml\n");
-                    string xmlFile = File.ReadAllText(XmlOutPath + "\\client.config2.xml");
+                    XmlReader xreader = XmlReader.Create(XmlOutPath + "\\client.config2.xml", settings);
+                    xmlDoc.Load(xreader);
 
-                    if (cbox_dps.Checked == true)
-                        xmlFile = xmlFile.Replace("\"show-party-6-dungeon-and-cave\" value=\"n\"", "\"show-party-6-dungeon-and-cave\" value=\"y\"");
-                    else
-                        xmlFile = xmlFile.Replace("\"show-party-6-dungeon-and-cave\" value=\"y\"", "\"show-party-6-dungeon-and-cave\" value=\"n\"");
+                    XmlNodeList nodeList = xmlDoc.SelectSingleNode("config").ChildNodes;//
 
-                    if (cbox_perfmod.Checked == true)
-                        xmlFile = xmlFile.Replace("\"use-optimal-performance-mode-option\" value=\"false\"", "\"use-optimal-performance-mode-option\" value=\"true\"");
-                    else
-                        xmlFile = xmlFile.Replace("\"use-optimal-performance-mode-option\" value=\"true\"", "\"use-optimal-performance-mode-option\" value=\"false\"");
+                    foreach (XmlNode xn in nodeList)// 
+                    {
+                        XmlElement xe = (XmlElement)xn;//
 
-                    File.WriteAllText(XmlOutPath + "\\client.config2.xml", xmlFile);
+                        if (xe.GetAttribute("name") == "latency")// 
+                        {
+                            XmlNodeList nls = xe.ChildNodes;//
+                            foreach (XmlNode xn1 in nls)//
+                            {
+                                XmlElement xe2 = (XmlElement)xn1;// 
+
+                                if (xe2.GetAttribute("name") == "fast-msec")// 
+                                {
+                                    try
+                                    {
+                                        xe2.SetAttribute("value", txbFastmsec.Text);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        MessageBox.Show(e.ToString());
+                                    }
+                                }
+
+                                if (xe2.GetAttribute("name") == "mid-msec")// 
+                                {
+                                    try
+                                    {
+                                        xe2.SetAttribute("value", txbMidmsec.Text);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        MessageBox.Show(e.ToString());
+                                    }
+                                }
+                            }
+                        }//latency
+
+                        #region DPS
+                        if (xe.GetAttribute("name") == "damage-meter")//
+                        {
+                            XmlNodeList nls = xe.ChildNodes;// 
+                            foreach (XmlNode xn1 in nls)// 
+                            {
+                                XmlElement xe2 = (XmlElement)xn1;// 
+                                if (xe2.GetAttribute("name") == "show-public-zone")// 
+                                {
+                                    try
+                                    {
+                                        if (cbox_dpspub.Checked == true) { xe2.SetAttribute("value", "y"); }  //
+                                        else { xe2.SetAttribute("value", "n"); }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        MessageBox.Show(e.ToString());
+                                    }
+                                }
+                                if (xe2.GetAttribute("name") == "show-party-6-dungeon-and-cave")// 
+                                {
+                                    try
+                                    {
+                                        if (cbox_dpssix.Checked == true) { xe2.SetAttribute("value", "y"); }  //
+                                        else { xe2.SetAttribute("value", "n"); }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        MessageBox.Show(e.ToString());
+                                    }
+                                }
+                                if (xe2.GetAttribute("name") == "show-field-zone")// 
+                                {
+                                    try
+                                    {
+                                        if (cbox_dpsfield.Checked == true) { xe2.SetAttribute("value", "y"); }  //
+                                        else { xe2.SetAttribute("value", "n"); }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        MessageBox.Show(e.ToString());
+                                    }
+                                }
+                                if (xe2.GetAttribute("name") == "show-faction-battle-field-zone")// 
+                                {
+                                    try
+                                    {
+                                        if (cbox_dpsfac.Checked == true) { xe2.SetAttribute("value", "y"); }  //
+                                        else { xe2.SetAttribute("value", "n"); }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        MessageBox.Show(e.ToString());
+                                    }
+                                }
+                            }
+
+                        }//DPS meter
+
+                        if(cbox_Cgct.Checked == true)
+                        if (xe.GetAttribute("name") == "skill")// 
+                        {
+                            XmlNodeList nls = xe.ChildNodes;//
+                            foreach (XmlNode xn1 in nls)//
+                            {
+                                XmlElement xe2 = (XmlElement)xn1;// 
+
+                                if (xe2.GetAttribute("name") == "skill-global-cool-latency-time")// 
+                                {
+                                    try
+                                    {
+                                        xe2.SetAttribute("value", txb_cgct.Text);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        MessageBox.Show(e.ToString());
+                                    }
+                                }
+                            }
+                        }//skill
+
+                        if (xe.GetAttribute("name") == "option")
+                        {
+                            XmlNodeList nls = xe.ChildNodes;// 
+                            foreach (XmlNode xn1 in nls)// 
+                            {
+                                XmlElement xe2 = (XmlElement)xn1;// 
+                                if (xe2.GetAttribute("name") == "use-optimal-performance-mode-option")// 
+                                {
+                                    try
+                                    {
+                                        if (cbox_perfmod.Checked == true) { xe2.SetAttribute("value", "true"); }  //
+                                        else { xe2.SetAttribute("value", "false"); }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        MessageBox.Show(e.ToString());
+                                    }
+                                }
+                            }
+                        }//option
+
+                        if (xe.GetAttribute("name") == "input")
+                        {
+                            XmlNodeList nls = xe.ChildNodes;// 
+                            foreach (XmlNode xn1 in nls)// 
+                            {
+                                XmlElement xe2 = (XmlElement)xn1;// 
+                                if (xe2.GetAttribute("name") == "pending-time")// 
+                                {
+                                    try
+                                    {
+                                        xe2.SetAttribute("value", txb_mpresstime.Text);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        MessageBox.Show(e.ToString());
+                                    }
+                                }
+                                if (xe2.GetAttribute("name") == "pending-key-tick-time")// 
+                                {
+                                    try
+                                    {
+                                        xe2.SetAttribute("value", txb_ptick.Text);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        MessageBox.Show(e.ToString());
+                                    }
+                                }
+                                if (xe2.GetAttribute("name") == "pressed-key-tick-time")// 
+                                {
+                                    try
+                                    {
+                                        xe2.SetAttribute("value", txb_presstick.Text);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        MessageBox.Show(e.ToString());
+                                    }
+                                }
+                            }
+                        }//input
+
+                        if (xe.GetAttribute("name") == "mouse")
+                        {
+                            XmlNodeList nls = xe.ChildNodes;// 
+                            foreach (XmlNode xn1 in nls)// 
+                            {
+                                XmlElement xe2 = (XmlElement)xn1;// 
+                                if (xe2.GetAttribute("name") == "ignore-mouse-press-time")// 
+                                {
+                                    try
+                                    {
+                                        xe2.SetAttribute("value", txb_mpresstime.Text);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        MessageBox.Show(e.ToString());
+                                    }
+                                }
+                            }
+                        }//mouse
+                        #endregion
+                    }//foreach 
+
+                    xreader.Close();
+                    xmlDoc.Save(XmlOutPath + "\\client.config2.xml");
+                    
                 }
             }
-
             catch
             {
                 Console.Write(str_patcherror);
@@ -289,8 +575,8 @@ namespace BnS_Launcher
             }
             Console.Write(str_pathdone);
             compileDat();
-
         }
+
         public void Compiler(string repackPath)
         {
             if (repackPath == null)
@@ -319,9 +605,10 @@ namespace BnS_Launcher
             }
 
             GC.Collect();
-            MessageBox.Show(str_patchdone, "Patcher");
+            MessageBox.Show(str_patchdone, Text);
             gbox_patcher.Enabled = true;
         }
+
         private void compileDat()
         {
             Console.Write(str_compiledat);
