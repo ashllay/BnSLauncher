@@ -1234,7 +1234,10 @@ namespace BnS_Launcher
             }
             else if (sSettings.sRegion == "KR")
             {
-                currentAppId = "B0D42105-0CB6-BC9F-3CB2-BE28A0662340";
+                if (sSettings.sServerType == "Live")
+                    currentAppId = "B0D42105-0CB6-BC9F-3CB2-BE28A0662340";
+                else if (sSettings.sServerType == "Test")
+                    currentAppId = "18A2B067-7A7E-DA99-CDF1-3BBE3BE93F68";
             }
             //Set some variables that are going to be used
             epoch = ((long)(DateTime.UtcNow - new DateTime(2001, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds).ToString();

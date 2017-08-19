@@ -46,7 +46,6 @@ namespace BnS_Launcher
 
             // Find and set file paths
             // Check the registry
-
             switch (sSettings.sRegion)
             {
                 case "JP":
@@ -106,6 +105,14 @@ namespace BnS_Launcher
             btn_start.Text = _i18N.LoadI18NValue("Patcher", "btn_start");
             //labels
             lb_outlog.Text = _i18N.LoadI18NValue("Patcher", "lb_outlog");
+            lb_fast.Text = _i18N.LoadI18NValue("Patcher", "lb_fast");
+            lb_mid.Text = _i18N.LoadI18NValue("Patcher", "lb_mid");
+            lb_mpresstime.Text = _i18N.LoadI18NValue("Patcher", "lb_mpresstime");
+            lb_presstick.Text = _i18N.LoadI18NValue("Patcher", "lb_presstick");
+            lb_ptime.Text = _i18N.LoadI18NValue("Patcher", "lb_ptime");
+            lb_ptimetick.Text = _i18N.LoadI18NValue("Patcher", "lb_ptimetick");
+            lb_time.Text = _i18N.LoadI18NValue("Patcher", "lb_time");
+            
             //strings
             strlb_info = _i18N.LoadI18NValue("Patcher", "strlb_info");
             str_extract = _i18N.LoadI18NValue("Patcher", "str_extract");
@@ -119,13 +126,26 @@ namespace BnS_Launcher
             str_errordat = _i18N.LoadI18NValue("Patcher", "str_errordat");
             //groupboxes
             gbox_repackf.Text = _i18N.LoadI18NValue("Patcher", "gbox_repackf");
+            gbox_dps.Text = _i18N.LoadI18NValue("Patcher", "gbox_dps");
+            gbox_input.Text = _i18N.LoadI18NValue("Patcher", "gbox_input");
+            gbox_latency.Text = _i18N.LoadI18NValue("Patcher", "gbox_latency");
+            gbox_mouse.Text = _i18N.LoadI18NValue("Patcher", "gbox_mouse");
+            gbox_msec.Text = _i18N.LoadI18NValue("Patcher", "gbox_msec");
+            
             //checkboxes
             cbox_webl.Text = _i18N.LoadI18NValue("Patcher", "cbox_webl");
             cbox_clause.Text = _i18N.LoadI18NValue("Patcher", "cbox_clause");
             cbox_minimize.Text = _i18N.LoadI18NValue("Patcher", "cbox_minimize");
             cbox_back.Text = _i18N.LoadI18NValue("Patcher", "cbox_back");
-
-            cbox_dpssix.Text = _i18N.LoadI18NValue("Patcher", "cbox_dps");
+            cbox_Cgct.Text = _i18N.LoadI18NValue("Patcher", "cbox_Cgct");
+            cbox_nagle.Text = _i18N.LoadI18NValue("Patcher", "cbox_nagle");
+            cbox_naglearena.Text = _i18N.LoadI18NValue("Patcher", "cbox_naglearena");
+            cbox_dpsclassic.Text = _i18N.LoadI18NValue("Patcher", "cbox_dpsclassic");
+            cbox_dpsfac.Text = _i18N.LoadI18NValue("Patcher", "cbox_dpsfac");
+            cbox_dpsfield.Text = _i18N.LoadI18NValue("Patcher", "cbox_dpsfield");
+            cbox_dpsjackpot.Text = _i18N.LoadI18NValue("Patcher", "cbox_dpsjackpot");
+            cbox_dpspub.Text = _i18N.LoadI18NValue("Patcher", "cbox_dpspub");
+            cbox_dpssix.Text = _i18N.LoadI18NValue("Patcher", "cbox_dpssix");
             cbox_perfmod.Text = _i18N.LoadI18NValue("Patcher", "cbox_perfmod");
         }
 
@@ -156,6 +176,37 @@ namespace BnS_Launcher
             }
             GC.Collect();
             XmlWrite();
+        }
+        public void Compiler(string repackPath)
+        {
+            if (repackPath == null)
+                return;
+            ebnsdat = new BackgroundWorker();
+            ebnsdat.WorkerSupportsCancellation = true;
+            ebnsdat.WorkerReportsProgress = true;
+            ebnsdat.DoWork += new DoWorkEventHandler(datcompress_DoWork);
+            ebnsdat.RunWorkerAsync();
+        }
+
+        private void datcompress_DoWork(object sender, DoWorkEventArgs e)
+        {
+            CheckForIllegalCrossThreadCalls = false;
+
+            if (PatchConfig == true)
+            {
+                Console.Write(str_repack, ConfigFileName);
+                BNSDat.BNSDat.Compress(ConfigOutPath, ConfigOutPath.Contains("64.dat"));
+            }
+
+            if (PatchXml == true)
+            {
+                Console.Write(str_repack, XmlFileName);
+                BNSDat.BNSDat.Compress(XmlOutPath, XmlOutPath.Contains("64.dat"));
+            }
+
+            GC.Collect();
+            MessageBox.Show(str_patchdone, Text);
+            gbox_patcher.Enabled = true;
         }
 
         private void btn_start_Click(object sender, EventArgs e)
@@ -299,7 +350,7 @@ namespace BnS_Launcher
                         {
                             try
                             {
-                                if (cbox_minimize.Checked == true) { xe.SetAttribute("value", "false"); }  //
+                                if (cbox_clause.Checked == true) { xe.SetAttribute("value", "false"); }  //
                                 else { xe.SetAttribute("value", "true"); }
                             }
                             catch (Exception e)
@@ -312,7 +363,7 @@ namespace BnS_Launcher
                         {
                             try
                             {
-                                if (cbox_webl.Checked == true) { xe.SetAttribute("value", "false"); }  //
+                                if (cbox_Cgct.Checked == true) { xe.SetAttribute("value", "false"); }  //
                                 else { xe.SetAttribute("value", "true"); }
                             }
                             catch (Exception e)
@@ -325,8 +376,8 @@ namespace BnS_Launcher
                         {
                             try
                             {
-                                if (cbox_nagle.Checked == true) { xe.SetAttribute("value", "false"); }  //
-                                else { xe.SetAttribute("value", "true"); }
+                                if (cbox_nagle.Checked == true) { xe.SetAttribute("value", "true"); }  //
+                                else { xe.SetAttribute("value", "false"); }
                             }
                             catch (Exception e)
                             {
@@ -509,7 +560,7 @@ namespace BnS_Launcher
                                 {
                                     try
                                     {
-                                        xe2.SetAttribute("value", txb_mpresstime.Text);
+                                        xe2.SetAttribute("value", txb_ptime.Text);
                                     }
                                     catch (Exception e)
                                     {
@@ -565,7 +616,6 @@ namespace BnS_Launcher
 
                     xreader.Close();
                     xmlDoc.Save(XmlOutPath + "\\client.config2.xml");
-                    
                 }
             }
             catch
@@ -575,38 +625,6 @@ namespace BnS_Launcher
             }
             Console.Write(str_pathdone);
             compileDat();
-        }
-
-        public void Compiler(string repackPath)
-        {
-            if (repackPath == null)
-                return;
-            ebnsdat = new BackgroundWorker();
-            ebnsdat.WorkerSupportsCancellation = true;
-            ebnsdat.WorkerReportsProgress = true;
-            ebnsdat.DoWork += new DoWorkEventHandler(datcompress_DoWork);
-            ebnsdat.RunWorkerAsync();
-        }
-
-        private void datcompress_DoWork(object sender, DoWorkEventArgs e)
-        {
-            CheckForIllegalCrossThreadCalls = false;
-
-            if (PatchConfig == true)
-            {
-                Console.Write(str_repack, ConfigFileName);
-                BNSDat.BNSDat.Compress(ConfigOutPath, ConfigOutPath.Contains("64.dat"));
-            }
-
-            if (PatchXml == true)
-            {
-                Console.Write(str_repack, XmlFileName);
-                BNSDat.BNSDat.Compress(XmlOutPath, XmlOutPath.Contains("64.dat"));
-            }
-
-            GC.Collect();
-            MessageBox.Show(str_patchdone, Text);
-            gbox_patcher.Enabled = true;
         }
 
         private void compileDat()

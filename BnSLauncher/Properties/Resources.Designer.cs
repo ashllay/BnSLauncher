@@ -73,10 +73,10 @@ namespace BnS_Launcher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _3584283_16_9_aspect_ratio_belt_black_hair_blade___soul_bodysuit_boots_breasts_brown_e {
+        internal static System.Drawing.Bitmap _3555939_huazang_pohwaran_1girl_belt_blade___soul_boots_brown_eyes_eyepatch_female_fingerless_gloves_gatling_gun_gloves {
             get {
-                object obj = ResourceManager.GetObject("_3584283_16_9_aspect_ratio_belt_black_hair_blade___soul_bodysuit_boots_breasts_br" +
-                        "own_e", resourceCulture);
+                object obj = ResourceManager.GetObject("3555939 huazang pohwaran 1girl belt blade & soul boots brown eyes eyepatch female" +
+                        " fingerless gloves gatling gun gloves", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

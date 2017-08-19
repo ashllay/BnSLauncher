@@ -38,31 +38,31 @@
             this.cbox_Cgct = new System.Windows.Forms.CheckBox();
             this.cbox_minimize = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.gbox_mouse = new System.Windows.Forms.GroupBox();
+            this.lb_mpresstime = new System.Windows.Forms.Label();
             this.txb_mpresstime = new System.Windows.Forms.TextBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.gbox_input = new System.Windows.Forms.GroupBox();
             this.txb_presstick = new System.Windows.Forms.TextBox();
             this.txb_ptick = new System.Windows.Forms.TextBox();
             this.txb_ptime = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lb_presstick = new System.Windows.Forms.Label();
+            this.lb_ptimetick = new System.Windows.Forms.Label();
+            this.lb_ptime = new System.Windows.Forms.Label();
+            this.gbox_latency = new System.Windows.Forms.GroupBox();
             this.txb_cgct = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lb_time = new System.Windows.Forms.Label();
+            this.gbox_dps = new System.Windows.Forms.GroupBox();
             this.cbox_dpsjackpot = new System.Windows.Forms.CheckBox();
             this.cbox_dpsclassic = new System.Windows.Forms.CheckBox();
             this.cbox_dpsfac = new System.Windows.Forms.CheckBox();
             this.cbox_dpsfield = new System.Windows.Forms.CheckBox();
             this.cbox_dpspub = new System.Windows.Forms.CheckBox();
             this.cbox_dpssix = new System.Windows.Forms.CheckBox();
-            this.gboxLatency = new System.Windows.Forms.GroupBox();
+            this.gbox_msec = new System.Windows.Forms.GroupBox();
             this.txbMidmsec = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lb_fast = new System.Windows.Forms.Label();
             this.txbFastmsec = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lb_mid = new System.Windows.Forms.Label();
             this.cbox_perfmod = new System.Windows.Forms.CheckBox();
             this.cbox_back = new System.Windows.Forms.CheckBox();
             this.gbox_patcher = new System.Windows.Forms.GroupBox();
@@ -76,11 +76,11 @@
             this.tabPatcher.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.gboxLatency.SuspendLayout();
+            this.gbox_mouse.SuspendLayout();
+            this.gbox_input.SuspendLayout();
+            this.gbox_latency.SuspendLayout();
+            this.gbox_dps.SuspendLayout();
+            this.gbox_msec.SuspendLayout();
             this.gbox_patcher.SuspendLayout();
             this.gbox_repackf.SuspendLayout();
             this.SuspendLayout();
@@ -97,6 +97,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.BackColor = System.Drawing.Color.Transparent;
             this.tabPage1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.tabPage1.Controls.Add(this.cbox_naglearena);
             this.tabPage1.Controls.Add(this.cbox_nagle);
@@ -116,28 +117,26 @@
             this.cbox_naglearena.AutoSize = true;
             this.cbox_naglearena.Checked = true;
             this.cbox_naglearena.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbox_naglearena.Location = new System.Drawing.Point(6, 118);
+            this.cbox_naglearena.Location = new System.Drawing.Point(7, 116);
             this.cbox_naglearena.Name = "cbox_naglearena";
-            this.cbox_naglearena.Size = new System.Drawing.Size(104, 17);
+            this.cbox_naglearena.Size = new System.Drawing.Size(15, 14);
             this.cbox_naglearena.TabIndex = 13;
-            this.cbox_naglearena.Text = "Use nagle arena";
             this.cbox_naglearena.UseVisualStyleBackColor = true;
             // 
             // cbox_nagle
             // 
             this.cbox_nagle.AutoSize = true;
-            this.cbox_nagle.Location = new System.Drawing.Point(6, 95);
+            this.cbox_nagle.Location = new System.Drawing.Point(7, 96);
             this.cbox_nagle.Name = "cbox_nagle";
-            this.cbox_nagle.Size = new System.Drawing.Size(74, 17);
+            this.cbox_nagle.Size = new System.Drawing.Size(15, 14);
             this.cbox_nagle.TabIndex = 12;
-            this.cbox_nagle.Text = "Use nagle";
             this.cbox_nagle.UseVisualStyleBackColor = true;
             // 
             // cbox_webl
             // 
             this.cbox_webl.AutoSize = true;
             this.cbox_webl.ForeColor = System.Drawing.Color.Black;
-            this.cbox_webl.Location = new System.Drawing.Point(6, 6);
+            this.cbox_webl.Location = new System.Drawing.Point(7, 16);
             this.cbox_webl.Name = "cbox_webl";
             this.cbox_webl.Size = new System.Drawing.Size(15, 14);
             this.cbox_webl.TabIndex = 9;
@@ -147,7 +146,7 @@
             // 
             this.cbox_clause.AutoSize = true;
             this.cbox_clause.ForeColor = System.Drawing.Color.Black;
-            this.cbox_clause.Location = new System.Drawing.Point(6, 29);
+            this.cbox_clause.Location = new System.Drawing.Point(7, 36);
             this.cbox_clause.Name = "cbox_clause";
             this.cbox_clause.Size = new System.Drawing.Size(15, 14);
             this.cbox_clause.TabIndex = 10;
@@ -156,18 +155,17 @@
             // cbox_Cgct
             // 
             this.cbox_Cgct.AutoSize = true;
-            this.cbox_Cgct.Location = new System.Drawing.Point(6, 72);
+            this.cbox_Cgct.Location = new System.Drawing.Point(7, 76);
             this.cbox_Cgct.Name = "cbox_Cgct";
-            this.cbox_Cgct.Size = new System.Drawing.Size(141, 17);
+            this.cbox_Cgct.Size = new System.Drawing.Size(15, 14);
             this.cbox_Cgct.TabIndex = 0;
-            this.cbox_Cgct.Text = "Use custom latency time";
             this.cbox_Cgct.UseVisualStyleBackColor = true;
             // 
             // cbox_minimize
             // 
             this.cbox_minimize.AutoSize = true;
             this.cbox_minimize.ForeColor = System.Drawing.Color.Black;
-            this.cbox_minimize.Location = new System.Drawing.Point(6, 52);
+            this.cbox_minimize.Location = new System.Drawing.Point(7, 56);
             this.cbox_minimize.Name = "cbox_minimize";
             this.cbox_minimize.Size = new System.Drawing.Size(15, 14);
             this.cbox_minimize.TabIndex = 11;
@@ -175,11 +173,11 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.groupBox4);
-            this.tabPage2.Controls.Add(this.groupBox3);
-            this.tabPage2.Controls.Add(this.groupBox2);
-            this.tabPage2.Controls.Add(this.groupBox1);
-            this.tabPage2.Controls.Add(this.gboxLatency);
+            this.tabPage2.Controls.Add(this.gbox_mouse);
+            this.tabPage2.Controls.Add(this.gbox_input);
+            this.tabPage2.Controls.Add(this.gbox_latency);
+            this.tabPage2.Controls.Add(this.gbox_dps);
+            this.tabPage2.Controls.Add(this.gbox_msec);
             this.tabPage2.Controls.Add(this.cbox_perfmod);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -188,48 +186,46 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Xml.dat";
             // 
-            // groupBox4
+            // gbox_mouse
             // 
-            this.groupBox4.Controls.Add(this.label7);
-            this.groupBox4.Controls.Add(this.txb_mpresstime);
-            this.groupBox4.Location = new System.Drawing.Point(5, 99);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(155, 41);
-            this.groupBox4.TabIndex = 7;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Mouse";
+            this.gbox_mouse.Controls.Add(this.lb_mpresstime);
+            this.gbox_mouse.Controls.Add(this.txb_mpresstime);
+            this.gbox_mouse.Location = new System.Drawing.Point(6, 98);
+            this.gbox_mouse.Name = "gbox_mouse";
+            this.gbox_mouse.Size = new System.Drawing.Size(155, 41);
+            this.gbox_mouse.TabIndex = 7;
+            this.gbox_mouse.TabStop = false;
             // 
-            // label7
+            // lb_mpresstime
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(5, 16);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(87, 13);
-            this.label7.TabIndex = 7;
-            this.label7.Text = "Ignore press time";
+            this.lb_mpresstime.AutoSize = true;
+            this.lb_mpresstime.Location = new System.Drawing.Point(5, 16);
+            this.lb_mpresstime.Name = "lb_mpresstime";
+            this.lb_mpresstime.Size = new System.Drawing.Size(13, 13);
+            this.lb_mpresstime.TabIndex = 7;
+            this.lb_mpresstime.Text = "_";
             // 
             // txb_mpresstime
             // 
             this.txb_mpresstime.Location = new System.Drawing.Point(98, 13);
             this.txb_mpresstime.Name = "txb_mpresstime";
-            this.txb_mpresstime.Size = new System.Drawing.Size(53, 20);
+            this.txb_mpresstime.Size = new System.Drawing.Size(51, 20);
             this.txb_mpresstime.TabIndex = 8;
             this.txb_mpresstime.Text = "1.000000";
             // 
-            // groupBox3
+            // gbox_input
             // 
-            this.groupBox3.Controls.Add(this.txb_presstick);
-            this.groupBox3.Controls.Add(this.txb_ptick);
-            this.groupBox3.Controls.Add(this.txb_ptime);
-            this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Location = new System.Drawing.Point(6, 6);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(155, 87);
-            this.groupBox3.TabIndex = 27;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Imput";
+            this.gbox_input.Controls.Add(this.txb_presstick);
+            this.gbox_input.Controls.Add(this.txb_ptick);
+            this.gbox_input.Controls.Add(this.txb_ptime);
+            this.gbox_input.Controls.Add(this.lb_presstick);
+            this.gbox_input.Controls.Add(this.lb_ptimetick);
+            this.gbox_input.Controls.Add(this.lb_ptime);
+            this.gbox_input.Location = new System.Drawing.Point(6, 6);
+            this.gbox_input.Name = "gbox_input";
+            this.gbox_input.Size = new System.Drawing.Size(155, 87);
+            this.gbox_input.TabIndex = 27;
+            this.gbox_input.TabStop = false;
             // 
             // txb_presstick
             // 
@@ -255,43 +251,42 @@
             this.txb_ptime.TabIndex = 4;
             this.txb_ptime.Text = "0.300000";
             // 
-            // label6
+            // lb_presstick
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(5, 61);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(65, 13);
-            this.label6.TabIndex = 2;
-            this.label6.Text = "Pressed tick";
+            this.lb_presstick.AutoSize = true;
+            this.lb_presstick.Location = new System.Drawing.Point(5, 61);
+            this.lb_presstick.Name = "lb_presstick";
+            this.lb_presstick.Size = new System.Drawing.Size(13, 13);
+            this.lb_presstick.TabIndex = 2;
+            this.lb_presstick.Text = "_";
             // 
-            // label5
+            // lb_ptimetick
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(5, 38);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(66, 13);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "Pending tick";
+            this.lb_ptimetick.AutoSize = true;
+            this.lb_ptimetick.Location = new System.Drawing.Point(5, 38);
+            this.lb_ptimetick.Name = "lb_ptimetick";
+            this.lb_ptimetick.Size = new System.Drawing.Size(13, 13);
+            this.lb_ptimetick.TabIndex = 1;
+            this.lb_ptimetick.Text = "_";
             // 
-            // label4
+            // lb_ptime
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(5, 16);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(68, 13);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "Pending time";
+            this.lb_ptime.AutoSize = true;
+            this.lb_ptime.Location = new System.Drawing.Point(5, 16);
+            this.lb_ptime.Name = "lb_ptime";
+            this.lb_ptime.Size = new System.Drawing.Size(13, 13);
+            this.lb_ptime.TabIndex = 0;
+            this.lb_ptime.Text = "_";
             // 
-            // groupBox2
+            // gbox_latency
             // 
-            this.groupBox2.Controls.Add(this.txb_cgct);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Location = new System.Drawing.Point(167, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(91, 40);
-            this.groupBox2.TabIndex = 26;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Latency";
+            this.gbox_latency.Controls.Add(this.txb_cgct);
+            this.gbox_latency.Controls.Add(this.lb_time);
+            this.gbox_latency.Location = new System.Drawing.Point(167, 6);
+            this.gbox_latency.Name = "gbox_latency";
+            this.gbox_latency.Size = new System.Drawing.Size(91, 40);
+            this.gbox_latency.TabIndex = 26;
+            this.gbox_latency.TabStop = false;
             // 
             // txb_cgct
             // 
@@ -301,38 +296,36 @@
             this.txb_cgct.TabIndex = 2;
             this.txb_cgct.Text = "100";
             // 
-            // label3
+            // lb_time
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 16);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(30, 13);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Time";
+            this.lb_time.AutoSize = true;
+            this.lb_time.Location = new System.Drawing.Point(6, 16);
+            this.lb_time.Name = "lb_time";
+            this.lb_time.Size = new System.Drawing.Size(13, 13);
+            this.lb_time.TabIndex = 1;
+            this.lb_time.Text = "_";
             // 
-            // groupBox1
+            // gbox_dps
             // 
-            this.groupBox1.Controls.Add(this.cbox_dpsjackpot);
-            this.groupBox1.Controls.Add(this.cbox_dpsclassic);
-            this.groupBox1.Controls.Add(this.cbox_dpsfac);
-            this.groupBox1.Controls.Add(this.cbox_dpsfield);
-            this.groupBox1.Controls.Add(this.cbox_dpspub);
-            this.groupBox1.Controls.Add(this.cbox_dpssix);
-            this.groupBox1.Location = new System.Drawing.Point(263, 6);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(132, 87);
-            this.groupBox1.TabIndex = 16;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "DPS meter zone";
+            this.gbox_dps.Controls.Add(this.cbox_dpsjackpot);
+            this.gbox_dps.Controls.Add(this.cbox_dpsclassic);
+            this.gbox_dps.Controls.Add(this.cbox_dpsfac);
+            this.gbox_dps.Controls.Add(this.cbox_dpsfield);
+            this.gbox_dps.Controls.Add(this.cbox_dpspub);
+            this.gbox_dps.Controls.Add(this.cbox_dpssix);
+            this.gbox_dps.Location = new System.Drawing.Point(263, 6);
+            this.gbox_dps.Name = "gbox_dps";
+            this.gbox_dps.Size = new System.Drawing.Size(132, 87);
+            this.gbox_dps.TabIndex = 16;
+            this.gbox_dps.TabStop = false;
             // 
             // cbox_dpsjackpot
             // 
             this.cbox_dpsjackpot.AutoSize = true;
             this.cbox_dpsjackpot.Location = new System.Drawing.Point(67, 60);
             this.cbox_dpsjackpot.Name = "cbox_dpsjackpot";
-            this.cbox_dpsjackpot.Size = new System.Drawing.Size(61, 17);
+            this.cbox_dpsjackpot.Size = new System.Drawing.Size(15, 14);
             this.cbox_dpsjackpot.TabIndex = 14;
-            this.cbox_dpsjackpot.Text = "jackpot";
             this.cbox_dpsjackpot.UseVisualStyleBackColor = true;
             // 
             // cbox_dpsclassic
@@ -340,9 +333,8 @@
             this.cbox_dpsclassic.AutoSize = true;
             this.cbox_dpsclassic.Location = new System.Drawing.Point(6, 60);
             this.cbox_dpsclassic.Name = "cbox_dpsclassic";
-            this.cbox_dpsclassic.Size = new System.Drawing.Size(59, 17);
+            this.cbox_dpsclassic.Size = new System.Drawing.Size(15, 14);
             this.cbox_dpsclassic.TabIndex = 13;
-            this.cbox_dpsclassic.Text = "Classic";
             this.cbox_dpsclassic.UseVisualStyleBackColor = true;
             // 
             // cbox_dpsfac
@@ -350,9 +342,8 @@
             this.cbox_dpsfac.AutoSize = true;
             this.cbox_dpsfac.Location = new System.Drawing.Point(67, 15);
             this.cbox_dpsfac.Name = "cbox_dpsfac";
-            this.cbox_dpsfac.Size = new System.Drawing.Size(61, 17);
+            this.cbox_dpsfac.Size = new System.Drawing.Size(15, 14);
             this.cbox_dpsfac.TabIndex = 12;
-            this.cbox_dpsfac.Text = "Faction";
             this.cbox_dpsfac.UseVisualStyleBackColor = true;
             // 
             // cbox_dpsfield
@@ -360,9 +351,8 @@
             this.cbox_dpsfield.AutoSize = true;
             this.cbox_dpsfield.Location = new System.Drawing.Point(67, 37);
             this.cbox_dpsfield.Name = "cbox_dpsfield";
-            this.cbox_dpsfield.Size = new System.Drawing.Size(48, 17);
+            this.cbox_dpsfield.Size = new System.Drawing.Size(15, 14);
             this.cbox_dpsfield.TabIndex = 11;
-            this.cbox_dpsfield.Text = "Field";
             this.cbox_dpsfield.UseVisualStyleBackColor = true;
             // 
             // cbox_dpspub
@@ -370,9 +360,8 @@
             this.cbox_dpspub.AutoSize = true;
             this.cbox_dpspub.Location = new System.Drawing.Point(6, 37);
             this.cbox_dpspub.Name = "cbox_dpspub";
-            this.cbox_dpspub.Size = new System.Drawing.Size(55, 17);
+            this.cbox_dpspub.Size = new System.Drawing.Size(15, 14);
             this.cbox_dpspub.TabIndex = 10;
-            this.cbox_dpspub.Text = "Public";
             this.cbox_dpspub.UseVisualStyleBackColor = true;
             // 
             // cbox_dpssix
@@ -380,62 +369,60 @@
             this.cbox_dpssix.AutoSize = true;
             this.cbox_dpssix.Location = new System.Drawing.Point(6, 15);
             this.cbox_dpssix.Name = "cbox_dpssix";
-            this.cbox_dpssix.Size = new System.Drawing.Size(55, 17);
+            this.cbox_dpssix.Size = new System.Drawing.Size(15, 14);
             this.cbox_dpssix.TabIndex = 9;
-            this.cbox_dpssix.Text = "6-man";
             this.cbox_dpssix.UseVisualStyleBackColor = true;
             // 
-            // gboxLatency
+            // gbox_msec
             // 
-            this.gboxLatency.Controls.Add(this.txbMidmsec);
-            this.gboxLatency.Controls.Add(this.label2);
-            this.gboxLatency.Controls.Add(this.txbFastmsec);
-            this.gboxLatency.Controls.Add(this.label1);
-            this.gboxLatency.Location = new System.Drawing.Point(167, 52);
-            this.gboxLatency.Name = "gboxLatency";
-            this.gboxLatency.Size = new System.Drawing.Size(91, 63);
-            this.gboxLatency.TabIndex = 15;
-            this.gboxLatency.TabStop = false;
-            this.gboxLatency.Text = "Latency msec";
+            this.gbox_msec.Controls.Add(this.txbMidmsec);
+            this.gbox_msec.Controls.Add(this.lb_fast);
+            this.gbox_msec.Controls.Add(this.txbFastmsec);
+            this.gbox_msec.Controls.Add(this.lb_mid);
+            this.gbox_msec.Location = new System.Drawing.Point(166, 52);
+            this.gbox_msec.Name = "gbox_msec";
+            this.gbox_msec.Size = new System.Drawing.Size(91, 67);
+            this.gbox_msec.TabIndex = 15;
+            this.gbox_msec.TabStop = false;
             // 
             // txbMidmsec
             // 
-            this.txbMidmsec.Location = new System.Drawing.Point(39, 36);
+            this.txbMidmsec.Location = new System.Drawing.Point(42, 40);
             this.txbMidmsec.Name = "txbMidmsec";
             this.txbMidmsec.Size = new System.Drawing.Size(44, 20);
             this.txbMidmsec.TabIndex = 12;
             this.txbMidmsec.Text = "100";
             // 
-            // label2
+            // lb_fast
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 16);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(27, 13);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "Fast";
+            this.lb_fast.AutoSize = true;
+            this.lb_fast.Location = new System.Drawing.Point(9, 20);
+            this.lb_fast.Name = "lb_fast";
+            this.lb_fast.Size = new System.Drawing.Size(13, 13);
+            this.lb_fast.TabIndex = 14;
+            this.lb_fast.Text = "_";
             // 
             // txbFastmsec
             // 
-            this.txbFastmsec.Location = new System.Drawing.Point(39, 13);
+            this.txbFastmsec.Location = new System.Drawing.Point(42, 17);
             this.txbFastmsec.Name = "txbFastmsec";
             this.txbFastmsec.Size = new System.Drawing.Size(44, 20);
             this.txbFastmsec.TabIndex = 11;
             this.txbFastmsec.Text = "100";
             // 
-            // label1
+            // lb_mid
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 39);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(24, 13);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Mid";
+            this.lb_mid.AutoSize = true;
+            this.lb_mid.Location = new System.Drawing.Point(9, 43);
+            this.lb_mid.Name = "lb_mid";
+            this.lb_mid.Size = new System.Drawing.Size(13, 13);
+            this.lb_mid.TabIndex = 13;
+            this.lb_mid.Text = "_";
             // 
             // cbox_perfmod
             // 
             this.cbox_perfmod.AutoSize = true;
-            this.cbox_perfmod.Location = new System.Drawing.Point(167, 121);
+            this.cbox_perfmod.Location = new System.Drawing.Point(166, 124);
             this.cbox_perfmod.Name = "cbox_perfmod";
             this.cbox_perfmod.Size = new System.Drawing.Size(15, 14);
             this.cbox_perfmod.TabIndex = 10;
@@ -448,8 +435,9 @@
             this.cbox_back.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbox_back.Location = new System.Drawing.Point(171, 15);
             this.cbox_back.Name = "cbox_back";
-            this.cbox_back.Size = new System.Drawing.Size(15, 14);
+            this.cbox_back.Size = new System.Drawing.Size(32, 17);
             this.cbox_back.TabIndex = 9;
+            this.cbox_back.Text = "_";
             this.cbox_back.UseVisualStyleBackColor = true;
             // 
             // gbox_patcher
@@ -546,7 +534,7 @@
             // Patcher
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackgroundImage = global::BnS_Launcher.Properties.Resources._3584283_16_9_aspect_ratio_belt_black_hair_blade___soul_bodysuit_boots_breasts_brown_e;
+            this.BackgroundImage = global::BnS_Launcher.Properties.Resources._3555939_huazang_pohwaran_1girl_belt_blade___soul_boots_brown_eyes_eyepatch_female_fingerless_gloves_gatling_gun_gloves;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(429, 382);
             this.Controls.Add(this.gbox_patcher);
@@ -563,16 +551,16 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.gboxLatency.ResumeLayout(false);
-            this.gboxLatency.PerformLayout();
+            this.gbox_mouse.ResumeLayout(false);
+            this.gbox_mouse.PerformLayout();
+            this.gbox_input.ResumeLayout(false);
+            this.gbox_input.PerformLayout();
+            this.gbox_latency.ResumeLayout(false);
+            this.gbox_latency.PerformLayout();
+            this.gbox_dps.ResumeLayout(false);
+            this.gbox_dps.PerformLayout();
+            this.gbox_msec.ResumeLayout(false);
+            this.gbox_msec.PerformLayout();
             this.gbox_patcher.ResumeLayout(false);
             this.gbox_patcher.PerformLayout();
             this.gbox_repackf.ResumeLayout(false);
@@ -600,29 +588,29 @@
         private System.Windows.Forms.CheckBox cbox_cxml;
         private System.Windows.Forms.CheckBox cbox_cconfig;
         private System.Windows.Forms.CheckBox cbox_perfmod;
-        private System.Windows.Forms.GroupBox gboxLatency;
+        private System.Windows.Forms.GroupBox gbox_msec;
         private System.Windows.Forms.TextBox txbMidmsec;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lb_fast;
         private System.Windows.Forms.TextBox txbFastmsec;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label lb_mid;
+        private System.Windows.Forms.GroupBox gbox_dps;
         private System.Windows.Forms.CheckBox cbox_dpsfac;
         private System.Windows.Forms.CheckBox cbox_dpsfield;
         private System.Windows.Forms.CheckBox cbox_dpspub;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox gbox_latency;
         private System.Windows.Forms.TextBox txb_cgct;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lb_time;
         private System.Windows.Forms.CheckBox cbox_Cgct;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.GroupBox gbox_mouse;
+        private System.Windows.Forms.Label lb_mpresstime;
         private System.Windows.Forms.TextBox txb_mpresstime;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox gbox_input;
         private System.Windows.Forms.TextBox txb_presstick;
         private System.Windows.Forms.TextBox txb_ptick;
         private System.Windows.Forms.TextBox txb_ptime;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lb_presstick;
+        private System.Windows.Forms.Label lb_ptimetick;
+        private System.Windows.Forms.Label lb_ptime;
         private System.Windows.Forms.CheckBox cbox_dpsjackpot;
         private System.Windows.Forms.CheckBox cbox_dpsclassic;
         private System.Windows.Forms.CheckBox cbox_naglearena;
