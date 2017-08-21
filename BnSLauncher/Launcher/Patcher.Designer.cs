@@ -35,7 +35,7 @@
             this.cbox_nagle = new System.Windows.Forms.CheckBox();
             this.cbox_webl = new System.Windows.Forms.CheckBox();
             this.cbox_clause = new System.Windows.Forms.CheckBox();
-            this.cbox_Cgct = new System.Windows.Forms.CheckBox();
+            this.cbox_cgcd = new System.Windows.Forms.CheckBox();
             this.cbox_minimize = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.gbox_mouse = new System.Windows.Forms.GroupBox();
@@ -103,7 +103,7 @@
             this.tabPage1.Controls.Add(this.cbox_nagle);
             this.tabPage1.Controls.Add(this.cbox_webl);
             this.tabPage1.Controls.Add(this.cbox_clause);
-            this.tabPage1.Controls.Add(this.cbox_Cgct);
+            this.tabPage1.Controls.Add(this.cbox_cgcd);
             this.tabPage1.Controls.Add(this.cbox_minimize);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -152,18 +152,21 @@
             this.cbox_clause.TabIndex = 10;
             this.cbox_clause.UseVisualStyleBackColor = true;
             // 
-            // cbox_Cgct
+            // cbox_cgcd
             // 
-            this.cbox_Cgct.AutoSize = true;
-            this.cbox_Cgct.Location = new System.Drawing.Point(7, 76);
-            this.cbox_Cgct.Name = "cbox_Cgct";
-            this.cbox_Cgct.Size = new System.Drawing.Size(15, 14);
-            this.cbox_Cgct.TabIndex = 0;
-            this.cbox_Cgct.UseVisualStyleBackColor = true;
+            this.cbox_cgcd.AutoSize = true;
+            this.cbox_cgcd.Location = new System.Drawing.Point(7, 76);
+            this.cbox_cgcd.Name = "cbox_cgcd";
+            this.cbox_cgcd.Size = new System.Drawing.Size(15, 14);
+            this.cbox_cgcd.TabIndex = 0;
+            this.cbox_cgcd.UseVisualStyleBackColor = true;
+            this.cbox_cgcd.CheckedChanged += new System.EventHandler(this.cbox_cgcd_CheckedChanged);
             // 
             // cbox_minimize
             // 
             this.cbox_minimize.AutoSize = true;
+            this.cbox_minimize.Checked = true;
+            this.cbox_minimize.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbox_minimize.ForeColor = System.Drawing.Color.Black;
             this.cbox_minimize.Location = new System.Drawing.Point(7, 56);
             this.cbox_minimize.Name = "cbox_minimize";
@@ -211,7 +214,6 @@
             this.txb_mpresstime.Name = "txb_mpresstime";
             this.txb_mpresstime.Size = new System.Drawing.Size(51, 20);
             this.txb_mpresstime.TabIndex = 8;
-            this.txb_mpresstime.Text = "1.000000";
             // 
             // gbox_input
             // 
@@ -233,7 +235,6 @@
             this.txb_presstick.Name = "txb_presstick";
             this.txb_presstick.Size = new System.Drawing.Size(58, 20);
             this.txb_presstick.TabIndex = 6;
-            this.txb_presstick.Text = "0.25";
             // 
             // txb_ptick
             // 
@@ -241,7 +242,6 @@
             this.txb_ptick.Name = "txb_ptick";
             this.txb_ptick.Size = new System.Drawing.Size(58, 20);
             this.txb_ptick.TabIndex = 5;
-            this.txb_ptick.Text = "0.25";
             // 
             // txb_ptime
             // 
@@ -249,7 +249,6 @@
             this.txb_ptime.Name = "txb_ptime";
             this.txb_ptime.Size = new System.Drawing.Size(58, 20);
             this.txb_ptime.TabIndex = 4;
-            this.txb_ptime.Text = "0.300000";
             // 
             // lb_presstick
             // 
@@ -294,7 +293,6 @@
             this.txb_cgct.Name = "txb_cgct";
             this.txb_cgct.Size = new System.Drawing.Size(44, 20);
             this.txb_cgct.TabIndex = 2;
-            this.txb_cgct.Text = "100";
             // 
             // lb_time
             // 
@@ -391,7 +389,6 @@
             this.txbMidmsec.Name = "txbMidmsec";
             this.txbMidmsec.Size = new System.Drawing.Size(44, 20);
             this.txbMidmsec.TabIndex = 12;
-            this.txbMidmsec.Text = "100";
             // 
             // lb_fast
             // 
@@ -408,7 +405,6 @@
             this.txbFastmsec.Name = "txbFastmsec";
             this.txbFastmsec.Size = new System.Drawing.Size(44, 20);
             this.txbFastmsec.TabIndex = 11;
-            this.txbFastmsec.Text = "100";
             // 
             // lb_mid
             // 
@@ -545,6 +541,7 @@
             this.MaximizeBox = false;
             this.Name = "Patcher";
             this.Text = "Patcher";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Patcher_FormClosing);
             this.Load += new System.EventHandler(this.Patcher_Load);
             this.tabPatcher.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -600,7 +597,7 @@
         private System.Windows.Forms.GroupBox gbox_latency;
         private System.Windows.Forms.TextBox txb_cgct;
         private System.Windows.Forms.Label lb_time;
-        private System.Windows.Forms.CheckBox cbox_Cgct;
+        private System.Windows.Forms.CheckBox cbox_cgcd;
         private System.Windows.Forms.GroupBox gbox_mouse;
         private System.Windows.Forms.Label lb_mpresstime;
         private System.Windows.Forms.TextBox txb_mpresstime;

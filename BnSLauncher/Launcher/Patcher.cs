@@ -26,15 +26,31 @@ namespace BnS_Launcher
 
         SettingsClass sSettings = new SettingsClass();
 
-        string strlb_info, str_extract, str_repackerror, str_patching, str_patcherror, str_pathdone, str_repack, str_patchdone, str_compiledat, str_errordat;
+        string strlb_info, str_extract, str_repackerror, str_patching, str_patcherror, str_pathdone, str_repack, str_patchdone, str_compiledat, str_errordat, gcd_string;
+
+        public bool pbrackup, pweb_launcher, pclause, pminize, pgcd, pnagle, pnaglearena, xpublick, xsixman, xfield, xfaction, xjackpot, xclassic, xoptimal;
+
 
         private BslI18NLoader _i18N;
+
+        private void cbox_cgcd_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbox_cgcd.Checked == true)
+            {
+                richOut.Clear();
+                Console.Write(gcd_string);
+            }
+            else
+                richOut.Clear();
+        }
 
         public Patcher()
         {
             InitializeComponent();
             InitI18N();
+            PatcherSettingsManager(Environment.CurrentDirectory + "\\Config\\Patcher.xml");
         }
+
 
         private void Patcher_Load(object sender, EventArgs e)
         {
@@ -43,6 +59,21 @@ namespace BnS_Launcher
 
             _writer = new StrWriter(richOut);
             Console.SetOut(_writer);
+            
+            cbox_back.Checked = pbrackup;
+            cbox_webl.Checked = pweb_launcher;
+            cbox_clause.Checked = pclause;
+            cbox_minimize.Checked = pminize;
+            cbox_cgcd.Checked = pgcd;
+            cbox_nagle.Checked = pnagle;
+            cbox_naglearena.Checked = pnaglearena;
+            cbox_dpspub.Checked = xpublick;
+            cbox_dpssix.Checked = xsixman;
+            cbox_dpsfield.Checked = xfield;
+            cbox_dpsfac.Checked = xfaction;
+            cbox_dpsjackpot.Checked = xjackpot;
+            cbox_dpsclassic.Checked = xclassic;
+            cbox_perfmod.Checked = xoptimal;
 
             // Find and set file paths
             // Check the registry
@@ -95,7 +126,385 @@ namespace BnS_Launcher
             ConfigOutPath = ConfigFilePath + ".files"; //get full file path and add .files
             XmlOutPath = XmlFilePath + ".files";
             // Console.Write("{0}", DatPath);
+            
         }
+
+        private void Patcher_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            PatcherSettingsManager(Environment.CurrentDirectory + "\\Config\\Patcher.xml",true);
+        }
+
+        void PatcherSettingsManager(string sPfile, bool save = false)
+        {
+            string[] returnBool = new string[14];
+            string[] returnValue = new string[4];
+
+            XmlDocument xmlDoc = new XmlDocument();
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.IgnoreComments = true;//
+            XmlReader mReader = XmlReader.Create(sPfile);
+            xmlDoc.Load(mReader);
+
+            XmlNodeList nodeList = xmlDoc.SelectSingleNode("config").ChildNodes;//
+
+            foreach (XmlNode xn in nodeList)// 
+            {
+                XmlElement xe = (XmlElement)xn;// 
+                //configxml
+                if (xe.GetAttribute("name") == "backup-original-file")
+                {
+                    try
+                    {
+                        if (save == true)
+                        {
+                            if (cbox_back.Checked == true) { xe.SetAttribute("value", "true"); }  //
+                            else { xe.SetAttribute("value", "false"); }
+                        }
+                        else
+                            returnBool[0] = xe.GetAttribute("value"); //
+                    }
+                    catch { }
+                }
+                #region configdat
+                if (xe.GetAttribute("name") == "configdat")//
+                {
+                    XmlNodeList nls = xe.ChildNodes;// 
+                    foreach (XmlNode xn1 in nls)// 
+                    {
+                        XmlElement xe2 = (XmlElement)xn1;// 
+                        if (xe2.GetAttribute("name") == "use-web-launching")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                {
+                                    if (cbox_webl.Checked == true) { xe2.SetAttribute("value", "true"); }  //
+                                    else { xe2.SetAttribute("value", "false"); }
+                                }
+                                else
+                                    returnBool[1] = xe2.GetAttribute("value"); //
+
+                            }
+                            catch { }
+                        }
+
+                        if (xe2.GetAttribute("name") == "disable-clause")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                {
+                                    if (cbox_clause.Checked == true) { xe2.SetAttribute("value", "true"); }  //
+                                    else { xe2.SetAttribute("value", "false"); }
+                                }
+                                else
+                                    returnBool[2] = xe2.GetAttribute("value"); //
+                                }
+                            catch { }
+                        }
+
+                        if (xe2.GetAttribute("name") == "disable-minimize")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                {
+                                    if (cbox_minimize.Checked == true) { xe2.SetAttribute("value", "true"); }  //
+                                    else { xe2.SetAttribute("value", "false"); }
+                                }
+                                else
+                                returnBool[3] = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
+
+                        if (xe2.GetAttribute("name") == "use-custom-gcd")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                {
+                                    if (cbox_cgcd.Checked == true) { xe2.SetAttribute("value", "true"); }  //
+                                    else { xe2.SetAttribute("value", "false"); }
+                                }
+                                else
+                                returnBool[4] = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
+
+                        if (xe2.GetAttribute("name") == "use-nagle")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                {
+                                    if (cbox_nagle.Checked == true) { xe2.SetAttribute("value", "true"); }  //
+                                    else { xe2.SetAttribute("value", "false"); }
+                                }
+                                else
+                                returnBool[5] = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
+
+                        if (xe2.GetAttribute("name") == "use-nagle-arena")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                {
+                                    if (cbox_naglearena.Checked == true) { xe2.SetAttribute("value", "true"); }  //
+                                    else { xe2.SetAttribute("value", "false"); }
+                                }
+                                else
+                                returnBool[6] = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
+                    }
+
+                }
+                #endregion
+                #region xmldat
+                if (xe.GetAttribute("name") == "xmldat")//
+                {
+                    XmlNodeList nls = xe.ChildNodes;// 
+                    foreach (XmlNode xn1 in nls)// 
+                    {
+                        XmlElement xe2 = (XmlElement)xn1;// 
+                        if (xe2.GetAttribute("name") == "pending-time")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                
+                                    xe2.SetAttribute("value", txb_ptime.Text); //
+                                
+                                else
+                                txb_ptime.Text = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
+
+                        if (xe2.GetAttribute("name") == "pending-key-tick-time")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                    xe2.SetAttribute("value", txb_ptick.Text); //
+                                else
+                                txb_ptick.Text = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
+
+                        if (xe2.GetAttribute("name") == "pressed-key-tick-time")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                    xe2.SetAttribute("value", txb_presstick.Text); //
+                                else
+                                txb_presstick.Text = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
+
+                        if (xe2.GetAttribute("name") == "ignore-mouse-press-time")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                    xe2.SetAttribute("value", txb_mpresstime.Text); //
+                                else
+                                txb_mpresstime.Text = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
+                        if (xe2.GetAttribute("name") == "skill-global-cool-latency-time")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                    xe2.SetAttribute("value", txb_cgct.Text); //
+                                else
+                                txb_cgct.Text = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
+
+                        if (xe2.GetAttribute("name") == "fast-msec")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                    xe2.SetAttribute("value", txbFastmsec.Text); //
+                                else
+                                txbFastmsec.Text = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
+
+                        if (xe2.GetAttribute("name") == "mid-msec")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                    xe2.SetAttribute("value", txbMidmsec.Text); //
+                                else
+                                txbMidmsec.Text = xe2.GetAttribute("value"); //
+
+                            }
+                            catch { }
+                        }
+                        if (xe2.GetAttribute("name") == "show-public-zone")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                {
+                                    if (cbox_dpspub.Checked == true) { xe2.SetAttribute("value", "true"); }  //
+                                    else { xe2.SetAttribute("value", "false"); }
+                                }
+                                else
+                                returnBool[7] = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
+                        if (xe2.GetAttribute("name") == "show-party-6-dungeon-and-cave")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                {
+                                    if (cbox_dpssix.Checked == true) { xe2.SetAttribute("value", "true"); }  //
+                                    else { xe2.SetAttribute("value", "false"); }
+                                }
+                                else
+                                returnBool[8] = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
+                        if (xe2.GetAttribute("name") == "show-field-zone")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                {
+                                    if (cbox_dpsfield.Checked == true) { xe2.SetAttribute("value", "true"); }  //
+                                    else { xe2.SetAttribute("value", "false"); }
+                                }
+                                else
+                                returnBool[9] = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
+                        if (xe2.GetAttribute("name") == "show-faction-battle-field-zone")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                {
+                                    if (cbox_dpsfac.Checked == true) { xe2.SetAttribute("value", "true"); }  //
+                                    else { xe2.SetAttribute("value", "false"); }
+                                }
+                                else
+                                returnBool[10] = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
+                        if (xe2.GetAttribute("name") == "show-jackpot-boss-zone")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                {
+                                    if (cbox_dpsjackpot.Checked == true) { xe2.SetAttribute("value", "true"); }  //
+                                    else { xe2.SetAttribute("value", "false"); }
+                                }
+                                else
+                                returnBool[11] = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
+                        if (xe2.GetAttribute("name") == "show-classic-field-zone")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                {
+                                    if (cbox_dpsclassic.Checked == true) { xe2.SetAttribute("value", "true"); }  //
+                                    else { xe2.SetAttribute("value", "false"); }
+                                }
+                                else
+                                returnBool[12] = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
+                        if (xe2.GetAttribute("name") == "use-optimal-performance-mode-option")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                {
+                                    if (cbox_perfmod.Checked == true) { xe2.SetAttribute("value", "true"); }  //
+                                    else { xe2.SetAttribute("value", "false"); }
+                                }
+                                else
+                                returnBool[13] = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
+                    }
+                }
+                #endregion
+            }//foreach 
+            // public bool pbrackup, pweb_launcher, pclause, pminize, pgcd, pnagle, pnaglearena, xpublick, xsixman, xfield, xfaction, xjackpot, xclassic, xoptimal;
+
+            if (returnBool[0] == "false") { pbrackup = false; }
+            else { pbrackup = true; }
+            if (sSettings.sRegion == "EN" || sSettings.sRegion == "KR")
+            {
+                pweb_launcher = true;
+            }
+            else
+            {
+                if (returnBool[1] == "false") { pweb_launcher = false; }
+                else { pweb_launcher = true; }
+            }
+            if (returnBool[2] == "false") { pclause = false; }
+            else { pclause = true; }
+            if (returnBool[3] == "false") { pminize = false; }
+            else { pminize = true; }
+            if (returnBool[4] == "false") { pgcd = false; }
+            else { pgcd = true; }
+            if (returnBool[5] == "false") { pnagle = false; }
+            else { pnagle = true; }
+            if (returnBool[6] == "false") { pnaglearena = false; }
+            else { pnaglearena = true; }
+
+            if (returnBool[7] == "false") { xpublick = false; }
+            else { xpublick = true; }
+            if (returnBool[8] == "false") { xsixman = false; }
+            else { xsixman = true; }
+            if (returnBool[9] == "false") { xfield = false; }
+            else { xfield = true; }
+            if (returnBool[10] == "false") { xfaction = false; }
+            else { xfaction = true; }
+            if (returnBool[11] == "false") { xjackpot = false; }
+            else { xjackpot = true; }
+            if (returnBool[12] == "false") { xclassic = false; }
+            else { xclassic = true; }
+            if (returnBool[13] == "false") { xoptimal = false; }
+            else { xoptimal = true; }
+            mReader.Close();
+
+            if (save == true)
+                xmlDoc.Save(sPfile);
+        }
+
+
         private void InitI18N()
         {
             _i18N = BslI18NLoader.Instance;
@@ -115,6 +524,7 @@ namespace BnS_Launcher
             
             //strings
             strlb_info = _i18N.LoadI18NValue("Patcher", "strlb_info");
+            gcd_string = _i18N.LoadI18NValue("Patcher", "gcd_string");
             str_extract = _i18N.LoadI18NValue("Patcher", "str_extract");
             str_repackerror = _i18N.LoadI18NValue("Patcher", "str_repackerror");
             str_patching = _i18N.LoadI18NValue("Patcher", "str_patching");
@@ -124,6 +534,7 @@ namespace BnS_Launcher
             str_patchdone = _i18N.LoadI18NValue("Patcher", "str_patchdone");
             str_compiledat = _i18N.LoadI18NValue("Patcher", "str_compiledat");
             str_errordat = _i18N.LoadI18NValue("Patcher", "str_errordat");
+
             //groupboxes
             gbox_repackf.Text = _i18N.LoadI18NValue("Patcher", "gbox_repackf");
             gbox_dps.Text = _i18N.LoadI18NValue("Patcher", "gbox_dps");
@@ -137,7 +548,7 @@ namespace BnS_Launcher
             cbox_clause.Text = _i18N.LoadI18NValue("Patcher", "cbox_clause");
             cbox_minimize.Text = _i18N.LoadI18NValue("Patcher", "cbox_minimize");
             cbox_back.Text = _i18N.LoadI18NValue("Patcher", "cbox_back");
-            cbox_Cgct.Text = _i18N.LoadI18NValue("Patcher", "cbox_Cgct");
+            cbox_cgcd.Text = _i18N.LoadI18NValue("Patcher", "cbox_Cgct");
             cbox_nagle.Text = _i18N.LoadI18NValue("Patcher", "cbox_nagle");
             cbox_naglearena.Text = _i18N.LoadI18NValue("Patcher", "cbox_naglearena");
             cbox_dpsclassic.Text = _i18N.LoadI18NValue("Patcher", "cbox_dpsclassic");
@@ -363,7 +774,7 @@ namespace BnS_Launcher
                         {
                             try
                             {
-                                if (cbox_Cgct.Checked == true) { xe.SetAttribute("value", "false"); }  //
+                                if (cbox_cgcd.Checked == true) { xe.SetAttribute("value", "false"); }  //
                                 else { xe.SetAttribute("value", "true"); }
                             }
                             catch (Exception e)
@@ -503,11 +914,37 @@ namespace BnS_Launcher
                                         MessageBox.Show(e.ToString());
                                     }
                                 }
+
+                                if (xe2.GetAttribute("name") == "show-jackpot-boss-zone")// 
+                                {
+                                    try
+                                    {
+                                        if (cbox_dpsjackpot.Checked == true) { xe2.SetAttribute("value", "y"); }  //
+                                        else { xe2.SetAttribute("value", "n"); }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        MessageBox.Show(e.ToString());
+                                    }
+                                }
+
+                                if (xe2.GetAttribute("name") == "show-classic-field-zone")// 
+                                {
+                                    try
+                                    {
+                                        if (cbox_dpsclassic.Checked == true) { xe2.SetAttribute("value", "y"); }  //
+                                        else { xe2.SetAttribute("value", "n"); }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        MessageBox.Show(e.ToString());
+                                    }
+                                }
                             }
 
                         }//DPS meter
 
-                        if(cbox_Cgct.Checked == true)
+                        if(cbox_cgcd.Checked == true)
                         if (xe.GetAttribute("name") == "skill")// 
                         {
                             XmlNodeList nls = xe.ChildNodes;//

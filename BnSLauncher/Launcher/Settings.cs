@@ -284,10 +284,7 @@ namespace BnS_Launcher
                     {
                         txb_zoom.Text = xe.GetAttribute("value");
                     }
-                    catch //(Exception e)
-                    {
-                       // MessageBox.Show(e.ToString());
-                    }
+                    catch { }
                 }
             }
             xreader.Close();
@@ -310,10 +307,7 @@ namespace BnS_Launcher
                     {
                         xe.SetAttribute("value", txb_zoom.Text);
                     }
-                    catch //(Exception e)
-                    {
-                        //MessageBox.Show(e.ToString());
-                    }
+                    catch { }
                 }
             }
             xreader.Close();
