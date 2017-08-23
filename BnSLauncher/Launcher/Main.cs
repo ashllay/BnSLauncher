@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Web.Security;
 using BnS_Launcher.lib;
+using System.Drawing;
 
 namespace BnS_Launcher
 {
@@ -26,7 +27,7 @@ namespace BnS_Launcher
         private string msb_clinotset, msb_clinotfound, msb_slidererror, msb_emptypass, msb_emptymail, msb_mainterror, lb_loginstsdone;
 
         private bool ClientFound = true;
-
+        private bool UseCustomImg = false;
         SettingsClass sSettings = new SettingsClass();
         IniFile Settings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
 
@@ -35,7 +36,20 @@ namespace BnS_Launcher
         public Main()
         {
             InitializeComponent();
+            if (UseCustomImg == false)
+            {            
+                AutoScaleMode = AutoScaleMode.None;
+                BackgroundImage = Properties.Resources._5334298_1girl_animal_ears_blade__amp__soul_blush_bodysuit_boots_brown_eyes_brown_hair;
+                BackgroundImageLayout = ImageLayout.Center;
+            }
+            else
+            {
+                AutoScaleMode = AutoScaleMode.None;
+                BackgroundImage = Image.FromFile("5334298 1girl animal ears blade &amp; soul blush bodysuit boots brown eyes brown hair.png");
+                BackgroundImageLayout = ImageLayout.Center;
+            }
             InitI18N();
+
 
             var settingsFile = Environment.CurrentDirectory + "\\Settings.ini";
             if (!File.Exists(settingsFile))
@@ -930,7 +944,6 @@ namespace BnS_Launcher
         {
             try
             {
-
                 LoginServer = new TcpClient(LoginIp, LoginPort);
                 LoginServer.ReceiveBufferSize = 1024;
                 NetworkStream ns = LoginServer.GetStream();

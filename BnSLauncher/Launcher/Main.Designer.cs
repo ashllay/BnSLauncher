@@ -195,6 +195,7 @@
             // txb_Pass
             // 
             this.txb_Pass.Location = new System.Drawing.Point(68, 45);
+            this.txb_Pass.MaxLength = 16;
             this.txb_Pass.Name = "txb_Pass";
             this.txb_Pass.PasswordChar = '*';
             this.txb_Pass.Size = new System.Drawing.Size(187, 20);
@@ -211,9 +212,9 @@
             // 
             // Main
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackgroundImage = global::BnS_Launcher.Properties.Resources._5334298_1girl_animal_ears_blade__amp__soul_blush_bodysuit_boots_brown_eyes_brown_hair;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            //this.BackgroundImage = global::BnS_Launcher.Properties.Resources._5334298_1girl_animal_ears_blade__amp__soul_blush_bodysuit_boots_brown_eyes_brown_hair;
+            //this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(617, 417);
             this.Controls.Add(this.box_Login);
             this.Controls.Add(this.btn_patcher);

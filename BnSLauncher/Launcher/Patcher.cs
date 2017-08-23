@@ -735,8 +735,8 @@ namespace BnS_Launcher
                         {
                             try
                             {
-                                if (cbox_webl.Checked == true) { xe.SetAttribute("value", "false"); }  //
-                                else { xe.SetAttribute("value", "true"); }
+                                if (cbox_webl.Checked == true) { xe.SetAttribute("value", "true"); }  //
+                                else { xe.SetAttribute("value", "false"); }
                             }
                             catch (Exception e)
                             {
