@@ -212,9 +212,9 @@
             // 
             // Main
             // 
-            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            //this.BackgroundImage = global::BnS_Launcher.Properties.Resources._5334298_1girl_animal_ears_blade__amp__soul_blush_bodysuit_boots_brown_eyes_brown_hair;
-            //this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackgroundImage = global::BnS_Launcher.Properties.Resources._5334298_1girl_animal_ears_blade__amp__soul_blush_bodysuit_boots_brown_eyes_brown_hair;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(617, 417);
             this.Controls.Add(this.box_Login);
             this.Controls.Add(this.btn_patcher);

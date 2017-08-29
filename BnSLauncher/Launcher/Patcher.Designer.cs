@@ -92,7 +92,7 @@
             this.tabPatcher.Location = new System.Drawing.Point(9, 36);
             this.tabPatcher.Name = "tabPatcher";
             this.tabPatcher.SelectedIndex = 0;
-            this.tabPatcher.Size = new System.Drawing.Size(406, 171);
+            this.tabPatcher.Size = new System.Drawing.Size(412, 171);
             this.tabPatcher.TabIndex = 24;
             // 
             // tabPage1
@@ -185,7 +185,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(398, 145);
+            this.tabPage2.Size = new System.Drawing.Size(404, 145);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Xml.dat";
             // 
@@ -281,7 +281,7 @@
             // 
             this.gbox_latency.Controls.Add(this.txb_cgct);
             this.gbox_latency.Controls.Add(this.lb_time);
-            this.gbox_latency.Location = new System.Drawing.Point(167, 6);
+            this.gbox_latency.Location = new System.Drawing.Point(166, 6);
             this.gbox_latency.Name = "gbox_latency";
             this.gbox_latency.Size = new System.Drawing.Size(91, 40);
             this.gbox_latency.TabIndex = 26;
@@ -313,7 +313,7 @@
             this.gbox_dps.Controls.Add(this.cbox_dpssix);
             this.gbox_dps.Location = new System.Drawing.Point(263, 6);
             this.gbox_dps.Name = "gbox_dps";
-            this.gbox_dps.Size = new System.Drawing.Size(132, 87);
+            this.gbox_dps.Size = new System.Drawing.Size(135, 87);
             this.gbox_dps.TabIndex = 16;
             this.gbox_dps.TabStop = false;
             // 
@@ -438,6 +438,8 @@
             // 
             // gbox_patcher
             // 
+            this.gbox_patcher.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbox_patcher.BackColor = System.Drawing.Color.Transparent;
             this.gbox_patcher.BackgroundImage = global::BnS_Launcher.Properties.Resources._2x2;
             this.gbox_patcher.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -447,7 +449,7 @@
             this.gbox_patcher.Controls.Add(this.btn_start);
             this.gbox_patcher.Location = new System.Drawing.Point(4, 4);
             this.gbox_patcher.Name = "gbox_patcher";
-            this.gbox_patcher.Size = new System.Drawing.Size(420, 261);
+            this.gbox_patcher.Size = new System.Drawing.Size(427, 261);
             this.gbox_patcher.TabIndex = 24;
             this.gbox_patcher.TabStop = false;
             // 
@@ -459,7 +461,7 @@
             this.gbox_repackf.ForeColor = System.Drawing.Color.White;
             this.gbox_repackf.Location = new System.Drawing.Point(9, 213);
             this.gbox_repackf.Name = "gbox_repackf";
-            this.gbox_repackf.Size = new System.Drawing.Size(316, 39);
+            this.gbox_repackf.Size = new System.Drawing.Size(326, 39);
             this.gbox_repackf.TabIndex = 25;
             this.gbox_repackf.TabStop = false;
             // 
@@ -498,7 +500,7 @@
             this.btn_start.BackColor = System.Drawing.Color.Transparent;
             this.btn_start.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_start.ForeColor = System.Drawing.Color.White;
-            this.btn_start.Location = new System.Drawing.Point(331, 224);
+            this.btn_start.Location = new System.Drawing.Point(341, 224);
             this.btn_start.Name = "btn_start";
             this.btn_start.Size = new System.Drawing.Size(76, 23);
             this.btn_start.TabIndex = 4;
@@ -507,12 +509,14 @@
             // 
             // richOut
             // 
+            this.richOut.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richOut.BackColor = System.Drawing.SystemColors.Control;
             this.richOut.ForeColor = System.Drawing.Color.Black;
             this.richOut.HideSelection = false;
             this.richOut.Location = new System.Drawing.Point(4, 285);
             this.richOut.Name = "richOut";
-            this.richOut.Size = new System.Drawing.Size(420, 91);
+            this.richOut.Size = new System.Drawing.Size(427, 91);
             this.richOut.TabIndex = 22;
             this.richOut.Text = "";
             // 
@@ -532,7 +536,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::BnS_Launcher.Properties.Resources._3555939_huazang_pohwaran_1girl_belt_blade___soul_boots_brown_eyes_eyepatch_female_fingerless_gloves_gatling_gun_gloves;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(429, 382);
+            this.ClientSize = new System.Drawing.Size(436, 382);
             this.Controls.Add(this.gbox_patcher);
             this.Controls.Add(this.lb_outlog);
             this.Controls.Add(this.richOut);

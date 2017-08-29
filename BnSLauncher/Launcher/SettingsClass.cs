@@ -19,11 +19,11 @@ class SettingsClass
     string servertype = "";
     string xmlsettings = "";
     //
-    bool KorPath = false;
-    bool KorTestPath = false;
-    bool WstPath = false;
-    bool JpnPath = false;
-    bool TwnPath = false;
+    bool KorPath;
+    bool KorTestPath;
+    bool WstPath;
+    bool JpnPath;
+    bool TwnPath;
     //
     IniFile fSettings = new IniFile(Environment.CurrentDirectory + "\\Settings.ini");
     //
@@ -51,6 +51,8 @@ class SettingsClass
         {
             if (sKorPath != null || !string.IsNullOrEmpty(csKorLivePath))
                 KorPath = true;
+            //else
+            //    KorPath = false;
             return KorPath;
         }
         set { KorPath = value; }
@@ -137,7 +139,7 @@ class SettingsClass
                         if (useWstCustomPath == "true")
                         {
                             if (!string.IsNullOrEmpty(csWstPath))
-                                installpath = csTwnPath;
+                                installpath = csWstPath;
                             else
                                 TwnPath = false;
                         }
@@ -432,27 +434,32 @@ class SettingsClass
     {
         get
         {
-            switch (sRegion)
+            try
             {
-                case "JP":
-                    xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCJAPAN\ClientConfiguration.xml";
-                    break;
-                case "TW":
-                    xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCTAIWAN\ClientConfiguration.xml";
-                    break;
-                case "EN":
-                    xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCWEST\ClientConfiguration.xml";
-                    break;
-                case "KR":
-                    if (sServerType == "Live")
-                        xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT\ClientConfiguration.xml";
-                    else if (sServerType == "Test")
-                        xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT_TEST\ClientConfiguration.xml";
-                    break;
-                default:
-                    break;
+                switch (sRegion)
+                {
+                    case "JP":
+                        xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCJAPAN\ClientConfiguration.xml";
+                        break;
+                    case "TW":
+                        xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCTAIWAN\ClientConfiguration.xml";
+                        break;
+                    case "EN":
+                        xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCWEST\ClientConfiguration.xml";
+                        break;
+                    case "KR":
+                        if (sServerType == "Live")
+                            xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT\ClientConfiguration.xml";
+                        else if (sServerType == "Test")
+                            xmlsettings = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"\BnS\NCSOFT_TEST\ClientConfiguration.xml";
+                        break;
+                    default:
+                        break;
+                }
             }
+            catch { }
             return xmlsettings;
+
         }
         set { xmlsettings = value; }
     }

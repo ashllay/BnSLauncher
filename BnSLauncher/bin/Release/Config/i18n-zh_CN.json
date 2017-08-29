@@ -16,6 +16,7 @@
 		"msb_slidererror": "Slider works only on x86 Client!",
 		"msb_emptypass": "Password field is empty!!",
 		"msb_emptymail": "Email field is empty!!",
+		"msb_mainterror": "There was an error connecting to the Login Server, please make sure there isn't a maintenance.",
 		"cbox_Smail": "Save email",
 		"cbox_Spass": "Save password"
     },

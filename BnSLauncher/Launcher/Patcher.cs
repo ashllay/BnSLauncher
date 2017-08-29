@@ -125,7 +125,7 @@ namespace BnS_Launcher
 
             ConfigOutPath = ConfigFilePath + ".files"; //get full file path and add .files
             XmlOutPath = XmlFilePath + ".files";
-            // Console.Write("{0}", DatPath);
+             Console.Write("{0}", DatPath);
             
         }
 
@@ -944,7 +944,7 @@ namespace BnS_Launcher
 
                         }//DPS meter
 
-                        if(cbox_cgcd.Checked == true)
+                       // if(cbox_cgcd.Checked == true)
                         if (xe.GetAttribute("name") == "skill")// 
                         {
                             XmlNodeList nls = xe.ChildNodes;//
@@ -964,7 +964,7 @@ namespace BnS_Launcher
                                     }
                                 }
                             }
-                        }//skill
+                        }// skill
 
                         if (xe.GetAttribute("name") == "option")
                         {
