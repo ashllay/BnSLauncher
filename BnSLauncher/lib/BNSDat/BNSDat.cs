@@ -33,18 +33,21 @@ namespace BnS_Launcher.BNSDat
         public byte[] Padding;
 
     }
+
+    public class ExtractEventListener
+    {
+        public Action<int> NumberOfFiles;
+        public Action ProcessedFile;
+
+    }
     public class BNSDat
     {
 
+        public string AES_KEY = "bns_obt_kr_2014#";
 
-        // public class BNSDat
-        // {
+        public byte[] XOR_KEY = new byte[16] { 164, 159, 216, 179, 246, 142, 57, 194, 45, 224, 97, 117, 92, 75, 26, 7 };
 
-        public static string AES_KEY = "bns_obt_kr_2014#";
-
-        public static byte[] XOR_KEY = new byte[16] { 164, 159, 216, 179, 246, 142, 57, 194, 45, 224, 97, 117, 92, 75, 26, 7 };
-
-        private static byte[] Decrypt(byte[] buffer, int size)
+        private byte[] Decrypt(byte[] buffer, int size)
         {
             // AES requires buffer to consist of blocks with 16 bytes (each)
             // expand last block by padding zeros if required...
@@ -68,7 +71,7 @@ namespace BnS_Launcher.BNSDat
             return output;
         }
 
-        private static byte[] Deflate(byte[] buffer, int sizeCompressed, int sizeDecompressed)
+        private byte[] Deflate(byte[] buffer, int sizeCompressed, int sizeDecompressed)
         {
             byte[] tmp = Ionic.Zlib.ZlibStream.UncompressBuffer(buffer);
 
@@ -86,7 +89,7 @@ namespace BnS_Launcher.BNSDat
             return tmp;
         }
 
-        private static byte[] Unpack(byte[] buffer, int sizeStored, int sizeSheared, int sizeUnpacked, bool isEncrypted, bool isCompressed)
+        private byte[] Unpack(byte[] buffer, int sizeStored, int sizeSheared, int sizeUnpacked, bool isEncrypted, bool isCompressed)
         {
             byte[] output = buffer;
 
@@ -117,7 +120,7 @@ namespace BnS_Launcher.BNSDat
             return output;
         }
 
-        private static byte[] Inflate(byte[] buffer, int sizeDecompressed, out int sizeCompressed, int compressionLevel)
+        private byte[] Inflate(byte[] buffer, int sizeDecompressed, out int sizeCompressed, int compressionLevel)
         {
 
             MemoryStream output = new MemoryStream();
@@ -129,7 +132,7 @@ namespace BnS_Launcher.BNSDat
             return output.ToArray();
         }
 
-        private static byte[] Encrypt(byte[] buffer, int size, out int sizePadded)
+        private byte[] Encrypt(byte[] buffer, int size, out int sizePadded)
         {
             int AES_BLOCK_SIZE = AES_KEY.Length;
             sizePadded = size + (AES_BLOCK_SIZE - (size % AES_BLOCK_SIZE));
@@ -146,7 +149,7 @@ namespace BnS_Launcher.BNSDat
             return output;
         }
 
-        private static byte[] Pack(byte[] buffer, int sizeUnpacked, out int sizeSheared, out int sizeStored, bool encrypt, bool compress, int compressionLevel)
+        private byte[] Pack(byte[] buffer, int sizeUnpacked, out int sizeSheared, out int sizeStored, bool encrypt, bool compress, int compressionLevel)
         {
             byte[] output = buffer;
             buffer = null;
@@ -170,7 +173,7 @@ namespace BnS_Launcher.BNSDat
             return output;
         }
 
-        public static void Extract(string FileName, bool is64 = false)
+        public void Extract(string FileName, Action<int, int> processedEvent, bool is64 = false)
         {
 
             FileStream fs = new FileStream(FileName, FileMode.Open);
@@ -221,13 +224,7 @@ namespace BnS_Launcher.BNSDat
                 if (!Directory.Exists((new FileInfo(file_path)).DirectoryName))
                     Directory.CreateDirectory((new FileInfo(file_path)).DirectoryName);
 
-                //Printf(wxT("\rExtracting Files: %i/%i"), (i + 1), FileCount);
-
-
-                //BnsDatTool.LogOutput.AppendText("\rExtracting Files: %i/%i", (i + 1), FileCount);
-                Console.Write("\rExtracting Files: {0}/{1}", (i + 1), FileCount);
-
-                // richTextBox1.AppendText(string.Format("{0}{1}", "Hello", Environment.NewLine));
+                // Console.Write("\rExtracting Files: {0}/{1}", (i + 1), FileCount);
 
                 br.BaseStream.Position = FileTableEntry.FileDataOffset;
                 buffer_packed = br.ReadBytes(FileTableEntry.FileDataSizeStored);
@@ -253,6 +250,7 @@ namespace BnS_Launcher.BNSDat
                     File.WriteAllBytes(file_path, buffer_unpacked);
                     buffer_unpacked = null;
                 }
+                processedEvent((i + 1), FileCount);
             }
             br2.Close();
             ms.Close();
@@ -265,7 +263,7 @@ namespace BnS_Launcher.BNSDat
             Console.Write("\nDone!");
         }
 
-        public static void Compress(string Folder, bool is64 = false, int compression = 9)
+        public void Compress(string Folder, Action<int, int> processedEvent, bool is64 = false, int compression = 9)
         {
             string file_path;
             byte[] buffer_packed;
@@ -305,7 +303,10 @@ namespace BnS_Launcher.BNSDat
                 FileStream fis = new FileStream(files[i], FileMode.Open);
                 MemoryStream tmp = new MemoryStream();
 
-                Console.Write("\rCompressing Files: {0}/{1}", (i + 1), FileCount);
+
+                //stopWatch.Start();
+                //Console.Write("\rCompressing Files: {0}/{1}", (i + 1), FileCount);
+                processedEvent((i + 1), FileCount);
 
                 if (file_path.EndsWith(".xml") || file_path.EndsWith(".x16"))
                 {
@@ -432,7 +433,7 @@ namespace BnS_Launcher.BNSDat
             Console.Write("\nDone!");
         }
 
-        private static void Convert(Stream iStream, BXML_TYPE iType, Stream oStream, BXML_TYPE oType)
+        private void Convert(Stream iStream, BXML_TYPE iType, Stream oStream, BXML_TYPE oType)
         {
             if ((iType == BXML_TYPE.BXML_PLAIN && oType == BXML_TYPE.BXML_BINARY) || (iType == BXML_TYPE.BXML_BINARY && oType == BXML_TYPE.BXML_PLAIN))
             {

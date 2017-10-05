@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <config BnsLauncher="Patcher">
-  <option name="backup-original-file" value="true" />
+  <option name="backup-original-file" value="false" />
   <group name="configdat">
     <option name="use-web-launching" value="true" />
     <option name="disable-clause" value="true" />
     <option name="disable-minimize" value="true" />
-    <option name="use-custom-gcd" value="true" />
+    <option name="use-custom-gcd" value="false" />
     <option name="use-nagle" value="false" />
     <option name="use-nagle-arena" value="false" />
   </group>
   <group name="xmldat">
     <option name="pending-time" value="0.300000" />
     <option name="pending-key-tick-time" value="0.25" />
-    <option name="pressed-key-tick-time" value="0.15" />
+    <option name="pressed-key-tick-time" value="0.25" />
     <option name="ignore-mouse-press-time" value="1.000000" />
-    <option name="skill-global-cool-latency-time" value="200" />
+    <option name="skill-global-cool-latency-time" value="100" />
     <option name="fast-msec" value="100" />
     <option name="mid-msec" value="100" />
     <option name="show-public-zone" value="false" />
@@ -23,6 +23,7 @@
     <option name="show-faction-battle-field-zone" value="false" />
     <option name="show-jackpot-boss-zone" value="false" />
     <option name="show-classic-field-zone" value="false" />
-    <option name="use-optimal-performance-mode-option" value="true" />
+    <option name="use-optimal-performance-mode-option" value="false" />
+    <option name="fix-train-complete-delay-time" value="true" />
   </group>
 </config>

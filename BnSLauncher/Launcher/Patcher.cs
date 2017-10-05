@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.IO;
 using BnS_Launcher.lib;
 using System.Xml;
+using System.Text.RegularExpressions;
 
 namespace BnS_Launcher
 {
@@ -19,6 +20,8 @@ namespace BnS_Launcher
         string ConfigFilePath = "";
         string XmlFileName = "";
         string XmlFilePath = "";
+        string fix1 = @"// 격사 전용 pitch min 값";
+        string fix2 = @"// 격사 전용 pitch max 값";
 
         public BackgroundWorker ebnsdat;
         public BackgroundWorker cbnsdat;
@@ -28,7 +31,7 @@ namespace BnS_Launcher
 
         string strlb_info, str_extract, str_repackerror, str_patching, str_patcherror, str_pathdone, str_repack, str_patchdone, str_compiledat, str_errordat, gcd_string;
 
-        public bool pbrackup, pweb_launcher, pclause, pminize, pgcd, pnagle, pnaglearena, xpublick, xsixman, xfield, xfaction, xjackpot, xclassic, xoptimal;
+        public bool pbrackup, pweb_launcher, pclause, pminize, pgcd, pnagle, pnaglearena, xpublick, xsixman, xfield, xfaction, xjackpot, xclassic, xoptimal, xftcdt;
 
 
         private BslI18NLoader _i18N;
@@ -74,7 +77,7 @@ namespace BnS_Launcher
             cbox_dpsjackpot.Checked = xjackpot;
             cbox_dpsclassic.Checked = xclassic;
             cbox_perfmod.Checked = xoptimal;
-
+            cbox_skdt.Checked = xftcdt;
             // Find and set file paths
             // Check the registry
             switch (sSettings.sRegion)
@@ -87,10 +90,12 @@ namespace BnS_Launcher
                     break;
                 case "EN":
                     cbox_webl.Enabled = false;
+                    cbox_cgcd.Enabled = false;
                     stRegion = "West";
                     break;
                 case "KR":
                     cbox_webl.Enabled = false;
+                    cbox_cgcd.Enabled = false;
                     if (sSettings.sServerType == "Live")
                         stRegion = "Korean";
                     else if (sSettings.sServerType == "Test")
@@ -125,7 +130,7 @@ namespace BnS_Launcher
 
             ConfigOutPath = ConfigFilePath + ".files"; //get full file path and add .files
             XmlOutPath = XmlFilePath + ".files";
-             Console.Write("{0}", DatPath);
+            //Console.Write("{0}", DatPath);
             
         }
 
@@ -136,7 +141,7 @@ namespace BnS_Launcher
 
         void PatcherSettingsManager(string sPfile, bool save = false)
         {
-            string[] returnBool = new string[14];
+            string[] returnBool = new string[15];
             string[] returnValue = new string[4];
 
             XmlDocument xmlDoc = new XmlDocument();
@@ -456,6 +461,21 @@ namespace BnS_Launcher
                             }
                             catch { }
                         }
+
+                        if (xe2.GetAttribute("name") == "fix-train-complete-delay-time")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                {
+                                    if (cbox_skdt.Checked == true) { xe2.SetAttribute("value", "true"); }  //
+                                    else { xe2.SetAttribute("value", "false"); }
+                                }
+                                else
+                                    returnBool[14] = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
                     }
                 }
                 #endregion
@@ -498,6 +518,8 @@ namespace BnS_Launcher
             else { xclassic = true; }
             if (returnBool[13] == "false") { xoptimal = false; }
             else { xoptimal = true; }
+            if (returnBool[14] == "false") { xoptimal = false; }
+            else { xftcdt = true; }
             mReader.Close();
 
             if (save == true)
@@ -577,15 +599,24 @@ namespace BnS_Launcher
             if (PatchConfig == true)
             {
                 Console.Write(str_extract, ConfigFileName);
-                BNSDat.BNSDat.Extract(ConfigFilePath, ConfigFilePath.EndsWith("64.dat"));
+                //BNSDat.BNSDat.Extract(ConfigFilePath, ConfigFilePath.EndsWith("64.dat"));
+
+                new BNSDat.BNSDat().Extract(ConfigFilePath, (number, of) =>
+                {
+                    richOut.Text = "Extracting Files: " + number + "/" + of;
+                }, ConfigFilePath.EndsWith("64.dat"));
             }
 
             if (PatchXml == true)
             {
-                Console.Write(str_errordat, XmlFileName);
-                BNSDat.BNSDat.Extract(XmlFilePath, XmlFilePath.EndsWith("64.dat"));
+                Console.Write(str_extract, XmlFileName);
+                //BNSDat.BNSDat.Extract(XmlFilePath, XmlFilePath.EndsWith("64.dat"));
+                new BNSDat.BNSDat().Extract(XmlFilePath, (number, of) =>
+                {
+                    richOut.Text = "Extracting Files: " + number + "/" + of;
+                }, XmlFilePath.EndsWith("64.dat"));
             }
-            GC.Collect();
+            // GC.Collect();
             XmlWrite();
         }
         public void Compiler(string repackPath)
@@ -606,23 +637,34 @@ namespace BnS_Launcher
             if (PatchConfig == true)
             {
                 Console.Write(str_repack, ConfigFileName);
-                BNSDat.BNSDat.Compress(ConfigOutPath, ConfigOutPath.Contains("64.dat"));
+                //BNSDat.BNSDat.Compress(ConfigOutPath, ConfigOutPath.Contains("64.dat"));
+
+                new BNSDat.BNSDat().Compress(ConfigOutPath, (number, of) =>
+                {
+                    richOut.Text = "Compressing Files: " + number + "/" + of;
+                }, ConfigOutPath.Contains("64.dat"), 9);
             }
 
             if (PatchXml == true)
             {
                 Console.Write(str_repack, XmlFileName);
-                BNSDat.BNSDat.Compress(XmlOutPath, XmlOutPath.Contains("64.dat"));
+               // BNSDat.BNSDat.Compress(XmlOutPath, XmlOutPath.Contains("64.dat"));
+
+                new BNSDat.BNSDat().Compress(XmlOutPath, (number, of) =>
+                {
+                    richOut.Text = "Compressing Files: " + number + "/" + of;
+                }, XmlOutPath.Contains("64.dat"), 9);
             }
 
-            GC.Collect();
+           // GC.Collect();
             MessageBox.Show(str_patchdone, Text);
             gbox_patcher.Enabled = true;
         }
 
         private void btn_start_Click(object sender, EventArgs e)
         {
-            gbox_patcher.Enabled = false;
+
+            //gbox_patcher.Enabled = false;
 
             if (!cbox_cconfig.Checked && !cbox_cxml.Checked)
             {
@@ -633,7 +675,7 @@ namespace BnS_Launcher
             if (cbox_cconfig.Checked == true)
             {
                 PatchConfig = true;
-                if (cbox_back.Checked ==true)
+                if (cbox_back.Checked == true)
                     BackConfig = true;
             }
             else
@@ -653,8 +695,9 @@ namespace BnS_Launcher
                 PatchXml = false;
                 BackXml = false;
             }
-            //Console.Write("Patching: Wait until patch finish!\n");
-            BakcUpManager();
+            ////Console.Write("Patching: Wait until patch finish!\n");
+            //BakcUpManager();
+            XmlWrite();
 
         }
         private void BakcUpManager()
@@ -704,7 +747,7 @@ namespace BnS_Launcher
 
                 File.Copy(DatPath + XmlFileName, CurrBackPath + XmlFileName, true);
             }
-            GC.Collect();
+           // GC.Collect();
             if (PatchConfig == true)
                 Extractor(ConfigFilePath);
 
@@ -713,12 +756,13 @@ namespace BnS_Launcher
         }
        
         void XmlWrite()
-        {            
+        {
             try
             {
                 XmlDocument xmlDoc = new XmlDocument();
                 XmlReaderSettings settings = new XmlReaderSettings();
                 settings.IgnoreComments = true;//  
+
                 if (PatchConfig == true)
                 {
                     Console.Write(str_patching + "system.config2.xml\n");
@@ -814,8 +858,27 @@ namespace BnS_Launcher
                 }
 
                 /*  client.config2.xml */
+                
                 if (PatchXml == true)
                 {
+                    string xComments = "//.*";
+                    if (!string.IsNullOrEmpty(xComments))
+                    {
+                        try
+                        {
+                            string configFile = File.ReadAllText(XmlOutPath + "\\client.config2.xml");
+                            // configFile = configFile.Replace(fix1, "");
+                            //configFile = configFile.Replace(fix2, "");
+                            Regex.Replace(configFile, "//.*", "");
+                            File.WriteAllText(configFile, configFile);
+
+                        }
+                        catch
+                        {
+                            Console.Write(str_patcherror);
+                        }
+                    }
+
                     Console.Write(str_patching + "client.config2.xml\n");
                     XmlReader xreader = XmlReader.Create(XmlOutPath + "\\client.config2.xml", settings);
                     xmlDoc.Load(xreader);
@@ -825,7 +888,28 @@ namespace BnS_Launcher
                     foreach (XmlNode xn in nodeList)// 
                     {
                         XmlElement xe = (XmlElement)xn;//
+                        if (xe.GetAttribute("name") == "skill")// 
+                        {
+                            XmlNodeList nls = xe.ChildNodes;//
+                            foreach (XmlNode xn1 in nls)// 
+                            {
+                                XmlElement xe2 = (XmlElement)xn1;// 
 
+                                if (xe2.GetAttribute("name") == "train-complete-delay-time")// 
+                                {
+                                    try
+                                    {
+                                        if (cbox_skdt.Checked == true) { xe2.SetAttribute("value", "0.500000"); }
+                                        else { xe2.SetAttribute("value", "1.500000"); }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        MessageBox.Show(e.ToString());
+                                    }
+                                }
+                            }
+                        }
+                        
                         if (xe.GetAttribute("name") == "latency")// 
                         {
                             XmlNodeList nls = xe.ChildNodes;//
@@ -944,28 +1028,6 @@ namespace BnS_Launcher
 
                         }//DPS meter
 
-                       // if(cbox_cgcd.Checked == true)
-                        if (xe.GetAttribute("name") == "skill")// 
-                        {
-                            XmlNodeList nls = xe.ChildNodes;//
-                            foreach (XmlNode xn1 in nls)//
-                            {
-                                XmlElement xe2 = (XmlElement)xn1;// 
-
-                                if (xe2.GetAttribute("name") == "skill-global-cool-latency-time")// 
-                                {
-                                    try
-                                    {
-                                        xe2.SetAttribute("value", txb_cgct.Text);
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        MessageBox.Show(e.ToString());
-                                    }
-                                }
-                            }
-                        }// skill
-
                         if (xe.GetAttribute("name") == "option")
                         {
                             XmlNodeList nls = xe.ChildNodes;// 
@@ -1061,7 +1123,7 @@ namespace BnS_Launcher
                 return;
             }
             Console.Write(str_pathdone);
-            compileDat();
+           compileDat();
         }
 
         private void compileDat()

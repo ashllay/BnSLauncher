@@ -73,6 +73,7 @@
             this.btn_start = new System.Windows.Forms.Button();
             this.richOut = new System.Windows.Forms.RichTextBox();
             this.lb_outlog = new System.Windows.Forms.Label();
+            this.cbox_skdt = new System.Windows.Forms.CheckBox();
             this.tabPatcher.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -108,7 +109,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(398, 145);
+            this.tabPage1.Size = new System.Drawing.Size(404, 145);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Config.dat";
             // 
@@ -176,6 +177,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.cbox_skdt);
             this.tabPage2.Controls.Add(this.gbox_mouse);
             this.tabPage2.Controls.Add(this.gbox_input);
             this.tabPage2.Controls.Add(this.gbox_latency);
@@ -531,6 +533,16 @@
             this.lb_outlog.TabIndex = 8;
             this.lb_outlog.Text = "_";
             // 
+            // cbox_skdt
+            // 
+            this.cbox_skdt.AutoSize = true;
+            this.cbox_skdt.Location = new System.Drawing.Point(269, 98);
+            this.cbox_skdt.Name = "cbox_skdt";
+            this.cbox_skdt.Size = new System.Drawing.Size(132, 17);
+            this.cbox_skdt.TabIndex = 28;
+            this.cbox_skdt.Text = "Fix skill train delay time";
+            this.cbox_skdt.UseVisualStyleBackColor = true;
+            // 
             // Patcher
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -616,5 +628,6 @@
         private System.Windows.Forms.CheckBox cbox_dpsclassic;
         private System.Windows.Forms.CheckBox cbox_naglearena;
         private System.Windows.Forms.CheckBox cbox_nagle;
+        private System.Windows.Forms.CheckBox cbox_skdt;
     }
 }

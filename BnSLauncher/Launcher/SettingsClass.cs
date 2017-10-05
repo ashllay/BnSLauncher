@@ -51,8 +51,6 @@ class SettingsClass
         {
             if (sKorPath != null || !string.IsNullOrEmpty(csKorLivePath))
                 KorPath = true;
-            //else
-            //    KorPath = false;
             return KorPath;
         }
         set { KorPath = value; }
