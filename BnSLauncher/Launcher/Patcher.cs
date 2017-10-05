@@ -62,7 +62,7 @@ namespace BnS_Launcher
 
             _writer = new StrWriter(richOut);
             Console.SetOut(_writer);
-            
+
             cbox_back.Checked = pbrackup;
             cbox_webl.Checked = pweb_launcher;
             cbox_clause.Checked = pclause;
@@ -131,12 +131,12 @@ namespace BnS_Launcher
             ConfigOutPath = ConfigFilePath + ".files"; //get full file path and add .files
             XmlOutPath = XmlFilePath + ".files";
             //Console.Write("{0}", DatPath);
-            
+
         }
 
         private void Patcher_FormClosing(object sender, FormClosingEventArgs e)
         {
-            PatcherSettingsManager(Environment.CurrentDirectory + "\\Config\\Patcher.xml",true);
+            PatcherSettingsManager(Environment.CurrentDirectory + "\\Config\\Patcher.xml", true);
         }
 
         void PatcherSettingsManager(string sPfile, bool save = false)
@@ -204,7 +204,7 @@ namespace BnS_Launcher
                                 }
                                 else
                                     returnBool[2] = xe2.GetAttribute("value"); //
-                                }
+                            }
                             catch { }
                         }
 
@@ -218,7 +218,7 @@ namespace BnS_Launcher
                                     else { xe2.SetAttribute("value", "false"); }
                                 }
                                 else
-                                returnBool[3] = xe2.GetAttribute("value"); //
+                                    returnBool[3] = xe2.GetAttribute("value"); //
                             }
                             catch { }
                         }
@@ -233,7 +233,7 @@ namespace BnS_Launcher
                                     else { xe2.SetAttribute("value", "false"); }
                                 }
                                 else
-                                returnBool[4] = xe2.GetAttribute("value"); //
+                                    returnBool[4] = xe2.GetAttribute("value"); //
                             }
                             catch { }
                         }
@@ -248,7 +248,7 @@ namespace BnS_Launcher
                                     else { xe2.SetAttribute("value", "false"); }
                                 }
                                 else
-                                returnBool[5] = xe2.GetAttribute("value"); //
+                                    returnBool[5] = xe2.GetAttribute("value"); //
                             }
                             catch { }
                         }
@@ -263,7 +263,7 @@ namespace BnS_Launcher
                                     else { xe2.SetAttribute("value", "false"); }
                                 }
                                 else
-                                returnBool[6] = xe2.GetAttribute("value"); //
+                                    returnBool[6] = xe2.GetAttribute("value"); //
                             }
                             catch { }
                         }
@@ -283,11 +283,11 @@ namespace BnS_Launcher
                             try
                             {
                                 if (save == true)
-                                
+
                                     xe2.SetAttribute("value", txb_ptime.Text); //
-                                
+
                                 else
-                                txb_ptime.Text = xe2.GetAttribute("value"); //
+                                    txb_ptime.Text = xe2.GetAttribute("value"); //
                             }
                             catch { }
                         }
@@ -299,7 +299,7 @@ namespace BnS_Launcher
                                 if (save == true)
                                     xe2.SetAttribute("value", txb_ptick.Text); //
                                 else
-                                txb_ptick.Text = xe2.GetAttribute("value"); //
+                                    txb_ptick.Text = xe2.GetAttribute("value"); //
                             }
                             catch { }
                         }
@@ -311,7 +311,7 @@ namespace BnS_Launcher
                                 if (save == true)
                                     xe2.SetAttribute("value", txb_presstick.Text); //
                                 else
-                                txb_presstick.Text = xe2.GetAttribute("value"); //
+                                    txb_presstick.Text = xe2.GetAttribute("value"); //
                             }
                             catch { }
                         }
@@ -323,7 +323,7 @@ namespace BnS_Launcher
                                 if (save == true)
                                     xe2.SetAttribute("value", txb_mpresstime.Text); //
                                 else
-                                txb_mpresstime.Text = xe2.GetAttribute("value"); //
+                                    txb_mpresstime.Text = xe2.GetAttribute("value"); //
                             }
                             catch { }
                         }
@@ -334,7 +334,7 @@ namespace BnS_Launcher
                                 if (save == true)
                                     xe2.SetAttribute("value", txb_cgct.Text); //
                                 else
-                                txb_cgct.Text = xe2.GetAttribute("value"); //
+                                    txb_cgct.Text = xe2.GetAttribute("value"); //
                             }
                             catch { }
                         }
@@ -346,7 +346,7 @@ namespace BnS_Launcher
                                 if (save == true)
                                     xe2.SetAttribute("value", txbFastmsec.Text); //
                                 else
-                                txbFastmsec.Text = xe2.GetAttribute("value"); //
+                                    txbFastmsec.Text = xe2.GetAttribute("value"); //
                             }
                             catch { }
                         }
@@ -358,7 +358,7 @@ namespace BnS_Launcher
                                 if (save == true)
                                     xe2.SetAttribute("value", txbMidmsec.Text); //
                                 else
-                                txbMidmsec.Text = xe2.GetAttribute("value"); //
+                                    txbMidmsec.Text = xe2.GetAttribute("value"); //
 
                             }
                             catch { }
@@ -373,7 +373,7 @@ namespace BnS_Launcher
                                     else { xe2.SetAttribute("value", "false"); }
                                 }
                                 else
-                                returnBool[7] = xe2.GetAttribute("value"); //
+                                    returnBool[7] = xe2.GetAttribute("value"); //
                             }
                             catch { }
                         }
@@ -387,7 +387,7 @@ namespace BnS_Launcher
                                     else { xe2.SetAttribute("value", "false"); }
                                 }
                                 else
-                                returnBool[8] = xe2.GetAttribute("value"); //
+                                    returnBool[8] = xe2.GetAttribute("value"); //
                             }
                             catch { }
                         }
@@ -401,7 +401,7 @@ namespace BnS_Launcher
                                     else { xe2.SetAttribute("value", "false"); }
                                 }
                                 else
-                                returnBool[9] = xe2.GetAttribute("value"); //
+                                    returnBool[9] = xe2.GetAttribute("value"); //
                             }
                             catch { }
                         }
@@ -415,7 +415,7 @@ namespace BnS_Launcher
                                     else { xe2.SetAttribute("value", "false"); }
                                 }
                                 else
-                                returnBool[10] = xe2.GetAttribute("value"); //
+                                    returnBool[10] = xe2.GetAttribute("value"); //
                             }
                             catch { }
                         }
@@ -429,7 +429,7 @@ namespace BnS_Launcher
                                     else { xe2.SetAttribute("value", "false"); }
                                 }
                                 else
-                                returnBool[11] = xe2.GetAttribute("value"); //
+                                    returnBool[11] = xe2.GetAttribute("value"); //
                             }
                             catch { }
                         }
@@ -443,7 +443,7 @@ namespace BnS_Launcher
                                     else { xe2.SetAttribute("value", "false"); }
                                 }
                                 else
-                                returnBool[12] = xe2.GetAttribute("value"); //
+                                    returnBool[12] = xe2.GetAttribute("value"); //
                             }
                             catch { }
                         }
@@ -457,7 +457,7 @@ namespace BnS_Launcher
                                     else { xe2.SetAttribute("value", "false"); }
                                 }
                                 else
-                                returnBool[13] = xe2.GetAttribute("value"); //
+                                    returnBool[13] = xe2.GetAttribute("value"); //
                             }
                             catch { }
                         }
@@ -543,7 +543,7 @@ namespace BnS_Launcher
             lb_ptime.Text = _i18N.LoadI18NValue("Patcher", "lb_ptime");
             lb_ptimetick.Text = _i18N.LoadI18NValue("Patcher", "lb_ptimetick");
             lb_time.Text = _i18N.LoadI18NValue("Patcher", "lb_time");
-            
+
             //strings
             strlb_info = _i18N.LoadI18NValue("Patcher", "strlb_info");
             gcd_string = _i18N.LoadI18NValue("Patcher", "gcd_string");
@@ -564,7 +564,7 @@ namespace BnS_Launcher
             gbox_latency.Text = _i18N.LoadI18NValue("Patcher", "gbox_latency");
             gbox_mouse.Text = _i18N.LoadI18NValue("Patcher", "gbox_mouse");
             gbox_msec.Text = _i18N.LoadI18NValue("Patcher", "gbox_msec");
-            
+
             //checkboxes
             cbox_webl.Text = _i18N.LoadI18NValue("Patcher", "cbox_webl");
             cbox_clause.Text = _i18N.LoadI18NValue("Patcher", "cbox_clause");
@@ -648,7 +648,7 @@ namespace BnS_Launcher
             if (PatchXml == true)
             {
                 Console.Write(str_repack, XmlFileName);
-               // BNSDat.BNSDat.Compress(XmlOutPath, XmlOutPath.Contains("64.dat"));
+                // BNSDat.BNSDat.Compress(XmlOutPath, XmlOutPath.Contains("64.dat"));
 
                 new BNSDat.BNSDat().Compress(XmlOutPath, (number, of) =>
                 {
@@ -656,7 +656,7 @@ namespace BnS_Launcher
                 }, XmlOutPath.Contains("64.dat"), 9);
             }
 
-           // GC.Collect();
+            // GC.Collect();
             MessageBox.Show(str_patchdone, Text);
             gbox_patcher.Enabled = true;
         }
@@ -696,8 +696,8 @@ namespace BnS_Launcher
                 BackXml = false;
             }
             ////Console.Write("Patching: Wait until patch finish!\n");
-            //BakcUpManager();
-            XmlWrite();
+            BakcUpManager();
+            // XmlWrite();
 
         }
         private void BakcUpManager()
@@ -747,14 +747,14 @@ namespace BnS_Launcher
 
                 File.Copy(DatPath + XmlFileName, CurrBackPath + XmlFileName, true);
             }
-           // GC.Collect();
+            // GC.Collect();
             if (PatchConfig == true)
                 Extractor(ConfigFilePath);
 
             if (PatchXml == true)
                 Extractor(XmlFilePath);
         }
-       
+
         void XmlWrite()
         {
             try
@@ -858,20 +858,18 @@ namespace BnS_Launcher
                 }
 
                 /*  client.config2.xml */
-                
+
                 if (PatchXml == true)
                 {
-                    string xComments = "//.*";
-                    if (!string.IsNullOrEmpty(xComments))
+
+                    if (!string.IsNullOrEmpty(fix1) && !string.IsNullOrEmpty(fix2))
                     {
                         try
                         {
                             string configFile = File.ReadAllText(XmlOutPath + "\\client.config2.xml");
-                            // configFile = configFile.Replace(fix1, "");
-                            //configFile = configFile.Replace(fix2, "");
-                            Regex.Replace(configFile, "//.*", "");
-                            File.WriteAllText(configFile, configFile);
-
+                            configFile = configFile.Replace(fix1, "");
+                            configFile = configFile.Replace(fix2, "");
+                            File.WriteAllText(XmlOutPath + "\\client.config2.xml", configFile);
                         }
                         catch
                         {
@@ -909,7 +907,7 @@ namespace BnS_Launcher
                                 }
                             }
                         }
-                        
+
                         if (xe.GetAttribute("name") == "latency")// 
                         {
                             XmlNodeList nls = xe.ChildNodes;//
@@ -1123,7 +1121,7 @@ namespace BnS_Launcher
                 return;
             }
             Console.Write(str_pathdone);
-           compileDat();
+            compileDat();
         }
 
         private void compileDat()
