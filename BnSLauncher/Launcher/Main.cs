@@ -207,14 +207,22 @@ namespace BnS_Launcher
             }
 
 
-            if (string.IsNullOrWhiteSpace(SavedPass))
+            if (string.IsNullOrWhiteSpace(SavedMail))
             {
                 cbox_Smail.Checked = false;
             }
             else
             {
-                txb_Mail.Text = Dec(SavedMail);
-                cbox_Smail.Checked = true;
+                try
+                {
+                    txb_Mail.Text = Dec(SavedMail);
+                    cbox_Smail.Checked = true;
+                }
+                catch
+                {
+                    MessageBox.Show("Did you have changed anything on your pc?", "Error");
+                }
+
             }
 
             if (string.IsNullOrWhiteSpace(SavedPass))
@@ -462,8 +470,8 @@ namespace BnS_Launcher
             {
                 if (string.IsNullOrWhiteSpace(txb_Mail.Text))
                 {
-
                     MessageBox.Show(msb_emptymail, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    cbox_Smail.Checked = false;
                 }
                 else
                 {
@@ -481,6 +489,7 @@ namespace BnS_Launcher
                 if (string.IsNullOrWhiteSpace(txb_Pass.Text))
                 {
                     MessageBox.Show(msb_emptypass, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    cbox_Spass.Checked = false;
                 }
                 else
                 {

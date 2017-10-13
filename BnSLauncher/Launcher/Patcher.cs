@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using System.IO;
 using BnS_Launcher.lib;
 using System.Xml;
-using System.Text.RegularExpressions;
+
 
 namespace BnS_Launcher
 {
@@ -31,8 +31,15 @@ namespace BnS_Launcher
 
         string strlb_info, str_extract, str_repackerror, str_patching, str_patcherror, str_pathdone, str_repack, str_patchdone, str_compiledat, str_errordat, gcd_string;
 
-        public bool pbrackup, pweb_launcher, pclause, pminize, pgcd, pnagle, pnaglearena, xpublick, xsixman, xfield, xfaction, xjackpot, xclassic, xoptimal, xftcdt;
+        public bool pbrackup, pweb_launcher, pclause, pminize, pgcd, pnagle, pnaglearena, xpublick, xsixman, xfield, xfaction, xjackpot, xclassic, xoptimal, xftcdt, xcslider;
 
+        private void cbox_slider_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbox_slider.Checked)
+                btn_Slider.Enabled = true;
+            else
+                btn_Slider.Enabled = false;
+        }
 
         private BslI18NLoader _i18N;
 
@@ -78,6 +85,10 @@ namespace BnS_Launcher
             cbox_dpsclassic.Checked = xclassic;
             cbox_perfmod.Checked = xoptimal;
             cbox_skdt.Checked = xftcdt;
+            cbox_slider.Checked = xcslider;
+
+            if (cbox_slider.Checked)
+                btn_Slider.Enabled = true;
             // Find and set file paths
             // Check the registry
             switch (sSettings.sRegion)
@@ -141,7 +152,7 @@ namespace BnS_Launcher
 
         void PatcherSettingsManager(string sPfile, bool save = false)
         {
-            string[] returnBool = new string[15];
+            string[] returnBool = new string[16];
             string[] returnValue = new string[4];
 
             XmlDocument xmlDoc = new XmlDocument();
@@ -476,11 +487,26 @@ namespace BnS_Launcher
                             }
                             catch { }
                         }
+
+                        if (xe2.GetAttribute("name") == "use-custom-slider")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                {
+                                    if (cbox_slider.Checked == true) { xe2.SetAttribute("value", "true"); }  //
+                                    else { xe2.SetAttribute("value", "false"); }
+                                }
+                                else
+                                    returnBool[15] = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
                     }
                 }
                 #endregion
             }//foreach 
-            // public bool pbrackup, pweb_launcher, pclause, pminize, pgcd, pnagle, pnaglearena, xpublick, xsixman, xfield, xfaction, xjackpot, xclassic, xoptimal;
+            // public bool pbrackup, pweb_launcher, pclause, pminize, pgcd, pnagle, pnaglearena, xpublick, xsixman, xfield, xfaction, xjackpot, xclassic, xoptimal, xcslider;
 
             if (returnBool[0] == "false") { pbrackup = false; }
             else { pbrackup = true; }
@@ -518,8 +544,10 @@ namespace BnS_Launcher
             else { xclassic = true; }
             if (returnBool[13] == "false") { xoptimal = false; }
             else { xoptimal = true; }
-            if (returnBool[14] == "false") { xoptimal = false; }
+            if (returnBool[14] == "false") { xftcdt = false; }
             else { xftcdt = true; }
+            if (returnBool[15] == "false") { xcslider = false; }
+            else { xcslider = true; }
             mReader.Close();
 
             if (save == true)
@@ -1121,7 +1149,22 @@ namespace BnS_Launcher
                 return;
             }
             Console.Write(str_pathdone);
-            compileDat();
+            if (!cbox_slider.Checked)
+                compileDat();
+            else
+                Console.Write("Please edit slider vallues to continue patching process!");
+        }
+
+        private void btn_Slider_Click(object sender, EventArgs e)
+        {
+            SliderEditor slidereditor = new SliderEditor();
+            slidereditor.FormClosing += new FormClosingEventHandler(SliderEditor_FormClosing);
+            slidereditor.Show();
+        }
+
+        private void SliderEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //compileDat();
         }
 
         private void compileDat()

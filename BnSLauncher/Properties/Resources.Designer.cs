@@ -91,5 +91,25 @@ namespace BnS_Launcher.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap blade___soul_blade___soul_kim_hyung_tae {
+            get {
+                object obj = ResourceManager.GetObject("blade & soul blade & soul kim hyung tae", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Screenshot_170810_001 {
+            get {
+                object obj = ResourceManager.GetObject("Screenshot_170810_001", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

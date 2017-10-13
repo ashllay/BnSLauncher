@@ -23,7 +23,7 @@
     <option name="show-faction-battle-field-zone" value="false" />
     <option name="show-jackpot-boss-zone" value="false" />
     <option name="show-classic-field-zone" value="false" />
-    <option name="use-optimal-performance-mode-option" value="false" />
+    <option name="use-optimal-performance-mode-option" value="true" />
     <option name="fix-train-complete-delay-time" value="true" />
   </group>
 </config>
