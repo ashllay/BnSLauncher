@@ -1164,7 +1164,10 @@ namespace BnS_Launcher
 
         private void SliderEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //compileDat();
+            if(SliderEditor.xCompile == true)
+            {
+                compileDat();
+            }
         }
 
         private void compileDat()

@@ -16,13 +16,9 @@ namespace BnS_Launcher
         string DatPath = "";
         string XmlFileName = "";
 
-        SettingsClass sSettings = new SettingsClass();
+        public static bool xCompile;
 
-        enum action
-        {
-            READ,
-            WRITE
-        };
+        SettingsClass sSettings = new SettingsClass();
 
         public SliderEditor()
         {
@@ -74,7 +70,7 @@ namespace BnS_Launcher
             }
         }
 
-        void XmlManager(string xFile, string xRace, string xSex, action aType)
+        void XmlManager(string xFile, string xRace, string xSex, bool xWrite)
         {
             /* 1 = Pelvis Width,	2 = Pelvis Thickness
             3 = Waist Thickness,	4 = Waist Length
@@ -107,7 +103,7 @@ namespace BnS_Launcher
                 {
                     try
                     {
-                        if (aType == action.READ)
+                        if (!xWrite)
                         {
                             //max
                             txbPelvisWidMax.Text = xe.GetAttribute("body-custom-max-1");
@@ -230,7 +226,7 @@ namespace BnS_Launcher
 
             creader.Close();
 
-            if (aType == action.WRITE)
+            if (xWrite == true)
             {
                 xmlDoc.Save(xmlFile);
                 ststripLabel.Text = "Xml File Saved!";
@@ -290,7 +286,7 @@ namespace BnS_Launcher
                         break;
 
                 }
-                XmlManager(xmlFile, Race, Sex, action.READ);
+                XmlManager(xmlFile, Race, Sex, false);
                 ststripLabel.Text = Race + Sex;
             }
             else
@@ -299,12 +295,18 @@ namespace BnS_Launcher
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            XmlManager(xmlFile, Race, Sex, action.WRITE);
+            XmlManager(xmlFile, Race, Sex, true);
         }
 
         private void SliderEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            XmlManager(xmlFile, Race, Sex, action.WRITE);
+            XmlManager(xmlFile, Race, Sex, true);
+        }
+
+        private void bntCloseCompile_Click(object sender, EventArgs e)
+        {
+            XmlManager(xmlFile, Race, Sex, true);
+            xCompile = true;
         }
 
         private void btnReset_Click(object sender, EventArgs e)

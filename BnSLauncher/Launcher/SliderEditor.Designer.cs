@@ -127,6 +127,7 @@
             this.ststrip = new System.Windows.Forms.StatusStrip();
             this.btnSave = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.bntCloseCompile = new System.Windows.Forms.Button();
             this.panel3.SuspendLayout();
             this.gboxFrame.SuspendLayout();
             this.gboxLowerBody.SuspendLayout();
@@ -359,9 +360,9 @@
             this.btnReset.BackColor = System.Drawing.Color.Transparent;
             this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReset.ForeColor = System.Drawing.Color.White;
-            this.btnReset.Location = new System.Drawing.Point(339, 446);
+            this.btnReset.Location = new System.Drawing.Point(299, 446);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(100, 60);
+            this.btnReset.Size = new System.Drawing.Size(67, 60);
             this.btnReset.TabIndex = 20;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = false;
@@ -1010,7 +1011,7 @@
             this.btnSave.ForeColor = System.Drawing.Color.White;
             this.btnSave.Location = new System.Drawing.Point(227, 446);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(100, 60);
+            this.btnSave.Size = new System.Drawing.Size(67, 60);
             this.btnSave.TabIndex = 15;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = false;
@@ -1020,6 +1021,7 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.panel1.BackgroundImage = global::BnS_Launcher.Properties.Resources._2x2;
+            this.panel1.Controls.Add(this.bntCloseCompile);
             this.panel1.Controls.Add(this.btnSave);
             this.panel1.Controls.Add(this.btnReset);
             this.panel1.Controls.Add(this.gboxFrame);
@@ -1032,6 +1034,18 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(445, 518);
             this.panel1.TabIndex = 24;
+            // 
+            // bntCloseCompile
+            // 
+            this.bntCloseCompile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bntCloseCompile.ForeColor = System.Drawing.Color.White;
+            this.bntCloseCompile.Location = new System.Drawing.Point(372, 446);
+            this.bntCloseCompile.Name = "bntCloseCompile";
+            this.bntCloseCompile.Size = new System.Drawing.Size(67, 60);
+            this.bntCloseCompile.TabIndex = 23;
+            this.bntCloseCompile.Text = "Close && Compile";
+            this.bntCloseCompile.UseVisualStyleBackColor = true;
+            this.bntCloseCompile.Click += new System.EventHandler(this.bntCloseCompile_Click);
             // 
             // SliderEditor
             // 
@@ -1168,5 +1182,6 @@
         private System.Windows.Forms.StatusStrip ststrip;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button bntCloseCompile;
     }
 }
