@@ -99,7 +99,6 @@
             // box_Login
             // 
             this.box_Login.BackColor = System.Drawing.Color.Transparent;
-            this.box_Login.BackgroundImage = global::BnS_Launcher.Properties.Resources._2x2;
             this.box_Login.Controls.Add(this.lb_loginsts);
             this.box_Login.Controls.Add(this.cbox_Spass);
             this.box_Login.Controls.Add(this.cbox_Smail);

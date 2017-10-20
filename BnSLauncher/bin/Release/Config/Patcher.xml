@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <config BnsLauncher="Patcher">
-  <option name="backup-original-file" value="false" />
+  <option name="backup-original-file" value="true" />
   <group name="configdat">
     <option name="use-web-launching" value="true" />
     <option name="disable-clause" value="true" />
@@ -25,5 +25,7 @@
     <option name="show-classic-field-zone" value="false" />
     <option name="use-optimal-performance-mode-option" value="true" />
     <option name="fix-train-complete-delay-time" value="true" />
+    <option name="use-custom-slider-file" value="false" />
+    <option name="xml-slider-file" value="D:\bns\Tools\BnSLauncher\BnSLauncher\bin\Release\test.xml" />
   </group>
 </config>

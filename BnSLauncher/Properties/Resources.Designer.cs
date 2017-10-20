@@ -65,7 +65,7 @@ namespace BnS_Launcher.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap _2x2 {
             get {
-                object obj = ResourceManager.GetObject("_2x2", resourceCulture);
+                object obj = ResourceManager.GetObject("2x2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -95,19 +95,9 @@ namespace BnS_Launcher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap blade___soul_blade___soul_kim_hyung_tae {
+        internal static System.Drawing.Bitmap blade___soul_blade___soul_kim_hyung_tae1 {
             get {
-                object obj = ResourceManager.GetObject("blade & soul blade & soul kim hyung tae", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Screenshot_170810_001 {
-            get {
-                object obj = ResourceManager.GetObject("Screenshot_170810_001", resourceCulture);
+                object obj = ResourceManager.GetObject("blade & soul blade & soul kim hyung tae1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

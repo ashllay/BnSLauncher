@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SliderEditor));
             this.label28 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.txbHeadWidMax = new System.Windows.Forms.TextBox();
@@ -127,6 +126,7 @@
             this.ststrip = new System.Windows.Forms.StatusStrip();
             this.btnSave = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btsSaveas = new System.Windows.Forms.Button();
             this.bntCloseCompile = new System.Windows.Forms.Button();
             this.panel3.SuspendLayout();
             this.gboxFrame.SuspendLayout();
@@ -360,9 +360,9 @@
             this.btnReset.BackColor = System.Drawing.Color.Transparent;
             this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReset.ForeColor = System.Drawing.Color.White;
-            this.btnReset.Location = new System.Drawing.Point(299, 446);
+            this.btnReset.Location = new System.Drawing.Point(313, 446);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(67, 60);
+            this.btnReset.Size = new System.Drawing.Size(60, 69);
             this.btnReset.TabIndex = 20;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = false;
@@ -467,6 +467,7 @@
             // 
             // ststripLabel
             // 
+            this.ststripLabel.ForeColor = System.Drawing.Color.White;
             this.ststripLabel.Name = "ststripLabel";
             this.ststripLabel.Size = new System.Drawing.Size(0, 17);
             // 
@@ -1011,7 +1012,7 @@
             this.btnSave.ForeColor = System.Drawing.Color.White;
             this.btnSave.Location = new System.Drawing.Point(227, 446);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(67, 60);
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 15;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = false;
@@ -1021,6 +1022,7 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.panel1.BackgroundImage = global::BnS_Launcher.Properties.Resources._2x2;
+            this.panel1.Controls.Add(this.btsSaveas);
             this.panel1.Controls.Add(this.bntCloseCompile);
             this.panel1.Controls.Add(this.btnSave);
             this.panel1.Controls.Add(this.btnReset);
@@ -1030,18 +1032,29 @@
             this.panel1.Controls.Add(this.gboxChest);
             this.panel1.Controls.Add(this.gboxUpperBody);
             this.panel1.ForeColor = System.Drawing.Color.White;
-            this.panel1.Location = new System.Drawing.Point(6, 6);
+            this.panel1.Location = new System.Drawing.Point(6, 5);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(445, 518);
             this.panel1.TabIndex = 24;
+            // 
+            // btsSaveas
+            // 
+            this.btsSaveas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btsSaveas.Location = new System.Drawing.Point(227, 475);
+            this.btsSaveas.Name = "btsSaveas";
+            this.btsSaveas.Size = new System.Drawing.Size(75, 40);
+            this.btsSaveas.TabIndex = 24;
+            this.btsSaveas.Text = "Save && Export";
+            this.btsSaveas.UseVisualStyleBackColor = true;
+            this.btsSaveas.Click += new System.EventHandler(this.btsSaveas_Click);
             // 
             // bntCloseCompile
             // 
             this.bntCloseCompile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bntCloseCompile.ForeColor = System.Drawing.Color.White;
-            this.bntCloseCompile.Location = new System.Drawing.Point(372, 446);
+            this.bntCloseCompile.Location = new System.Drawing.Point(379, 446);
             this.bntCloseCompile.Name = "bntCloseCompile";
-            this.bntCloseCompile.Size = new System.Drawing.Size(67, 60);
+            this.bntCloseCompile.Size = new System.Drawing.Size(60, 69);
             this.bntCloseCompile.TabIndex = 23;
             this.bntCloseCompile.Text = "Close && Compile";
             this.bntCloseCompile.UseVisualStyleBackColor = true;
@@ -1052,7 +1065,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImage = global::BnS_Launcher.Properties.Resources.blade___soul_blade___soul_kim_hyung_tae1;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(457, 549);
             this.Controls.Add(this.ststrip);
@@ -1062,7 +1075,6 @@
             this.MaximizeBox = false;
             this.Name = "SliderEditor";
             this.Text = "SliderEditor";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SliderEditor_FormClosing);
             this.Load += new System.EventHandler(this.SliderEditor_Load);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
@@ -1183,5 +1195,6 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button bntCloseCompile;
+        private System.Windows.Forms.Button btsSaveas;
     }
 }

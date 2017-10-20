@@ -86,7 +86,7 @@
 		"cbox_dpssix": "6-Man",
 		"cbox_perfmod": "Enable performace mode",
 		"strlb_info": "Detected Region: {0} and Architecture: {1} in Settings.",
-		"gcd_string": "Set GCD value on Xml.dat tab!!\n",
+		"gcd_string": "Auto GCD disabled default GCD is 100!\n",
 		"str_extract": "Extracting: {0}\n",
 		"str_repackerror": "Please select a file to repack!",
 		"str_patching": "\r\nPatching ",

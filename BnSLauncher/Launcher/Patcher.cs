@@ -29,9 +29,23 @@ namespace BnS_Launcher
 
         SettingsClass sSettings = new SettingsClass();
 
-        string strlb_info, str_extract, str_repackerror, str_patching, str_patcherror, str_pathdone, str_repack, str_patchdone, str_compiledat, str_errordat, gcd_string;
+        string strlb_info, str_extract, str_repackerror, str_patching, str_patcherror, str_pathdone, str_repack, str_patchdone, str_compiledat, str_errordat, gcd_string, pXsliderFile, pXsliderfilename;
 
-        public bool pbrackup, pweb_launcher, pclause, pminize, pgcd, pnagle, pnaglearena, xpublick, xsixman, xfield, xfaction, xjackpot, xclassic, xoptimal, xftcdt, xcslider;
+        public bool pbrackup, pweb_launcher, pclause, pminize, pgcd, pnagle, pnaglearena, xpublick, xsixman, xfield, xfaction, xjackpot, xclassic, xoptimal, xftcdt, xcslider, xusesavedslider;
+
+        private void btnSliderSearch_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog xSliderFile = new OpenFileDialog();
+            xSliderFile.Filter = "All Files (*.*)|*.*";
+            xSliderFile.FilterIndex = 1;
+            xSliderFile.Multiselect = false;
+
+            if (xSliderFile.ShowDialog() == DialogResult.OK)
+            {
+                pXsliderFile = xSliderFile.FileName;
+                cbox_UseSavedSlider.Checked = true;
+            }
+        }
 
         private void cbox_slider_CheckedChanged(object sender, EventArgs e)
         {
@@ -86,9 +100,10 @@ namespace BnS_Launcher
             cbox_perfmod.Checked = xoptimal;
             cbox_skdt.Checked = xftcdt;
             cbox_slider.Checked = xcslider;
-
+            cbox_UseSavedSlider.Checked = xusesavedslider;
             if (cbox_slider.Checked)
                 btn_Slider.Enabled = true;
+
             // Find and set file paths
             // Check the registry
             switch (sSettings.sRegion)
@@ -141,8 +156,15 @@ namespace BnS_Launcher
 
             ConfigOutPath = ConfigFilePath + ".files"; //get full file path and add .files
             XmlOutPath = XmlFilePath + ".files";
-            //Console.Write("{0}", DatPath);
 
+            pXsliderfilename = XmlOutPath + @"\engine\characterdefvaluedata.xml";
+            //Console.Write("{0}", pXsliderfilename);
+
+            if (!File.Exists(pXsliderfilename))
+            {
+                btn_Slider.Enabled = false;
+                cbox_UseSavedSlider.Checked = false;
+            }
         }
 
         private void Patcher_FormClosing(object sender, FormClosingEventArgs e)
@@ -152,7 +174,7 @@ namespace BnS_Launcher
 
         void PatcherSettingsManager(string sPfile, bool save = false)
         {
-            string[] returnBool = new string[16];
+            string[] returnBool = new string[17];
             string[] returnValue = new string[4];
 
             XmlDocument xmlDoc = new XmlDocument();
@@ -294,9 +316,7 @@ namespace BnS_Launcher
                             try
                             {
                                 if (save == true)
-
                                     xe2.SetAttribute("value", txb_ptime.Text); //
-
                                 else
                                     txb_ptime.Text = xe2.GetAttribute("value"); //
                             }
@@ -335,17 +355,6 @@ namespace BnS_Launcher
                                     xe2.SetAttribute("value", txb_mpresstime.Text); //
                                 else
                                     txb_mpresstime.Text = xe2.GetAttribute("value"); //
-                            }
-                            catch { }
-                        }
-                        if (xe2.GetAttribute("name") == "skill-global-cool-latency-time")// 
-                        {
-                            try
-                            {
-                                if (save == true)
-                                    xe2.SetAttribute("value", txb_cgct.Text); //
-                                else
-                                    txb_cgct.Text = xe2.GetAttribute("value"); //
                             }
                             catch { }
                         }
@@ -502,6 +511,33 @@ namespace BnS_Launcher
                             }
                             catch { }
                         }
+
+                        if (xe2.GetAttribute("name") == "use-custom-slider-file")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                {
+                                    if (cbox_UseSavedSlider.Checked == true) { xe2.SetAttribute("value", "true"); }  //
+                                    else { xe2.SetAttribute("value", "false"); }
+                                }
+                                else
+                                    returnBool[16] = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
+
+                        if (xe2.GetAttribute("name") == "xml-slider-file")// 
+                        {
+                            try
+                            {
+                                if (save == true)
+                                    xe2.SetAttribute("value", pXsliderFile); //
+                                else
+                                    pXsliderFile = xe2.GetAttribute("value"); //
+                            }
+                            catch { }
+                        }
                     }
                 }
                 #endregion
@@ -529,7 +565,6 @@ namespace BnS_Launcher
             else { pnagle = true; }
             if (returnBool[6] == "false") { pnaglearena = false; }
             else { pnaglearena = true; }
-
             if (returnBool[7] == "false") { xpublick = false; }
             else { xpublick = true; }
             if (returnBool[8] == "false") { xsixman = false; }
@@ -548,6 +583,9 @@ namespace BnS_Launcher
             else { xftcdt = true; }
             if (returnBool[15] == "false") { xcslider = false; }
             else { xcslider = true; }
+            if (returnBool[16] == "false") { xusesavedslider = false; }
+            else { xusesavedslider = true; }
+            
             mReader.Close();
 
             if (save == true)
@@ -570,7 +608,6 @@ namespace BnS_Launcher
             lb_presstick.Text = _i18N.LoadI18NValue("Patcher", "lb_presstick");
             lb_ptime.Text = _i18N.LoadI18NValue("Patcher", "lb_ptime");
             lb_ptimetick.Text = _i18N.LoadI18NValue("Patcher", "lb_ptimetick");
-            lb_time.Text = _i18N.LoadI18NValue("Patcher", "lb_time");
 
             //strings
             strlb_info = _i18N.LoadI18NValue("Patcher", "strlb_info");
@@ -589,7 +626,6 @@ namespace BnS_Launcher
             gbox_repackf.Text = _i18N.LoadI18NValue("Patcher", "gbox_repackf");
             gbox_dps.Text = _i18N.LoadI18NValue("Patcher", "gbox_dps");
             gbox_input.Text = _i18N.LoadI18NValue("Patcher", "gbox_input");
-            gbox_latency.Text = _i18N.LoadI18NValue("Patcher", "gbox_latency");
             gbox_mouse.Text = _i18N.LoadI18NValue("Patcher", "gbox_mouse");
             gbox_msec.Text = _i18N.LoadI18NValue("Patcher", "gbox_msec");
 
@@ -691,8 +727,7 @@ namespace BnS_Launcher
 
         private void btn_start_Click(object sender, EventArgs e)
         {
-
-            //gbox_patcher.Enabled = false;
+            gbox_patcher.Enabled = false;
 
             if (!cbox_cconfig.Checked && !cbox_cxml.Checked)
             {
@@ -776,11 +811,15 @@ namespace BnS_Launcher
                 File.Copy(DatPath + XmlFileName, CurrBackPath + XmlFileName, true);
             }
             // GC.Collect();
-            if (PatchConfig == true)
-                Extractor(ConfigFilePath);
-
-            if (PatchXml == true)
-                Extractor(XmlFilePath);
+            if (cbox_onlyrepack.Checked == true)
+                XmlWrite();
+            else
+            {
+                if (PatchConfig == true)
+                    Extractor(ConfigFilePath);
+                if (PatchXml == true)
+                    Extractor(XmlFilePath);
+            }
         }
 
         void XmlWrite()
@@ -1149,10 +1188,26 @@ namespace BnS_Launcher
                 return;
             }
             Console.Write(str_pathdone);
-            if (!cbox_slider.Checked)
-                compileDat();
+
+            if (PatchXml == true)
+            {
+                if (cbox_slider.Checked)
+                {
+                    if (cbox_UseSavedSlider.Checked)
+                    {
+                        if (File.Exists(pXsliderFile))
+                            File.Copy(pXsliderFile, pXsliderfilename, true);
+                        compileDat();
+                    }
+                    else
+                        Console.Write("Please edit slider values to continue patching process!");
+                }
+                else
+                    compileDat();
+            }
             else
-                Console.Write("Please edit slider vallues to continue patching process!");
+                compileDat();
+
         }
 
         private void btn_Slider_Click(object sender, EventArgs e)
@@ -1164,7 +1219,10 @@ namespace BnS_Launcher
 
         private void SliderEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(SliderEditor.xCompile == true)
+            if(!string.IsNullOrEmpty(SliderEditor.xExportedslider))
+                pXsliderFile = SliderEditor.xExportedslider;
+
+            if (SliderEditor.xCompile == true)
             {
                 compileDat();
             }

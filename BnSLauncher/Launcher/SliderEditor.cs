@@ -17,9 +17,10 @@ namespace BnS_Launcher
         string XmlFileName = "";
 
         public static bool xCompile;
+        public static string xExportedslider;
 
         SettingsClass sSettings = new SettingsClass();
-
+        SaveFileDialog xExportSlider = new SaveFileDialog();
         public SliderEditor()
         {
             InitializeComponent();
@@ -70,7 +71,7 @@ namespace BnS_Launcher
             }
         }
 
-        void XmlManager(string xFile, string xRace, string xSex, bool xWrite)
+        void XmlManager(string xFile, string xRace, string xSex, bool xWrite, bool xExport)
         {
             /* 1 = Pelvis Width,	2 = Pelvis Thickness
             3 = Waist Thickness,	4 = Waist Length
@@ -228,7 +229,27 @@ namespace BnS_Launcher
 
             if (xWrite == true)
             {
-                xmlDoc.Save(xmlFile);
+                if (xExport)
+                {
+                    xExportSlider.InitialDirectory = @"C:\";
+                    xExportSlider.Title = "Save xml Files";
+                    xExportSlider.CheckPathExists = true;
+                    xExportSlider.DefaultExt = "xml";
+                    xExportSlider.Filter = "Xml files (*.xml)|*.xml";
+                    xExportSlider.FilterIndex = 2;
+                    xExportSlider.RestoreDirectory = true;
+
+                    if (xExportSlider.ShowDialog() == DialogResult.OK)
+                    {
+                        xExportedslider = xExportSlider.FileName;
+                        xmlDoc.Save(xmlFile);
+                        xmlDoc.Save(xExportedslider);
+                    }
+                }
+                else
+                {
+                    xmlDoc.Save(xmlFile);
+                }
                 ststripLabel.Text = "Xml File Saved!";
             }
         }
@@ -286,7 +307,7 @@ namespace BnS_Launcher
                         break;
 
                 }
-                XmlManager(xmlFile, Race, Sex, false);
+                XmlManager(xmlFile, Race, Sex, false, false);
                 ststripLabel.Text = Race + Sex;
             }
             else
@@ -295,18 +316,19 @@ namespace BnS_Launcher
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            XmlManager(xmlFile, Race, Sex, true);
-        }
-
-        private void SliderEditor_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            XmlManager(xmlFile, Race, Sex, true);
+            XmlManager(xmlFile, Race, Sex, true, false);
         }
 
         private void bntCloseCompile_Click(object sender, EventArgs e)
         {
-            XmlManager(xmlFile, Race, Sex, true);
+            XmlManager(xmlFile, Race, Sex, true, false);
             xCompile = true;
+            Close();
+        }
+
+        private void btsSaveas_Click(object sender, EventArgs e)
+        {
+            XmlManager(xmlFile, Race, Sex, true, true);
         }
 
         private void btnReset_Click(object sender, EventArgs e)

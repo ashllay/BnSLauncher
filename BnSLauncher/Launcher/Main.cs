@@ -413,7 +413,7 @@ namespace BnS_Launcher
                     box_Login.Visible = false;
                     btn_play.Enabled = true;
                 }
-                if (string.IsNullOrWhiteSpace(SavedPass))
+                if (string.IsNullOrWhiteSpace(SavedMail))
                 {
                     cbox_Smail.Checked = false;
                 }

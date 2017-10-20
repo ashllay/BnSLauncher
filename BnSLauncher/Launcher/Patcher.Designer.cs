@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Patcher));
             this.tabPatcher = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.cbox_onlyrepack = new System.Windows.Forms.CheckBox();
             this.cbox_naglearena = new System.Windows.Forms.CheckBox();
             this.cbox_nagle = new System.Windows.Forms.CheckBox();
             this.cbox_webl = new System.Windows.Forms.CheckBox();
@@ -38,12 +39,12 @@
             this.cbox_cgcd = new System.Windows.Forms.CheckBox();
             this.cbox_minimize = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.btn_Slider = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cbox_slider = new System.Windows.Forms.CheckBox();
+            this.btn_Slider = new System.Windows.Forms.Button();
+            this.btnSliderSearch = new System.Windows.Forms.Button();
+            this.cbox_UseSavedSlider = new System.Windows.Forms.CheckBox();
             this.cbox_skdt = new System.Windows.Forms.CheckBox();
-            this.gbox_mouse = new System.Windows.Forms.GroupBox();
-            this.lb_mpresstime = new System.Windows.Forms.Label();
-            this.txb_mpresstime = new System.Windows.Forms.TextBox();
             this.gbox_input = new System.Windows.Forms.GroupBox();
             this.txb_presstick = new System.Windows.Forms.TextBox();
             this.txb_ptick = new System.Windows.Forms.TextBox();
@@ -51,9 +52,9 @@
             this.lb_presstick = new System.Windows.Forms.Label();
             this.lb_ptimetick = new System.Windows.Forms.Label();
             this.lb_ptime = new System.Windows.Forms.Label();
-            this.gbox_latency = new System.Windows.Forms.GroupBox();
-            this.txb_cgct = new System.Windows.Forms.TextBox();
-            this.lb_time = new System.Windows.Forms.Label();
+            this.gbox_mouse = new System.Windows.Forms.GroupBox();
+            this.lb_mpresstime = new System.Windows.Forms.Label();
+            this.txb_mpresstime = new System.Windows.Forms.TextBox();
             this.gbox_dps = new System.Windows.Forms.GroupBox();
             this.cbox_dpsjackpot = new System.Windows.Forms.CheckBox();
             this.cbox_dpsclassic = new System.Windows.Forms.CheckBox();
@@ -79,9 +80,9 @@
             this.tabPatcher.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.gbox_mouse.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.gbox_input.SuspendLayout();
-            this.gbox_latency.SuspendLayout();
+            this.gbox_mouse.SuspendLayout();
             this.gbox_dps.SuspendLayout();
             this.gbox_msec.SuspendLayout();
             this.gbox_patcher.SuspendLayout();
@@ -90,12 +91,14 @@
             // 
             // tabPatcher
             // 
+            this.tabPatcher.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabPatcher.Controls.Add(this.tabPage1);
             this.tabPatcher.Controls.Add(this.tabPage2);
             this.tabPatcher.Location = new System.Drawing.Point(9, 36);
             this.tabPatcher.Name = "tabPatcher";
             this.tabPatcher.SelectedIndex = 0;
-            this.tabPatcher.Size = new System.Drawing.Size(412, 203);
+            this.tabPatcher.Size = new System.Drawing.Size(447, 186);
             this.tabPatcher.TabIndex = 24;
             // 
             // tabPage1
@@ -111,9 +114,19 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(404, 177);
+            this.tabPage1.Size = new System.Drawing.Size(439, 160);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Config.dat";
+            // 
+            // cbox_onlyrepack
+            // 
+            this.cbox_onlyrepack.AutoSize = true;
+            this.cbox_onlyrepack.Location = new System.Drawing.Point(269, 15);
+            this.cbox_onlyrepack.Name = "cbox_onlyrepack";
+            this.cbox_onlyrepack.Size = new System.Drawing.Size(86, 17);
+            this.cbox_onlyrepack.TabIndex = 10;
+            this.cbox_onlyrepack.Text = "Repack only";
+            this.cbox_onlyrepack.UseVisualStyleBackColor = true;
             // 
             // cbox_naglearena
             // 
@@ -179,79 +192,84 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.btn_Slider);
-            this.tabPage2.Controls.Add(this.cbox_slider);
+            this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Controls.Add(this.cbox_skdt);
-            this.tabPage2.Controls.Add(this.gbox_mouse);
             this.tabPage2.Controls.Add(this.gbox_input);
-            this.tabPage2.Controls.Add(this.gbox_latency);
+            this.tabPage2.Controls.Add(this.gbox_mouse);
             this.tabPage2.Controls.Add(this.gbox_dps);
             this.tabPage2.Controls.Add(this.gbox_msec);
             this.tabPage2.Controls.Add(this.cbox_perfmod);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(404, 177);
+            this.tabPage2.Size = new System.Drawing.Size(439, 160);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Xml.dat";
             // 
-            // btn_Slider
+            // groupBox1
             // 
-            this.btn_Slider.Enabled = false;
-            this.btn_Slider.Location = new System.Drawing.Point(166, 148);
-            this.btn_Slider.Name = "btn_Slider";
-            this.btn_Slider.Size = new System.Drawing.Size(75, 23);
-            this.btn_Slider.TabIndex = 30;
-            this.btn_Slider.Text = "Slider Editor";
-            this.btn_Slider.UseVisualStyleBackColor = true;
-            this.btn_Slider.Click += new System.EventHandler(this.btn_Slider_Click);
+            this.groupBox1.Controls.Add(this.cbox_slider);
+            this.groupBox1.Controls.Add(this.btn_Slider);
+            this.groupBox1.Controls.Add(this.btnSliderSearch);
+            this.groupBox1.Controls.Add(this.cbox_UseSavedSlider);
+            this.groupBox1.Location = new System.Drawing.Point(167, 91);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(266, 41);
+            this.groupBox1.TabIndex = 33;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Custom Slider";
             // 
             // cbox_slider
             // 
             this.cbox_slider.AutoSize = true;
-            this.cbox_slider.Location = new System.Drawing.Point(6, 152);
+            this.cbox_slider.Location = new System.Drawing.Point(5, 16);
             this.cbox_slider.Name = "cbox_slider";
-            this.cbox_slider.Size = new System.Drawing.Size(90, 17);
+            this.cbox_slider.Size = new System.Drawing.Size(65, 17);
             this.cbox_slider.TabIndex = 29;
-            this.cbox_slider.Text = "Custom Slider";
+            this.cbox_slider.Text = "Enabled";
             this.cbox_slider.UseVisualStyleBackColor = true;
             this.cbox_slider.CheckedChanged += new System.EventHandler(this.cbox_slider_CheckedChanged);
+            // 
+            // btn_Slider
+            // 
+            this.btn_Slider.Enabled = false;
+            this.btn_Slider.Location = new System.Drawing.Point(208, 11);
+            this.btn_Slider.Name = "btn_Slider";
+            this.btn_Slider.Size = new System.Drawing.Size(52, 23);
+            this.btn_Slider.TabIndex = 30;
+            this.btn_Slider.Text = "Editor";
+            this.btn_Slider.UseVisualStyleBackColor = true;
+            this.btn_Slider.Click += new System.EventHandler(this.btn_Slider_Click);
+            // 
+            // btnSliderSearch
+            // 
+            this.btnSliderSearch.Location = new System.Drawing.Point(149, 11);
+            this.btnSliderSearch.Name = "btnSliderSearch";
+            this.btnSliderSearch.Size = new System.Drawing.Size(53, 23);
+            this.btnSliderSearch.TabIndex = 31;
+            this.btnSliderSearch.Text = "Search";
+            this.btnSliderSearch.UseVisualStyleBackColor = true;
+            this.btnSliderSearch.Click += new System.EventHandler(this.btnSliderSearch_Click);
+            // 
+            // cbox_UseSavedSlider
+            // 
+            this.cbox_UseSavedSlider.AutoSize = true;
+            this.cbox_UseSavedSlider.Location = new System.Drawing.Point(73, 16);
+            this.cbox_UseSavedSlider.Name = "cbox_UseSavedSlider";
+            this.cbox_UseSavedSlider.Size = new System.Drawing.Size(77, 17);
+            this.cbox_UseSavedSlider.TabIndex = 32;
+            this.cbox_UseSavedSlider.Text = "Use saved";
+            this.cbox_UseSavedSlider.UseVisualStyleBackColor = true;
             // 
             // cbox_skdt
             // 
             this.cbox_skdt.AutoSize = true;
-            this.cbox_skdt.Location = new System.Drawing.Point(269, 98);
+            this.cbox_skdt.Location = new System.Drawing.Point(6, 137);
             this.cbox_skdt.Name = "cbox_skdt";
             this.cbox_skdt.Size = new System.Drawing.Size(132, 17);
             this.cbox_skdt.TabIndex = 28;
             this.cbox_skdt.Text = "Fix skill train delay time";
             this.cbox_skdt.UseVisualStyleBackColor = true;
-            // 
-            // gbox_mouse
-            // 
-            this.gbox_mouse.Controls.Add(this.lb_mpresstime);
-            this.gbox_mouse.Controls.Add(this.txb_mpresstime);
-            this.gbox_mouse.Location = new System.Drawing.Point(6, 98);
-            this.gbox_mouse.Name = "gbox_mouse";
-            this.gbox_mouse.Size = new System.Drawing.Size(155, 41);
-            this.gbox_mouse.TabIndex = 7;
-            this.gbox_mouse.TabStop = false;
-            // 
-            // lb_mpresstime
-            // 
-            this.lb_mpresstime.AutoSize = true;
-            this.lb_mpresstime.Location = new System.Drawing.Point(5, 16);
-            this.lb_mpresstime.Name = "lb_mpresstime";
-            this.lb_mpresstime.Size = new System.Drawing.Size(13, 13);
-            this.lb_mpresstime.TabIndex = 7;
-            this.lb_mpresstime.Text = "_";
-            // 
-            // txb_mpresstime
-            // 
-            this.txb_mpresstime.Location = new System.Drawing.Point(98, 13);
-            this.txb_mpresstime.Name = "txb_mpresstime";
-            this.txb_mpresstime.Size = new System.Drawing.Size(51, 20);
-            this.txb_mpresstime.TabIndex = 8;
             // 
             // gbox_input
             // 
@@ -263,7 +281,7 @@
             this.gbox_input.Controls.Add(this.lb_ptime);
             this.gbox_input.Location = new System.Drawing.Point(6, 6);
             this.gbox_input.Name = "gbox_input";
-            this.gbox_input.Size = new System.Drawing.Size(155, 87);
+            this.gbox_input.Size = new System.Drawing.Size(155, 83);
             this.gbox_input.TabIndex = 27;
             this.gbox_input.TabStop = false;
             // 
@@ -315,31 +333,31 @@
             this.lb_ptime.TabIndex = 0;
             this.lb_ptime.Text = "_";
             // 
-            // gbox_latency
+            // gbox_mouse
             // 
-            this.gbox_latency.Controls.Add(this.txb_cgct);
-            this.gbox_latency.Controls.Add(this.lb_time);
-            this.gbox_latency.Location = new System.Drawing.Point(166, 6);
-            this.gbox_latency.Name = "gbox_latency";
-            this.gbox_latency.Size = new System.Drawing.Size(91, 40);
-            this.gbox_latency.TabIndex = 26;
-            this.gbox_latency.TabStop = false;
+            this.gbox_mouse.Controls.Add(this.lb_mpresstime);
+            this.gbox_mouse.Controls.Add(this.txb_mpresstime);
+            this.gbox_mouse.Location = new System.Drawing.Point(6, 91);
+            this.gbox_mouse.Name = "gbox_mouse";
+            this.gbox_mouse.Size = new System.Drawing.Size(155, 41);
+            this.gbox_mouse.TabIndex = 7;
+            this.gbox_mouse.TabStop = false;
             // 
-            // txb_cgct
+            // lb_mpresstime
             // 
-            this.txb_cgct.Location = new System.Drawing.Point(39, 13);
-            this.txb_cgct.Name = "txb_cgct";
-            this.txb_cgct.Size = new System.Drawing.Size(44, 20);
-            this.txb_cgct.TabIndex = 2;
+            this.lb_mpresstime.AutoSize = true;
+            this.lb_mpresstime.Location = new System.Drawing.Point(5, 16);
+            this.lb_mpresstime.Name = "lb_mpresstime";
+            this.lb_mpresstime.Size = new System.Drawing.Size(13, 13);
+            this.lb_mpresstime.TabIndex = 7;
+            this.lb_mpresstime.Text = "_";
             // 
-            // lb_time
+            // txb_mpresstime
             // 
-            this.lb_time.AutoSize = true;
-            this.lb_time.Location = new System.Drawing.Point(6, 16);
-            this.lb_time.Name = "lb_time";
-            this.lb_time.Size = new System.Drawing.Size(13, 13);
-            this.lb_time.TabIndex = 1;
-            this.lb_time.Text = "_";
+            this.txb_mpresstime.Location = new System.Drawing.Point(98, 13);
+            this.txb_mpresstime.Name = "txb_mpresstime";
+            this.txb_mpresstime.Size = new System.Drawing.Size(51, 20);
+            this.txb_mpresstime.TabIndex = 8;
             // 
             // gbox_dps
             // 
@@ -349,9 +367,9 @@
             this.gbox_dps.Controls.Add(this.cbox_dpsfield);
             this.gbox_dps.Controls.Add(this.cbox_dpspub);
             this.gbox_dps.Controls.Add(this.cbox_dpssix);
-            this.gbox_dps.Location = new System.Drawing.Point(263, 6);
+            this.gbox_dps.Location = new System.Drawing.Point(264, 6);
             this.gbox_dps.Name = "gbox_dps";
-            this.gbox_dps.Size = new System.Drawing.Size(135, 87);
+            this.gbox_dps.Size = new System.Drawing.Size(135, 83);
             this.gbox_dps.TabIndex = 16;
             this.gbox_dps.TabStop = false;
             // 
@@ -415,9 +433,9 @@
             this.gbox_msec.Controls.Add(this.lb_fast);
             this.gbox_msec.Controls.Add(this.txbFastmsec);
             this.gbox_msec.Controls.Add(this.lb_mid);
-            this.gbox_msec.Location = new System.Drawing.Point(166, 52);
+            this.gbox_msec.Location = new System.Drawing.Point(167, 6);
             this.gbox_msec.Name = "gbox_msec";
-            this.gbox_msec.Size = new System.Drawing.Size(91, 67);
+            this.gbox_msec.Size = new System.Drawing.Size(91, 83);
             this.gbox_msec.TabIndex = 15;
             this.gbox_msec.TabStop = false;
             // 
@@ -456,7 +474,7 @@
             // cbox_perfmod
             // 
             this.cbox_perfmod.AutoSize = true;
-            this.cbox_perfmod.Location = new System.Drawing.Point(166, 124);
+            this.cbox_perfmod.Location = new System.Drawing.Point(167, 138);
             this.cbox_perfmod.Name = "cbox_perfmod";
             this.cbox_perfmod.Size = new System.Drawing.Size(15, 14);
             this.cbox_perfmod.TabIndex = 10;
@@ -487,19 +505,20 @@
             this.gbox_patcher.Controls.Add(this.btn_start);
             this.gbox_patcher.Location = new System.Drawing.Point(4, 4);
             this.gbox_patcher.Name = "gbox_patcher";
-            this.gbox_patcher.Size = new System.Drawing.Size(427, 290);
+            this.gbox_patcher.Size = new System.Drawing.Size(462, 277);
             this.gbox_patcher.TabIndex = 24;
             this.gbox_patcher.TabStop = false;
             // 
             // gbox_repackf
             // 
+            this.gbox_repackf.Controls.Add(this.cbox_onlyrepack);
             this.gbox_repackf.Controls.Add(this.cbox_cxml);
             this.gbox_repackf.Controls.Add(this.cbox_cconfig);
             this.gbox_repackf.Controls.Add(this.cbox_back);
             this.gbox_repackf.ForeColor = System.Drawing.Color.White;
-            this.gbox_repackf.Location = new System.Drawing.Point(9, 245);
+            this.gbox_repackf.Location = new System.Drawing.Point(9, 228);
             this.gbox_repackf.Name = "gbox_repackf";
-            this.gbox_repackf.Size = new System.Drawing.Size(326, 39);
+            this.gbox_repackf.Size = new System.Drawing.Size(361, 39);
             this.gbox_repackf.TabIndex = 25;
             this.gbox_repackf.TabStop = false;
             // 
@@ -538,7 +557,7 @@
             this.btn_start.BackColor = System.Drawing.Color.Transparent;
             this.btn_start.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_start.ForeColor = System.Drawing.Color.White;
-            this.btn_start.Location = new System.Drawing.Point(341, 256);
+            this.btn_start.Location = new System.Drawing.Point(376, 239);
             this.btn_start.Name = "btn_start";
             this.btn_start.Size = new System.Drawing.Size(76, 23);
             this.btn_start.TabIndex = 4;
@@ -552,9 +571,9 @@
             this.richOut.BackColor = System.Drawing.SystemColors.Control;
             this.richOut.ForeColor = System.Drawing.Color.Black;
             this.richOut.HideSelection = false;
-            this.richOut.Location = new System.Drawing.Point(4, 313);
+            this.richOut.Location = new System.Drawing.Point(4, 303);
             this.richOut.Name = "richOut";
-            this.richOut.Size = new System.Drawing.Size(427, 91);
+            this.richOut.Size = new System.Drawing.Size(462, 91);
             this.richOut.TabIndex = 22;
             this.richOut.Text = "";
             // 
@@ -563,7 +582,7 @@
             this.lb_outlog.AutoSize = true;
             this.lb_outlog.BackColor = System.Drawing.Color.Transparent;
             this.lb_outlog.ForeColor = System.Drawing.Color.White;
-            this.lb_outlog.Location = new System.Drawing.Point(10, 297);
+            this.lb_outlog.Location = new System.Drawing.Point(10, 284);
             this.lb_outlog.Name = "lb_outlog";
             this.lb_outlog.Size = new System.Drawing.Size(13, 13);
             this.lb_outlog.TabIndex = 8;
@@ -572,9 +591,9 @@
             // Patcher
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackgroundImage = global::BnS_Launcher.Properties.Resources._3555939_huazang_pohwaran_1girl_belt_blade___soul_boots_brown_eyes_eyepatch_female_fingerless_gloves_gatling_gun_gloves;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(436, 410);
+            this.ClientSize = new System.Drawing.Size(471, 400);
             this.Controls.Add(this.gbox_patcher);
             this.Controls.Add(this.lb_outlog);
             this.Controls.Add(this.richOut);
@@ -590,12 +609,12 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            this.gbox_mouse.ResumeLayout(false);
-            this.gbox_mouse.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.gbox_input.ResumeLayout(false);
             this.gbox_input.PerformLayout();
-            this.gbox_latency.ResumeLayout(false);
-            this.gbox_latency.PerformLayout();
+            this.gbox_mouse.ResumeLayout(false);
+            this.gbox_mouse.PerformLayout();
             this.gbox_dps.ResumeLayout(false);
             this.gbox_dps.PerformLayout();
             this.gbox_msec.ResumeLayout(false);
@@ -636,9 +655,6 @@
         private System.Windows.Forms.CheckBox cbox_dpsfac;
         private System.Windows.Forms.CheckBox cbox_dpsfield;
         private System.Windows.Forms.CheckBox cbox_dpspub;
-        private System.Windows.Forms.GroupBox gbox_latency;
-        private System.Windows.Forms.TextBox txb_cgct;
-        private System.Windows.Forms.Label lb_time;
         private System.Windows.Forms.CheckBox cbox_cgcd;
         private System.Windows.Forms.GroupBox gbox_mouse;
         private System.Windows.Forms.Label lb_mpresstime;
@@ -657,5 +673,9 @@
         private System.Windows.Forms.CheckBox cbox_skdt;
         private System.Windows.Forms.Button btn_Slider;
         private System.Windows.Forms.CheckBox cbox_slider;
+        private System.Windows.Forms.Button btnSliderSearch;
+        private System.Windows.Forms.CheckBox cbox_UseSavedSlider;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox cbox_onlyrepack;
     }
 }
